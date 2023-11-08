@@ -16,11 +16,12 @@ You can download the latest version of Ollamac from the [releases page](https://
 
 ## Features
 
-- **Tailored for macOS**: Designed exclusively for macOS, Ollamac delivers swift and stable performance.
-- **Ease of Use**: The intuitive graphical interface of Ollamac simplifies your dialogue with Ollama models.
-- **Chat Archiving**: Your chats are automatically saved on your Mac, ensuring that your conversations are both secure and retrievable at any time.
-- **Seamless Interaction**: With HTTP streaming, you can engage in smooth, real-time conversations with any Ollama model.
-- **Universal Model Support**: Ollamac works with every Ollama model available, offering versatility for your specific needs.
+- **Open-source**: You can access and help improve Ollamac’s code.
+- **Built for macOS**: Ollamac runs smoothly and quickly on macOS.
+- **All Model Support**: Ollamac is compatible with every Ollama model.
+- **Easy to use**: The simple design makes interacting with Ollama models easy.
+- **Chat saving**: It automatically stores your chats on your Mac for safety.
+- **Real-time chat**: Talk without delays, thanks to HTTP streaming.
 
 And more...
 
@@ -29,7 +30,7 @@ And more...
 <div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./assets/screenshot-dark.png">
-    <img alt="screenshot" srcset="./assets/screenshot.png">
+    <img alt="screenshot" src="./assets/screenshot.png">
   </picture>
 </div>
 
