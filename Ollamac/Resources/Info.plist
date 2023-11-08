@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SUEnableDownloaderService</key>
+	<true/>
+	<key>SUEnableInstallerLauncherService</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://raw.githubusercontent.com/kevinhermawan/Ollamac/main/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>xEv1HCqq1iI29hbUSHP7BuExQBfIMupe2d1Xa5bvW2Y=</string>
+</dict>
+</plist>
