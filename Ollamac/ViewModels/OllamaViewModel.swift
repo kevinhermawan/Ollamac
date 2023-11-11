@@ -5,81 +5,74 @@
 //  Created by Kevin Hermawan on 04/11/23.
 //
 
-import Alamofire
 import OptionalKit
 import SwiftData
 import SwiftUI
 import ViewState
+import OllamaKit
 
 @Observable
 final class OllamaViewModel {
     private var modelContext: ModelContext
+    private var ollamaKit: OllamaKit
     
-    var checkConnectionViewState: ViewState?
-    var fetchViewState: ViewState?
-
+    var isReachable: Bool = false
+    var isNotReachable: Bool {
+        !isReachable
+    }
+    
     var models: [OllamaModel] = []
     
-    init(modelContext: ModelContext) {
+    init(modelContext: ModelContext, ollamaKit: OllamaKit) {
         self.modelContext = modelContext
+        self.ollamaKit = ollamaKit
     }
     
     @MainActor
     func checkConnection() async {
-        self.checkConnectionViewState = .loading
-        
-        let request = AF.request(OllamaAPI.root).validate()
-        
-        do {
-            let _ = try await request.serializingString().value
-            
-            self.checkConnectionViewState = nil
-        } catch {
-            self.checkConnectionViewState = .error
-        }
+        isReachable = await ollamaKit.reachable()
+    }
+    
+    func isReachable() async -> Bool {
+        await ollamaKit.reachable()
     }
     
     @MainActor
-    func fetch() async {
-        self.fetchViewState = .loading
+    func fetch() async throws {
+        let prevModels = try self.fetchFromLocal()
+        let newModels = try await self.fetchFromRemote()
         
-        let request = AF.request(OllamaAPI.models).validate()
-        let response = request.serializingDecodable(OllamaModelResponse.self)
-        
-        do {
-            let prevModels = try self.fetchModels()
-            let newModels = try await response.value.models
-            
-            for model in prevModels {
-                if newModels.contains(where: { $0.name == model.name }) {                    
-                    model.isAvailable = true
-                } else {
-                    model.isAvailable = false
-                }
-            }
-            
-            for model in newModels {
+        for model in prevModels {
+            if newModels.contains(where: { $0.name == model.name }) {
                 model.isAvailable = true
-                self.modelContext.insert(model)
+            } else {
+                model.isAvailable = false
             }
-            
-            try self.modelContext.saveChanges()
-            models = try self.fetchModels()
-            
-            self.fetchViewState = models.isEmpty ? .empty : nil
-        } catch {
-            self.fetchViewState = .error
         }
+        
+        for newModel in newModels {
+            let model = OllamaModel(name: newModel.name)
+            model.isAvailable = true
+            
+            self.modelContext.insert(model)
+        }
+        
+        try self.modelContext.saveChanges()
+        models = try self.fetchFromLocal()
     }
     
-    private func fetchModels() throws -> [OllamaModel] {
+    private func fetchFromRemote() async throws -> [OKModelResponse.Model] {
+        let response = try await ollamaKit.models()
+        let models = response.models
+        
+        return models
+    }
+    
+    private func fetchFromLocal() throws -> [OllamaModel] {
         let sortDescriptor = SortDescriptor(\OllamaModel.name)
         let fetchDescriptor = FetchDescriptor<OllamaModel>(sortBy: [sortDescriptor])
+        let models = try modelContext.fetch(fetchDescriptor)
         
-        return try modelContext.fetch(fetchDescriptor)
-    }
-    
-    private struct OllamaModelResponse: Codable {
-        var models: [OllamaModel]
+        return models
     }
 }

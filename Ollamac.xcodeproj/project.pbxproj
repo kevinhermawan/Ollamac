@@ -12,7 +12,6 @@
 		0A4D358E2AF541DA00846890 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A4D358D2AF541DA00846890 /* Preview Assets.xcassets */; };
 		0A4D35992AF5425900846890 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35982AF5425900846890 /* AppView.swift */; };
 		0A4D359F2AF5429500846890 /* OllamaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D359E2AF5429500846890 /* OllamaModel.swift */; };
-		0A4D35AD2AF54CB600846890 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0A4D35AC2AF54CB600846890 /* Alamofire */; };
 		0A4D35B62AF562CB00846890 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35B52AF562CB00846890 /* MessageViewModel.swift */; };
 		0A4D35B82AF5630600846890 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35B72AF5630600846890 /* Message.swift */; };
 		0A4D35BA2AF563BE00846890 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35B92AF563BE00846890 /* Chat.swift */; };
@@ -24,8 +23,6 @@
 		0AA41A142AF613BF0053B8DB /* OptionalKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA41A132AF613BF0053B8DB /* OptionalKit */; };
 		0AA41A172AF635AD0053B8DB /* ViewState in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA41A162AF635AD0053B8DB /* ViewState */; };
 		0AA41A1C2AF65F170053B8DB /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA41A1B2AF65F170053B8DB /* AppModel.swift */; };
-		0AA41A1F2AF666740053B8DB /* OllamaAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA41A1E2AF666740053B8DB /* OllamaAPI.swift */; };
-		0AA41A222AF66B010053B8DB /* Encodable+Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA41A212AF66B010053B8DB /* Encodable+Parameters.swift */; };
 		0ACA4D4A2AF7946A000DA76F /* ChatSidebarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D492AF7946A000DA76F /* ChatSidebarListView.swift */; };
 		0ACA4D4C2AF794B8000DA76F /* CommandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D4B2AF794B8000DA76F /* CommandViewModel.swift */; };
 		0ACA4D4E2AF799A1000DA76F /* RenameChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D4D2AF799A1000DA76F /* RenameChatView.swift */; };
@@ -37,6 +34,7 @@
 		0ACA4D842AF94A9C000DA76F /* ChatContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D832AF94A9C000DA76F /* ChatContextMenu.swift */; };
 		0AE024832AFB898300347C18 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 0AE024822AFB898300347C18 /* Sparkle */; };
 		0AE024862AFB8EB900347C18 /* UpdaterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE024852AFB8EB900347C18 /* UpdaterViewModel.swift */; };
+		0AE0248B2AFEA24600347C18 /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AE0248A2AFEA24600347C18 /* OllamaKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,8 +54,6 @@
 		0A4D35C32AF575E700846890 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		0A4D35C52AF57D8800846890 /* MessageListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListItemView.swift; sourceTree = "<group>"; };
 		0AA41A1B2AF65F170053B8DB /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
-		0AA41A1E2AF666740053B8DB /* OllamaAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaAPI.swift; sourceTree = "<group>"; };
-		0AA41A212AF66B010053B8DB /* Encodable+Parameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Parameters.swift"; sourceTree = "<group>"; };
 		0ACA4D492AF7946A000DA76F /* ChatSidebarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSidebarListView.swift; sourceTree = "<group>"; };
 		0ACA4D4B2AF794B8000DA76F /* CommandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandViewModel.swift; sourceTree = "<group>"; };
 		0ACA4D4D2AF799A1000DA76F /* RenameChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameChatView.swift; sourceTree = "<group>"; };
@@ -74,12 +70,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AE024832AFB898300347C18 /* Sparkle in Frameworks */,
-				0A4D35AD2AF54CB600846890 /* Alamofire in Frameworks */,
 				0AA41A142AF613BF0053B8DB /* OptionalKit in Frameworks */,
 				0AA41A172AF635AD0053B8DB /* ViewState in Frameworks */,
 				0ACA4D762AF89C27000DA76F /* MarkdownUI in Frameworks */,
 				0ACA4D732AF88DB6000DA76F /* ViewCondition in Frameworks */,
 				0ACA4D5E2AF7AC43000DA76F /* SwiftUIIntrospect in Frameworks */,
+				0AE0248B2AFEA24600347C18 /* OllamaKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,7 +175,6 @@
 		0AA41A1D2AF666670053B8DB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				0AA41A1E2AF666740053B8DB /* OllamaAPI.swift */,
 				0ACA4D812AF948C4000DA76F /* Constants.swift */,
 			);
 			path = Utils;
@@ -188,7 +183,6 @@
 		0AA41A202AF669680053B8DB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				0AA41A212AF66B010053B8DB /* Encodable+Parameters.swift */,
 				0ACA4D502AF7A34D000DA76F /* ModelContext+SaveChanges.swift */,
 			);
 			path = Extensions;
@@ -231,13 +225,13 @@
 			);
 			name = Ollamac;
 			packageProductDependencies = (
-				0A4D35AC2AF54CB600846890 /* Alamofire */,
 				0AA41A132AF613BF0053B8DB /* OptionalKit */,
 				0AA41A162AF635AD0053B8DB /* ViewState */,
 				0ACA4D5D2AF7AC43000DA76F /* SwiftUIIntrospect */,
 				0ACA4D722AF88DB6000DA76F /* ViewCondition */,
 				0ACA4D752AF89C27000DA76F /* MarkdownUI */,
 				0AE024822AFB898300347C18 /* Sparkle */,
+				0AE0248A2AFEA24600347C18 /* OllamaKit */,
 			);
 			productName = Ollamac;
 			productReference = 0A4D35812AF541D900846890 /* Ollamac.app */;
@@ -268,13 +262,13 @@
 			);
 			mainGroup = 0A4D35782AF541D900846890;
 			packageReferences = (
-				0A4D35AB2AF54CB600846890 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				0AA41A122AF613BF0053B8DB /* XCRemoteSwiftPackageReference "OptionalKit" */,
 				0AA41A152AF635AD0053B8DB /* XCRemoteSwiftPackageReference "ViewState" */,
 				0ACA4D5C2AF7AC43000DA76F /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
 				0ACA4D712AF88DB6000DA76F /* XCRemoteSwiftPackageReference "ViewCondition" */,
 				0ACA4D742AF89C27000DA76F /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				0AE024812AFB898300347C18 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				0AE024892AFEA24600347C18 /* XCRemoteSwiftPackageReference "OllamaKit" */,
 			);
 			productRefGroup = 0A4D35822AF541D900846890 /* Products */;
 			projectDirPath = "";
@@ -308,7 +302,6 @@
 				0A4D35BE2AF56E7A00846890 /* OllamaViewModel.swift in Sources */,
 				0A4D35C42AF575E700846890 /* MessageView.swift in Sources */,
 				0ACA4D4A2AF7946A000DA76F /* ChatSidebarListView.swift in Sources */,
-				0AA41A1F2AF666740053B8DB /* OllamaAPI.swift in Sources */,
 				0A4D35992AF5425900846890 /* AppView.swift in Sources */,
 				0AA41A1C2AF65F170053B8DB /* AppModel.swift in Sources */,
 				0ACA4D4E2AF799A1000DA76F /* RenameChatView.swift in Sources */,
@@ -319,7 +312,6 @@
 				0A4D35C62AF57D8800846890 /* MessageListItemView.swift in Sources */,
 				0ACA4D822AF948C4000DA76F /* Constants.swift in Sources */,
 				0ACA4D4C2AF794B8000DA76F /* CommandViewModel.swift in Sources */,
-				0AA41A222AF66B010053B8DB /* Encodable+Parameters.swift in Sources */,
 				0A4D35852AF541D900846890 /* OllamacApp.swift in Sources */,
 				0A4D35BC2AF565CB00846890 /* ChatViewModel.swift in Sources */,
 				0ACA4D842AF94A9C000DA76F /* ChatContextMenu.swift in Sources */,
@@ -535,14 +527,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0A4D35AB2AF54CB600846890 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.8.1;
-			};
-		};
 		0AA41A122AF613BF0053B8DB /* XCRemoteSwiftPackageReference "OptionalKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kevinhermawan/OptionalKit";
@@ -591,14 +575,17 @@
 				minimumVersion = 2.5.1;
 			};
 		};
+		0AE024892AFEA24600347C18 /* XCRemoteSwiftPackageReference "OllamaKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kevinhermawan/OllamaKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0A4D35AC2AF54CB600846890 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0A4D35AB2AF54CB600846890 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
 		0AA41A132AF613BF0053B8DB /* OptionalKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0AA41A122AF613BF0053B8DB /* XCRemoteSwiftPackageReference "OptionalKit" */;
@@ -628,6 +615,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0AE024812AFB898300347C18 /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
+		};
+		0AE0248A2AFEA24600347C18 /* OllamaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0AE024892AFEA24600347C18 /* XCRemoteSwiftPackageReference "OllamaKit" */;
+			productName = OllamaKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

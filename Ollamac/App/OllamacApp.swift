@@ -5,6 +5,7 @@
 //  Created by Kevin Hermawan on 03/11/23.
 //
 
+import OllamaKit
 import Sparkle
 import SwiftUI
 import SwiftData
@@ -32,14 +33,27 @@ struct OllamacApp: App {
     
     init() {
         let modelContext = sharedModelContainer.mainContext
+        
         let updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
         updater = updaterController.updater
         
-        _updaterViewModel = State(initialValue: UpdaterViewModel(updater))
-        _commandViewModel = State(initialValue: CommandViewModel())
-        _ollamaViewModel = State(initialValue: OllamaViewModel(modelContext: modelContext))
-        _chatViewModel = State(initialValue: ChatViewModel(modelContext: modelContext))
-        _messageViewModel = State(initialValue: MessageViewModel(modelContext: modelContext))
+        let updaterViewModel = UpdaterViewModel(updater)
+        _updaterViewModel = State(initialValue: updaterViewModel)
+        
+        let commandViewModel = CommandViewModel()
+        _commandViewModel = State(initialValue: commandViewModel)
+        
+        let ollamaURL = URL(string: "http://localhost:11434")!
+        let ollamaKit = OllamaKit(baseURL: ollamaURL)
+                
+        let ollamaViewModel = OllamaViewModel(modelContext: modelContext, ollamaKit: ollamaKit)
+        _ollamaViewModel = State(initialValue: ollamaViewModel)
+        
+        let messageViewModel = MessageViewModel(modelContext: modelContext, ollamaKit: ollamaKit)
+        _messageViewModel = State(initialValue: messageViewModel)
+        
+        let chatViewModel = ChatViewModel(modelContext: modelContext)
+        _chatViewModel = State(initialValue: chatViewModel)
     }
     
     var body: some Scene {

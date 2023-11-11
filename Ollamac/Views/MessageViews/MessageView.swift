@@ -8,6 +8,7 @@
 import OptionalKit
 import SwiftUI
 import SwiftUIIntrospect
+import ViewState
 
 struct MessageView: View {
     private var chat: Chat
@@ -17,6 +18,9 @@ struct MessageView: View {
     @Environment(OllamaViewModel.self) private var ollamaViewModel
     
     @FocusState private var isInputFocused: Bool
+    
+    @State private var sendViewState: ViewState? = nil
+    @State private var errorMessage: String? = nil
     @State private var prompt: String = ""
     
     init(for chat: Chat) {
@@ -24,13 +28,11 @@ struct MessageView: View {
     }
     
     var isGenerating: Bool {
-        messageViewModel.generateViewState == .loading
+        messageViewModel.sendViewState == .loading
     }
     
     var disabledPromptInput: Bool {
         if isGenerating { return true }
-        if ollamaViewModel.checkConnectionViewState == .loading { return true }
-        if ollamaViewModel.checkConnectionViewState == .error { return true }
         if let model = chat.model, model.isNotAvailable { return true }
         
         return false
@@ -39,8 +41,6 @@ struct MessageView: View {
     var disabledSendButton: Bool {
         if prompt.isEmpty { return true }
         if isGenerating { return true }
-        if ollamaViewModel.checkConnectionViewState == .loading { return true }
-        if ollamaViewModel.checkConnectionViewState == .error { return true }
         if let model = chat.model, model.isNotAvailable { return true }
         
         return false
@@ -94,7 +94,7 @@ struct MessageView: View {
                                 .stroke(Color(nsColor: .separatorColor))
                         )
                         .focused($isInputFocused)
-                        .onChange(of: messageViewModel.generateViewState) { _, newState in
+                        .onChange(of: messageViewModel.sendViewState) { _, newState in
                             isInputFocused = newState.isNil
                         }
                     
@@ -108,27 +108,11 @@ struct MessageView: View {
                 }
                 .padding(.horizontal)
                 
-                if ollamaViewModel.checkConnectionViewState == .loading {
-                    HStack(spacing: 8) {
-                        ProgressView()
-                            .controlSize(.mini)
-                            .progressViewStyle(.circular)
-                        
-                        Text("Checking connection...")
-                            .foregroundStyle(.secondary)
-                    }
-                } else if ollamaViewModel.checkConnectionViewState == .error {
+                if let errorMessage {
                     HStack(alignment: .center) {
-                        Text(Constants.ollamaConnectionErrorMessage)
-                        
-                        Button("Check Again") { self.initialize(for: chat) }
-                            .buttonStyle(.plain)
-                            .foregroundStyle(.accent)
+                        Text(errorMessage)
                     }
                     .foregroundStyle(.secondary)
-                } else if let model = chat.model, model.isNotAvailable {
-                    Text(Constants.modelNotAvailableErrorMessage)
-                        .foregroundStyle(.secondary)
                 }
             }
             .padding(.top, 8)
@@ -147,7 +131,7 @@ struct MessageView: View {
     private func initialize(for chat: Chat) {
         Task {
             await ollamaViewModel.checkConnection()
-            await ollamaViewModel.fetch()
+            try await ollamaViewModel.fetch()
         }
         
         messageViewModel.fetch(for: chat)
@@ -155,12 +139,20 @@ struct MessageView: View {
     }
     
     private func send() {
+        errorMessage = nil
+        
         let message = Message(prompt: prompt, response: nil)
         message.chat = chat
         message.context = messageViewModel.messages.last?.context ?? []
         
         Task {
-            await messageViewModel.generate(message)
+            let isReachable = await ollamaViewModel.isReachable()
+            
+            if isReachable {
+                await messageViewModel.send(message)
+            } else {
+                errorMessage = Constants.ollamaConnectionErrorMessage
+            }
         }
         
         prompt = ""

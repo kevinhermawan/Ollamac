@@ -14,7 +14,6 @@ final class ChatViewModel {
     private var modelContext: ModelContext
     
     var fetchViewState: ViewState?
-    var createViewState: ViewState?
     var renameViewState: ViewState?
     var deleteViewState: ViewState?
     
@@ -38,18 +37,11 @@ final class ChatViewModel {
         }
     }
     
-    func create(_ chat: Chat) {
-        self.createViewState = .loading
-        
+    func create(_ chat: Chat) throws {
         self.modelContext.insert(chat)
         self.chats.insert(chat, at: 0)
         
-        do {
-            try self.modelContext.saveChanges()
-            self.createViewState = nil
-        } catch {
-            self.createViewState = .error
-        }
+        try self.modelContext.saveChanges()
     }
     
     func rename(_ chat: Chat) {
