@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "ollamakit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kevinhermawan/OllamaKit",
+      "state" : {
+        "revision" : "b6a3d6c4a0cd20a28b87032c73859e8513ad9465",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "optionalkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/OptionalKit",
