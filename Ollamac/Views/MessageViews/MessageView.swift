@@ -19,9 +19,9 @@ struct MessageView: View {
     
     @FocusState private var isInputFocused: Bool
     
-    @State private var sendViewState: ViewState? = nil
-    @State private var errorMessage: String? = nil
     @State private var prompt: String = ""
+    
+    @State private var errorMessage: String? = nil
     
     init(for chat: Chat) {
         self.chat = chat
@@ -112,7 +112,14 @@ struct MessageView: View {
                     HStack(alignment: .center) {
                         Text(errorMessage)
                     }
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.red)
+                }
+                
+                if messageViewModel.sendViewState == .error {
+                    HStack(alignment: .center) {
+                        Text(AppMessages.generalErrorMessage)
+                    }
+                    .foregroundStyle(.red)
                 }
             }
             .padding(.top, 8)
@@ -128,34 +135,28 @@ struct MessageView: View {
         }
     }
     
+    // MARK: - Actions
     private func initialize(for chat: Chat) {
-        Task {
-            await ollamaViewModel.checkConnection()
-            try await ollamaViewModel.fetch()
-        }
+        try? messageViewModel.fetch(for: chat)
         
-        messageViewModel.fetch(for: chat)
         isInputFocused = true
     }
     
     private func send() {
-        errorMessage = nil
-        
         let message = Message(prompt: prompt, response: nil)
-        message.chat = chat
         message.context = messageViewModel.messages.last?.context ?? []
-        
+        message.chat = chat
+
         Task {
-            let isReachable = await ollamaViewModel.isReachable()
-            
-            if isReachable {
-                await messageViewModel.send(message)
+            await messageViewModel.send(message)
+                        
+            if await ollamaViewModel.isReachable() {
+                prompt = ""
             } else {
-                errorMessage = Constants.ollamaConnectionErrorMessage
+                errorMessage = AppMessages.ollamaServerUnreachable
+                messageViewModel.revertSend(message)
             }
         }
-        
-        prompt = ""
     }
     
     private func scrollToBottom(_ proxy: ScrollViewProxy, messages: [Message]) {

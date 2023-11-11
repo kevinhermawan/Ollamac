@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ViewState
 
 struct RenameChatView: View {
     private var chat: Chat
@@ -27,8 +28,8 @@ struct RenameChatView: View {
             VStack(spacing: 16) {
                 TextField("Name", text: $name)
             }
-            .padding(.horizontal)
-            .frame(width: 300, height: 50)
+            .padding()
+            .frame(width: 300)
             .navigationTitle("Rename Chat")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -38,15 +39,17 @@ struct RenameChatView: View {
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
-                        chat.name = name
-                        chatViewModel.rename(chat)
-                        
-                        dismiss()
-                    }
-                    .disabled(name.isEmpty)
+                    Button("Done", action: saveAction)
+                        .disabled(name.isEmpty)
                 }
             }
         }
+    }
+    
+    func saveAction() {
+        chat.name = name
+        try? chatViewModel.rename(chat)
+        
+        dismiss()
     }
 }

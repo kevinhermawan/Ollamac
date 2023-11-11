@@ -22,7 +22,6 @@ struct AddChatView: View {
     
     @State private var errorMessage: String? = nil
     @State private var taskActionViewState: ViewState? = .loading
-    @State private var createActionViewState: ViewState? = nil
     
     init(onCreated: @escaping (_ chat: Chat) -> Void) {
         self.onCreated = onCreated
@@ -37,11 +36,11 @@ struct AddChatView: View {
     }
     
     var isLoading: Bool {
-        taskActionViewState == .loading || createActionViewState == .loading
+        taskActionViewState == .loading
     }
     
     var isError: Bool {
-        taskActionViewState == .error || createActionViewState == .error
+        taskActionViewState == .error
     }
     
     var body: some View {
@@ -65,16 +64,13 @@ struct AddChatView: View {
                 .disabled(isError)
                 
                 if let selectedModel, selectedModel.isNotAvailable {
-                    Text(Constants.ollamaModelUnavailable)
+                    Text(AppMessages.ollamaModelUnavailable)
                         .foregroundStyle(.red)
                         .frame(minHeight: 32)
                 }
                 
                 if isError, let errorMessage {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(errorMessage)
-                            .foregroundStyle(.red)
-                        
+                    FormErrorView(message: errorMessage) {
                         if taskActionViewState == .error {
                             Button("Try Again") {
                                 Task { await taskAction() }
@@ -83,13 +79,11 @@ struct AddChatView: View {
                             .foregroundStyle(.accent)
                         }
                     }
-                    .frame(minHeight: 32)
-                    .padding(.vertical, 8)
                 }
             }
             .padding()
             .frame(width: 400)
-            .navigationTitle(isLoading ? "Connecting..." : "New Chat")
+            .navigationTitle(isLoading ? "Loading..." : "New Chat")
             .task {
                 await taskAction()
             }
@@ -129,30 +123,22 @@ struct AddChatView: View {
                 
                 taskActionViewState = isEmpty ? .empty : nil
             } catch {
-                errorMessage = Constants.generalErrorMessage
+                errorMessage = AppMessages.generalErrorMessage
                 taskActionViewState = .error
             }
         } else {
-            errorMessage = Constants.ollamaServerUnreachable
+            errorMessage = AppMessages.ollamaServerUnreachable
             taskActionViewState = .error
         }
     }
     
     private func createAction() {
-        createActionViewState = .loading
-        
         let chat = Chat(name: name)
         chat.model = selectedModel
         
-        do {
-            try chatViewModel.create(chat)
-            createActionViewState = nil
-            
-            onCreated(chat)
-            dismiss()
-        } catch {
-            errorMessage = Constants.generalErrorMessage
-            createActionViewState = .error
-        }
+        try? chatViewModel.create(chat)
+        onCreated(chat)
+        
+        dismiss()
     }
 }

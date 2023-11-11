@@ -48,7 +48,8 @@ struct MessageListItemView: View {
             }
             
             if isGenerating {
-                Image(systemName: "hourglass")
+                ProgressView()
+                    .controlSize(.small)
             } else {
                 Markdown(text)
                     .textSelection(.enabled)
