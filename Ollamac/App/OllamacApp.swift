@@ -21,7 +21,7 @@ struct OllamacApp: App {
     @State private var messageViewModel: MessageViewModel
     
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema(AppModel.all)
+        let schema = Schema([Chat.self, Message.self, OllamaModel.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         
         do {

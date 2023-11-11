@@ -5,7 +5,6 @@
 //  Created by Kevin Hermawan on 05/11/23.
 //
 
-import OptionalKit
 import SwiftUI
 
 struct ChatSidebarListView: View {
@@ -13,9 +12,9 @@ struct ChatSidebarListView: View {
     @Environment(ChatViewModel.self) private var chatViewModel
     
     var body: some View {
-        @Bindable var commandViewModel = commandViewModel
+        @Bindable var commandViewModelBindable = commandViewModel
         
-        List(selection: $commandViewModel.selectedChat) {
+        List(selection: $commandViewModelBindable.selectedChat) {
             ForEach(chatViewModel.chats) { chat in
                 Label(chat.name, systemImage: "bubble")
                     .contextMenu {
@@ -24,55 +23,54 @@ struct ChatSidebarListView: View {
                     .tag(chat)
             }
         }
-        .toolbar {
-            toolbarItem()
-        }
+        .listStyle(.sidebar)
         .task {
-            chatViewModel.fetch()
+            try? chatViewModel.fetch()
+        }
+        .toolbar {
+            ToolbarItemGroup {
+                Spacer()
+                
+                Button("New Chat", systemImage: "square.and.pencil") {
+                    commandViewModel.isAddChatViewPresented = true
+                }
+                .buttonStyle(.accessoryBar)
+            }
         }
         .navigationDestination(for: Chat.self) { chat in
             MessageView(for: chat)
         }
-        .sheet(isPresented: $commandViewModel.isAddChatViewPresented) {
+        .sheet(
+            isPresented: $commandViewModelBindable.isAddChatViewPresented
+        ) {
             AddChatView() { createdChat in
                 self.commandViewModel.selectedChat = createdChat
             }
         }
-        .sheet(isPresented: $commandViewModel.isRenameChatViewPresented) {
+        .sheet(
+            isPresented: $commandViewModelBindable.isRenameChatViewPresented
+        ) {
             if let chatToRename = commandViewModel.chatToRename {
                 RenameChatView(for: chatToRename)
             }
         }
         .confirmationDialog(
-            Constants.deleteChatConfirmationTitle,
-            isPresented: $commandViewModel.isDeleteChatConfirmationPresented
+            AppMessages.chatDeletionTitle,
+            isPresented: $commandViewModelBindable.isDeleteChatConfirmationPresented
         ) {
             Button("Cancel", role: .cancel) {}
-            Button("Delete", role: .destructive) {
-                if let chatToDelete = commandViewModel.chatToDelete {
-                    self.chatViewModel.delete(chatToDelete)
-                    self.commandViewModel.chatToDelete = nil
-                    self.commandViewModel.selectedChat = nil
-                }
-            }
+            Button("Delete", role: .destructive, action: deleteAction)
         } message: {
-            Text(Constants.deleteChatConfirmationMessage)
+            Text(AppMessages.chatDeletionMessage)
         }
         .dialogSeverity(.critical)
     }
     
-    private func toolbarItem() -> some ToolbarContent {
-        ToolbarItemGroup {
-            Spacer()
-            
-            Button("New Chat", systemImage: "square.and.pencil") {
-                commandViewModel.isAddChatViewPresented = true
-            }
-            .buttonStyle(.accessoryBar)
-        }
+    func deleteAction() {
+        guard let chatToDelete = commandViewModel.chatToDelete else { return }
+        try? chatViewModel.delete(chatToDelete)
+        
+        commandViewModel.chatToDelete = nil
+        commandViewModel.selectedChat = nil
     }
-}
-
-#Preview {
-    ChatSidebarListView()
 }

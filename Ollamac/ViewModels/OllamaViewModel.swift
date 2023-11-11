@@ -16,21 +16,11 @@ final class OllamaViewModel {
     private var modelContext: ModelContext
     private var ollamaKit: OllamaKit
     
-    var isReachable: Bool = false
-    var isNotReachable: Bool {
-        !isReachable
-    }
-    
     var models: [OllamaModel] = []
     
     init(modelContext: ModelContext, ollamaKit: OllamaKit) {
         self.modelContext = modelContext
         self.ollamaKit = ollamaKit
-    }
-    
-    @MainActor
-    func checkConnection() async {
-        isReachable = await ollamaKit.reachable()
     }
     
     func isReachable() async -> Bool {

@@ -10,11 +10,10 @@ import ViewState
 
 struct AppView: View {
     @Environment(CommandViewModel.self) private var commandViewModel
-        
+    
     var body: some View {
         NavigationSplitView {
             ChatSidebarListView()
-                .listStyle(.sidebar)
         } detail: {
             if let selectedChat = commandViewModel.selectedChat {
                 MessageView(for: selectedChat)
@@ -25,9 +24,4 @@ struct AppView: View {
             }
         }
     }
-}
-
-#Preview {
-    AppView()
-        .modelContainer(for: AppModel.all, inMemory: true)
 }

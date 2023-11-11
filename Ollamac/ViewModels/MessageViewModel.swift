@@ -5,9 +5,9 @@
 //  Created by Kevin Hermawan on 04/11/23.
 //
 
+import Foundation
 import OllamaKit
 import SwiftData
-import Foundation
 import ViewState
 
 @Observable
@@ -15,34 +15,26 @@ final class MessageViewModel {
     private var modelContext: ModelContext
     private var ollamaKit: OllamaKit
     
-    var fetchViewState: ViewState? = nil
-    var sendViewState: ViewState? = nil
     var messages: [Message] = []
+    var sendViewState: ViewState? = nil
     
     init(modelContext: ModelContext, ollamaKit: OllamaKit) {
         self.modelContext = modelContext
         self.ollamaKit = ollamaKit
     }
     
-    func fetch(for chat: Chat) {
-        fetchViewState = .loading
-        
+    func fetch(for chat: Chat) throws {
         let chatId = chat.id
         let predicate = #Predicate<Message>{ $0.chat?.id == chatId }
         let sortDescriptor = SortDescriptor(\Message.createdAt)
         let fetchDescriptor = FetchDescriptor<Message>(predicate: predicate, sortBy: [sortDescriptor])
         
-        do {
-            messages = try modelContext.fetch(fetchDescriptor)
-            fetchViewState = messages.isEmpty ? .empty : nil
-        } catch {
-            fetchViewState = .error
-        }
+        messages = try modelContext.fetch(fetchDescriptor)
     }
     
     @MainActor
     func send(_ message: Message) async {
-        sendViewState = .loading
+        self.sendViewState = .loading
         
         messages.append(message)
         modelContext.insert(message)
@@ -54,18 +46,28 @@ final class MessageViewModel {
             switch stream.event {
             case let .stream(result):
                 switch result {
-                case let .success(value):
-                    strongSelf.setStreamSuccess(for: value)
+                case .success(let response):
+                    strongSelf.write(response)
+                    strongSelf.sendViewState = .loading
                 case .failure:
                     strongSelf.sendViewState = .error
+                    try? strongSelf.modelContext.saveChanges()
                 }
             case .complete:
-                strongSelf.setStreamComplete()
+                try? strongSelf.modelContext.saveChanges()
+                strongSelf.sendViewState = nil
             }
         }
     }
     
-    private func setStreamSuccess(for response: OKGenerateResponse) {
+    func revertSend(_ message: Message) {
+        messages.removeLast()
+        modelContext.delete(message)
+        
+        try? modelContext.saveChanges()
+    }
+    
+    private func write(_ response: OKGenerateResponse) {
         if self.messages.isEmpty { return }
         
         let lastIndex = self.messages.count - 1
@@ -74,13 +76,5 @@ final class MessageViewModel {
         self.messages[lastIndex].context = response.context
         self.messages[lastIndex].response = lastMessageResponse + response.response
     }
-    
-    private func setStreamComplete() {
-        do {
-            try self.modelContext.saveChanges()
-            self.sendViewState = nil
-        } catch {
-            self.sendViewState = .error
-        }
-    }
 }
+

@@ -7,34 +7,22 @@
 
 import SwiftData
 import SwiftUI
-import ViewState
 
 @Observable
 final class ChatViewModel {
     private var modelContext: ModelContext
-    
-    var fetchViewState: ViewState?
-    var renameViewState: ViewState?
-    var deleteViewState: ViewState?
-    
+        
     var chats: [Chat] = []
     
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
     }
     
-    func fetch() {
-        self.fetchViewState = nil
-        
+    func fetch() throws {
         let sortDescriptor = SortDescriptor(\Chat.createdAt, order: .reverse)
         let fetchDescriptor = FetchDescriptor<Chat>(sortBy: [sortDescriptor])
         
-        do {
-            self.chats = try self.modelContext.fetch(fetchDescriptor)
-            self.fetchViewState = self.chats.isEmpty ? .empty : nil
-        } catch {
-            self.fetchViewState = .error
-        }
+        self.chats = try self.modelContext.fetch(fetchDescriptor)
     }
     
     func create(_ chat: Chat) throws {
@@ -44,32 +32,18 @@ final class ChatViewModel {
         try self.modelContext.saveChanges()
     }
     
-    func rename(_ chat: Chat) {
-        self.renameViewState = .loading
-        
+    func rename(_ chat: Chat) throws {
         if let index = self.chats.firstIndex(where: { $0.id == chat.id }) {
             self.chats[index] = chat
         }
         
-        do {
-            try self.modelContext.saveChanges()
-            self.renameViewState = nil
-        } catch {
-            self.renameViewState = .error
-        }
+        try self.modelContext.saveChanges()
     }
     
-    func delete(_ chat: Chat) {
-        self.deleteViewState = .loading
-        
+    func delete(_ chat: Chat) throws {
         self.modelContext.delete(chat)
         self.chats.removeAll(where: { $0.id == chat.id })
         
-        do {
-            try self.modelContext.saveChanges()
-            self.deleteViewState = nil
-        } catch {
-            self.deleteViewState = .error
-        }
+        try self.modelContext.saveChanges()
     }
 }
