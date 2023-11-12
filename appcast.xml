@@ -3,12 +3,12 @@
     <channel>
         <title>Ollamac</title>
         <item>
-            <title>1.0.1</title>
-            <pubDate>Sun, 12 Nov 2023 19:43:27 +0700</pubDate>
-            <sparkle:version>2</sparkle:version>
-            <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
+            <title>1.0.2</title>
+            <pubDate>Mon, 13 Nov 2023 05:27:33 +0700</pubDate>
+            <sparkle:version>3</sparkle:version>
+            <sparkle:shortVersionString>1.0.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v1.0.1/Ollamac.dmg" length="6291162" type="application/octet-stream" sparkle:edSignature="7oFpInM7I38tkzWcxyqKhJhsNv+woxwQ5hSIy85IXg53PidM4I0PJKoIiQjx1D0o747geHVi+bKuq0Gm2/uzCw=="/>
+            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v1.0.2/Ollamac.dmg" length="6289778" type="application/octet-stream" sparkle:edSignature="9S26L8LhEN4V5uXxkv7SqR94bLwHR3WtWcefrlHFk+iQDmn8B+va320fq8aZvAq4EVqt5gT7q0j3JX8I1Ew1AQ=="/>
         </item>
     </channel>
 </rss>
