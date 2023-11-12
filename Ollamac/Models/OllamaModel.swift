@@ -20,10 +20,6 @@ final class OllamaModel: Identifiable {
         self.name = name
     }
     
-    @Transient var id: String {
-        name
-    }
-    
     @Transient var isNotAvailable: Bool {
         isAvailable == false
     }
