@@ -17,11 +17,11 @@ struct MessageView: View {
     @Environment(MessageViewModel.self) private var messageViewModel
     @Environment(OllamaViewModel.self) private var ollamaViewModel
     
-    @FocusState private var isInputFocused: Bool
-    
-    @State private var prompt: String = ""
+    @FocusState private var isEditorFocused: Bool
+    @State private var isEditorExpanded: Bool = false
     
     @State private var errorMessage: String? = nil
+    @State private var prompt: String = ""
     
     init(for chat: Chat) {
         self.chat = chat
@@ -31,15 +31,15 @@ struct MessageView: View {
         messageViewModel.sendViewState == .loading
     }
     
-    var disabledPromptInput: Bool {
+    var promptInputDisabled: Bool {
         if isGenerating { return true }
         if let model = chat.model, model.isNotAvailable { return true }
         
         return false
     }
     
-    var disabledSendButton: Bool {
-        if prompt.isEmpty { return true }
+    var sendButtonDisabled: Bool {
+        if prompt.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return true }
         if isGenerating { return true }
         if let model = chat.model, model.isNotAvailable { return true }
         
@@ -62,95 +62,103 @@ struct MessageView: View {
                 .id(message)
             }
             .onAppear {
-                scrollToBottom(scrollViewProxy, messages: messageViewModel.messages)
+                scrollToBottom(scrollViewProxy)
             }
-            .onChange(of: messageViewModel.messages) { _, newMessages in
-                scrollToBottom(scrollViewProxy, messages: newMessages)
+            .onChange(of: messageViewModel.messages) {
+                scrollToBottom(scrollViewProxy)
             }
             .onChange(of: messageViewModel.messages.last?.response?.count) {
-                scrollToBottom(scrollViewProxy, messages: messageViewModel.messages)
+                scrollToBottom(scrollViewProxy)
             }
             
-            VStack(spacing: 8) {
-                HStack(alignment: .bottom, spacing: 16) {
-                    TextEditor(text: $prompt)
-                        .introspect(.textEditor, on: .macOS(.v14)) { textView in
-                            textView.enclosingScrollView?.hasVerticalScroller = false
-                            textView.enclosingScrollView?.hasHorizontalScroller = false
-                            textView.backgroundColor = .clear
-                            textView.isEditable = !self.disabledPromptInput
+            if !isEditorExpanded {
+                VStack(spacing: 8) {
+                    HStack(alignment: .bottom, spacing: 16) {
+                        PromptEditor(prompt: $prompt)
+                            .frame(minHeight: 32, maxHeight: 256)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .overlay(alignment: .topTrailing) {
+                                Button(action: { isEditorExpanded = true }) {
+                                    Label("Expand", systemImage: "arrow.up.left.and.arrow.down.right")
+                                        .labelStyle(.iconOnly)
+                                }
+                                .padding(8)
+                                .buttonStyle(.plain)
+                                .keyboardShortcut("e", modifiers: .command)
+                                .help("Expand editor (⌘ + E)")
+                            }
+                            .focused($isEditorFocused)
+                            .onChange(of: messageViewModel.sendViewState) {
+                                isEditorFocused = messageViewModel.sendViewState.isNil
+                            }
+                            .onChange(of: prompt) {
+                                directSendAction()
+                            }
+                        
+                        Button(action: sendAction) {
+                            Label("Send", systemImage: "paperplane")
+                                .padding(8)
+                                .foregroundStyle(.white)
+                                .help("Send message (Return)")
                         }
-                        .padding(8)
-                        .lineSpacing(8)
-                        .font(.title3.weight(.regular))
-                        .frame(minHeight: 32, maxHeight: 256)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .background(Color(nsColor: .textBackgroundColor))
-                        .clipShape(
-                            RoundedRectangle(cornerRadius: 6)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 6)
-                                .stroke(Color(nsColor: .separatorColor))
-                        )
-                        .focused($isInputFocused)
-                        .onChange(of: messageViewModel.sendViewState) { _, newState in
-                            isInputFocused = newState.isNil
-                        }
+                        .buttonStyle(.borderedProminent)
+                        .disabled(sendButtonDisabled)
+                    }
+                    .padding(.horizontal)
                     
-                    Button(action: send) {
-                        Label("Send", systemImage: "paperplane")
-                            .foregroundStyle(.white)
-                            .padding(8)
+                    if let errorMessage {
+                        HStack(alignment: .center) {
+                            Text(errorMessage)
+                        }
+                        .foregroundStyle(.red)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(disabledSendButton)
-                }
-                .padding(.horizontal)
-                
-                if let errorMessage {
-                    HStack(alignment: .center) {
-                        Text(errorMessage)
+                    
+                    if messageViewModel.sendViewState == .error {
+                        HStack(alignment: .center) {
+                            Text(AppMessages.generalErrorMessage)
+                        }
+                        .foregroundStyle(.red)
                     }
-                    .foregroundStyle(.red)
                 }
-                
-                if messageViewModel.sendViewState == .error {
-                    HStack(alignment: .center) {
-                        Text(AppMessages.generalErrorMessage)
-                    }
-                    .foregroundStyle(.red)
-                }
+                .padding(.top, 8)
+                .padding(.bottom, 16)
             }
-            .padding(.top, 8)
-            .padding(.bottom, 16)
         }
         .navigationTitle(chat.name)
         .navigationSubtitle(chat.model?.name ?? "")
         .task {
-            self.initialize(for: chat)
+            initAction()
         }
-        .onChange(of: chat) { _, newChat in
-            self.initialize(for: newChat)
+        .onChange(of: chat) {
+            initAction()
+        }
+        .sheet(isPresented: $isEditorExpanded) {
+            PromptEditorExpandedView(prompt: $prompt) {
+                sendAction()
+            }
+            .onDisappear {
+                isEditorFocused = true
+            }
         }
     }
     
     // MARK: - Actions
-    private func initialize(for chat: Chat) {
+    private func initAction() {
         try? messageViewModel.fetch(for: chat)
         
-        isInputFocused = true
+        isEditorFocused = true
     }
     
-    private func send() {
+    private func sendAction() {
         let message = Message(prompt: prompt, response: nil)
         message.context = messageViewModel.messages.last?.context ?? []
         message.chat = chat
-
+        
         Task {
             await messageViewModel.send(message)
-                        
+            
             if await ollamaViewModel.isReachable() {
+                errorMessage = nil
                 prompt = ""
             } else {
                 errorMessage = AppMessages.ollamaServerUnreachable
@@ -159,10 +167,20 @@ struct MessageView: View {
         }
     }
     
-    private func scrollToBottom(_ proxy: ScrollViewProxy, messages: [Message]) {
-        guard messages.count > 0 else { return }
-        let lastIndex = messages.count - 1
-        let lastMessage = messages[lastIndex]
+    private func directSendAction() {
+        let trimmedPrompt = prompt.trimmingCharacters(in: .whitespacesAndNewlines)
+        let isLastCharacterNewline = prompt.unicodeScalars.last
+            .map { CharacterSet.newlines.contains($0) } ?? false
+        
+        guard !trimmedPrompt.isEmpty && isLastCharacterNewline else { return }
+        
+        sendAction()
+    }
+    
+    private func scrollToBottom(_ proxy: ScrollViewProxy) {
+        guard messageViewModel.messages.count > 0 else { return }
+        let lastIndex = messageViewModel.messages.count - 1
+        let lastMessage = messageViewModel.messages[lastIndex]
         
         proxy.scrollTo(lastMessage, anchor: .bottom)
     }

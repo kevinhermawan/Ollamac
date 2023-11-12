@@ -35,6 +35,7 @@ struct ChatSidebarListView: View {
                     commandViewModel.isAddChatViewPresented = true
                 }
                 .buttonStyle(.accessoryBar)
+                .help("New Chat (⌘ + N)")
             }
         }
         .navigationDestination(for: Chat.self) { chat in
