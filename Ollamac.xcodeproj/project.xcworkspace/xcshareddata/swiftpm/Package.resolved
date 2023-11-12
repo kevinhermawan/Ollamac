@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/ViewCondition",
       "state" : {
-        "revision" : "f69a0ebf8cb6630c171a8bc284c6b9273590cc81",
-        "version" : "1.0.0"
+        "revision" : "3d6ff8a51f31890e091eac6872d966859d11ed76",
+        "version" : "1.0.1"
       }
     },
     {

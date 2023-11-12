@@ -6,22 +6,77 @@
 //
 
 import SwiftUI
+import ViewCondition
 
 struct ChatSidebarListView: View {
     @Environment(CommandViewModel.self) private var commandViewModel
     @Environment(ChatViewModel.self) private var chatViewModel
     
+    private var todayChats: [Chat] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        
+        return chatViewModel.chats.filter {
+            calendar.isDate($0.modifiedAt, inSameDayAs: today)
+        }
+    }
+    
+    private var yesterdayChats: [Chat] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
+        
+        return chatViewModel.chats.filter {
+            calendar.isDate($0.modifiedAt, inSameDayAs: yesterday)
+        }
+    }
+    
+    private var previousDays: [Chat] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
+        
+        return chatViewModel.chats.filter {
+            !calendar.isDate($0.modifiedAt, inSameDayAs: today) && !calendar.isDate($0.modifiedAt, inSameDayAs: yesterday)
+        }
+    }
+    
     var body: some View {
         @Bindable var commandViewModelBindable = commandViewModel
         
         List(selection: $commandViewModelBindable.selectedChat) {
-            ForEach(chatViewModel.chats) { chat in
-                Label(chat.name, systemImage: "bubble")
-                    .contextMenu {
-                        ChatContextMenu(commandViewModel, for: chat)
-                    }
-                    .tag(chat)
+            Section(header: Text("Today")) {
+                ForEach(todayChats) { chat in
+                    Label(chat.name, systemImage: "bubble")
+                        .contextMenu {
+                            ChatContextMenu(commandViewModel, for: chat)
+                        }
+                        .tag(chat)
+                }
             }
+            .hide(if: todayChats.isEmpty, removeCompletely: true)
+            
+            Section(header: Text("Yesterday")) {
+                ForEach(yesterdayChats) { chat in
+                    Label(chat.name, systemImage: "bubble")
+                        .contextMenu {
+                            ChatContextMenu(commandViewModel, for: chat)
+                        }
+                        .tag(chat)
+                }
+            }
+            .hide(if: yesterdayChats.isEmpty, removeCompletely: true)
+            
+            Section(header: Text("Previous Days")) {
+                ForEach(previousDays) { chat in
+                    Label(chat.name, systemImage: "bubble")
+                        .contextMenu {
+                            ChatContextMenu(commandViewModel, for: chat)
+                        }
+                        .tag(chat)
+                }
+            }
+            .hide(if: previousDays.isEmpty, removeCompletely: true)
         }
         .listStyle(.sidebar)
         .task {
@@ -67,6 +122,7 @@ struct ChatSidebarListView: View {
         .dialogSeverity(.critical)
     }
     
+    // MARK: - Actions
     func deleteAction() {
         guard let chatToDelete = commandViewModel.chatToDelete else { return }
         try? chatViewModel.delete(chatToDelete)
