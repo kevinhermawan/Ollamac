@@ -19,7 +19,7 @@ final class ChatViewModel {
     }
     
     func fetch() throws {
-        let sortDescriptor = SortDescriptor(\Chat.createdAt, order: .reverse)
+        let sortDescriptor = SortDescriptor(\Chat.modifiedAt, order: .reverse)
         let fetchDescriptor = FetchDescriptor<Chat>(sortBy: [sortDescriptor])
         
         self.chats = try self.modelContext.fetch(fetchDescriptor)
@@ -44,6 +44,17 @@ final class ChatViewModel {
         self.modelContext.delete(chat)
         self.chats.removeAll(where: { $0.id == chat.id })
         
+        try self.modelContext.saveChanges()
+    }
+    
+    func modify(_ chat: Chat) throws {
+        chat.modifiedAt = .now
+
+        if let index = self.chats.firstIndex(where: { $0.id == chat.id }) {
+            self.chats.remove(at: index)
+            self.chats.insert(chat, at: 0)
+        }
+
         try self.modelContext.saveChanges()
     }
 }

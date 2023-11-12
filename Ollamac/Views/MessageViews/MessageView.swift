@@ -8,12 +8,14 @@
 import OptionalKit
 import SwiftUI
 import SwiftUIIntrospect
+import ViewCondition
 import ViewState
 
 struct MessageView: View {
     private var chat: Chat
     
     @Environment(\.modelContext) private var modelContext
+    @Environment(ChatViewModel.self) private var chatViewModel
     @Environment(MessageViewModel.self) private var messageViewModel
     @Environment(OllamaViewModel.self) private var ollamaViewModel
     
@@ -71,58 +73,58 @@ struct MessageView: View {
                 scrollToBottom(scrollViewProxy)
             }
             
-            if !isEditorExpanded {
-                VStack(spacing: 8) {
-                    HStack(alignment: .bottom, spacing: 16) {
-                        PromptEditor(prompt: $prompt)
-                            .frame(minHeight: 32, maxHeight: 256)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .overlay(alignment: .topTrailing) {
-                                Button(action: { isEditorExpanded = true }) {
-                                    Label("Expand", systemImage: "arrow.up.left.and.arrow.down.right")
-                                        .labelStyle(.iconOnly)
-                                }
-                                .padding(8)
-                                .buttonStyle(.plain)
-                                .keyboardShortcut("e", modifiers: .command)
-                                .help("Expand editor (⌘ + E)")
+            VStack(spacing: 8) {
+                HStack(alignment: .bottom, spacing: 16) {
+                    PromptEditor(prompt: $prompt)
+                        .frame(minHeight: 32, maxHeight: 256)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .overlay(alignment: .topTrailing) {
+                            Button(action: { isEditorExpanded = true }) {
+                                Label("Expand", systemImage: "arrow.up.left.and.arrow.down.right")
+                                    .labelStyle(.iconOnly)
                             }
-                            .focused($isEditorFocused)
-                            .onChange(of: messageViewModel.sendViewState) {
-                                isEditorFocused = messageViewModel.sendViewState.isNil
-                            }
-                            .onChange(of: prompt) {
-                                directSendAction()
-                            }
-                        
-                        Button(action: sendAction) {
-                            Label("Send", systemImage: "paperplane")
-                                .padding(8)
-                                .foregroundStyle(.white)
-                                .help("Send message (Return)")
+                            .padding(8)
+                            .buttonStyle(.plain)
+                            .keyboardShortcut("e", modifiers: .command)
+                            .help("Expand editor (⌘ + E)")
                         }
-                        .buttonStyle(.borderedProminent)
-                        .disabled(sendButtonDisabled)
-                    }
-                    .padding(.horizontal)
+                        .focused($isEditorFocused)
+                        .disabled(promptInputDisabled)
+                        .onChange(of: messageViewModel.sendViewState) {
+                            isEditorFocused = messageViewModel.sendViewState.isNil
+                        }
+                        .onChange(of: prompt) {
+                            directSendAction()
+                        }
                     
-                    if let errorMessage {
-                        HStack(alignment: .center) {
-                            Text(errorMessage)
-                        }
-                        .foregroundStyle(.red)
+                    Button(action: sendAction) {
+                        Label("Send", systemImage: "paperplane")
+                            .padding(8)
+                            .foregroundStyle(.white)
+                            .help("Send message (Return)")
                     }
-                    
-                    if messageViewModel.sendViewState == .error {
-                        HStack(alignment: .center) {
-                            Text(AppMessages.generalErrorMessage)
-                        }
-                        .foregroundStyle(.red)
-                    }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(sendButtonDisabled)
                 }
-                .padding(.top, 8)
-                .padding(.bottom, 16)
+                .padding(.horizontal)
+                
+                if let errorMessage {
+                    HStack(alignment: .center) {
+                        Text(errorMessage)
+                    }
+                    .foregroundStyle(.red)
+                }
+                
+                if messageViewModel.sendViewState == .error {
+                    HStack(alignment: .center) {
+                        Text(AppMessages.generalErrorMessage)
+                    }
+                    .foregroundStyle(.red)
+                }
             }
+            .padding(.top, 8)
+            .padding(.bottom, 16)
+            .hide(if: isEditorExpanded, removeCompletely: true)
         }
         .navigationTitle(chat.name)
         .navigationSubtitle(chat.model?.name ?? "")
@@ -150,6 +152,8 @@ struct MessageView: View {
     }
     
     private func sendAction() {
+        try? chatViewModel.modify(chat)
+        
         let message = Message(prompt: prompt, response: nil)
         message.context = messageViewModel.messages.last?.context ?? []
         message.chat = chat
