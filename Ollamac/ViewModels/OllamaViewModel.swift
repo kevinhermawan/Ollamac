@@ -33,7 +33,10 @@ final class OllamaViewModel {
         let newModels = try await self.fetchFromRemote()
         
         for model in prevModels {
-            if newModels.contains(where: { $0.name == model.name }) {
+            if let found = newModels.first(where: { $0.name == model.name }) {
+                model.size = found.size
+                model.digest = found.digest
+                model.modifiedAt = found.modifiedAt
                 model.isAvailable = true
             } else {
                 model.isAvailable = false
@@ -41,7 +44,13 @@ final class OllamaViewModel {
         }
         
         for newModel in newModels {
-            let model = OllamaModel(name: newModel.name)
+            let model = OllamaModel(
+                name: newModel.name,
+                size: newModel.size,
+                digest: newModel.digest,
+                modifiedAt: newModel.modifiedAt
+            )
+            
             model.isAvailable = true
             
             self.modelContext.insert(model)
