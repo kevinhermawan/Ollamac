@@ -67,6 +67,34 @@ final class MessageViewModel {
         try? modelContext.saveChanges()
     }
     
+    @MainActor
+    func regenerate(_ message: Message) async {
+        self.sendViewState = .loading
+        
+        messages[messages.endIndex - 1].response = nil
+        message.response = nil
+        try? modelContext.saveChanges()
+                
+        ollamaKit.generate(data: message.convertToOKGenerateRequestData()) { [weak self] stream in
+            guard let strongSelf = self else { return }
+            
+            switch stream.event {
+            case let .stream(result):
+                switch result {
+                case .success(let response):
+                    strongSelf.write(response)
+                    strongSelf.sendViewState = .loading
+                case .failure:
+                    strongSelf.sendViewState = .error
+                    try? strongSelf.modelContext.saveChanges()
+                }
+            case .complete:
+                try? strongSelf.modelContext.saveChanges()
+                strongSelf.sendViewState = nil
+            }
+        }
+    }
+    
     private func write(_ response: OKGenerateResponse) {
         if self.messages.isEmpty { return }
         
