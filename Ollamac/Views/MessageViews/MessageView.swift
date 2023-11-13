@@ -50,17 +50,18 @@ struct MessageView: View {
     
     var body: some View {
         ScrollViewReader { scrollViewProxy in
-            List(messageViewModel.messages) { message in
-                MessageListItemView(
-                    message.prompt ?? "",
-                    isAssistant: false
-                )
+            List(messageViewModel.messages.indices, id: \.self) { index in
+                let message = messageViewModel.messages[index]
                 
-                MessageListItemView(
-                    message.response ?? "",
-                    isAssistant: true,
-                    isGenerating: message.response.isNil && isGenerating
-                )
+                MessageListItemView(message.prompt ?? "")
+                    .assistant(false)
+                
+                MessageListItemView(message.response ?? "") {
+                    regenerateAction(for: message)
+                }
+                .assistant(true)
+                .generating(message.response.isNil && isGenerating)
+                .finalMessage(index == messageViewModel.messages.endIndex - 1)
                 .id(message)
             }
             .onAppear {
@@ -179,6 +180,19 @@ struct MessageView: View {
         guard !trimmedPrompt.isEmpty && isLastCharacterNewline else { return }
         
         sendAction()
+    }
+    
+    private func regenerateAction(for message: Message) {
+        try? chatViewModel.modify(chat)
+        
+        Task {
+            if await ollamaViewModel.isReachable() {
+                errorMessage = nil
+                await messageViewModel.regenerate(message)
+            } else {
+                errorMessage = AppMessages.ollamaServerUnreachable
+            }
+        }
     }
     
     private func scrollToBottom(_ proxy: ScrollViewProxy) {

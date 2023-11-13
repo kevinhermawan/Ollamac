@@ -10,42 +10,39 @@ import SwiftUI
 import ViewCondition
 
 struct MessageListItemView: View {
-    let text: String
-    let isAssistant: Bool
-    let isGenerating: Bool
+    private var isAssistant: Bool = false
+    private var isGenerating: Bool = false
+    private var isFinalMessage: Bool = false
     
-    init(_ text: String, isAssistant: Bool, isGenerating: Bool = false) {
+    let text: String
+    let regenerateAction: () -> Void
+    
+    init(_ text: String) {
         self.text = text
-        self.isAssistant = isAssistant
-        self.isGenerating = isGenerating
+        self.regenerateAction = {}
+    }
+    
+    init(_ text: String, regenerateAction: @escaping () -> Void) {
+        self.text = text
+        self.regenerateAction = regenerateAction
     }
     
     @State private var isHovered: Bool = false
     @State private var isCopied: Bool = false
     
-    var isCopyButtonVisible: Bool {
+    private var isCopyButtonVisible: Bool {
         isHovered && isAssistant && !isGenerating
+    }
+    
+    private var isRegenerateButtonVisible: Bool {
+        isCopyButtonVisible && isFinalMessage
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(isAssistant ? "Assistant" : "You")
-                    .font(.title3.weight(.semibold))
-                    .foregroundStyle(.accent)
-                
-                Spacer()
-                
-                Button(action: copy) {
-                    Label(
-                        isCopied ? "Copied" : "Copy",
-                        systemImage: isCopied ? "list.clipboard" : "clipboard"
-                    )
-                    .foregroundStyle(.accent)
-                }
-                .buttonStyle(.borderless)
-                .visible(if: isCopyButtonVisible)
-            }
+            Text(isAssistant ? "Assistant" : "You")
+                .font(.title3.weight(.semibold))
+                .foregroundStyle(.accent)
             
             if isGenerating {
                 ProgressView()
@@ -75,6 +72,26 @@ struct MessageListItemView: View {
                             .padding(.bottom)
                     }
             }
+            
+            HStack(alignment: .center, spacing: 8) {
+                Button(action: copyAction) {
+                    Image(systemName: isCopied ? "list.clipboard.fill" : "clipboard")
+                }
+                .buttonStyle(.accessoryBar)
+                .clipShape(.circle)
+                .help("Copy message")
+                .visible(if: isCopyButtonVisible)
+                
+                Button(action: regenerateAction) {
+                    Image(systemName: "arrow.triangle.2.circlepath")
+                }
+                .buttonStyle(.accessoryBar)
+                .clipShape(.circle)
+                .help("Regenerate response")
+                .visible(if: isRegenerateButtonVisible)
+            }
+            .padding(.top, 8)
+            .visible(if: isAssistant, removeCompletely: true)
         }
         .padding(.vertical)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -84,7 +101,8 @@ struct MessageListItemView: View {
         }
     }
     
-    func copy() {
+    // MARK: - Actions
+    private func copyAction() {
         let content = MarkdownContent(text)
         let plainText = content.renderPlainText()
         
@@ -94,12 +112,39 @@ struct MessageListItemView: View {
         
         isCopied = true
     }
+    
+    // MARK: - Modifiers
+    public func assistant(_ isAssistant: Bool) -> MessageListItemView {
+        var view = self
+        view.isAssistant = isAssistant
+        
+        return view
+    }
+    
+    public func generating(_ isGenerating: Bool) -> MessageListItemView {
+        var view = self
+        view.isGenerating = isGenerating
+        
+        return view
+    }
+    
+    public func finalMessage(_ isFinalMessage: Bool) -> MessageListItemView {
+        var view = self
+        view.isFinalMessage = isFinalMessage
+        
+        return view
+    }
 }
 
 #Preview {
     List {
-        MessageListItemView("Hello, world!", isAssistant: false)
-        MessageListItemView("Hello, world!", isAssistant: true)
-        MessageListItemView("Hello, world!", isAssistant: true, isGenerating: true)
+        MessageListItemView("Hello, world!")
+            .assistant(false)
+        
+        MessageListItemView("Hello, world!")
+            .assistant(true)
+        
+        MessageListItemView("Hello, world!")
+            .generating(true)
     }
 }
