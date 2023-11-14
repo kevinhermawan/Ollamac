@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/OllamaKit",
       "state" : {
-        "revision" : "b6a3d6c4a0cd20a28b87032c73859e8513ad9465",
-        "version" : "1.0.0"
+        "revision" : "10d467cfa4f0484754bebf3726e59ab8312f545f",
+        "version" : "1.0.1"
       }
     },
     {
