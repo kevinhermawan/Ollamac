@@ -23,6 +23,11 @@
 		0A4D35C22AF56FD500846890 /* AddChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35C12AF56FD500846890 /* AddChatView.swift */; };
 		0A4D35C42AF575E700846890 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35C32AF575E700846890 /* MessageView.swift */; };
 		0A4D35C62AF57D8800846890 /* MessageListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35C52AF57D8800846890 /* MessageListItemView.swift */; };
+		0A6DFE6A2B02B4400096D8E1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6DFE692B02B4400096D8E1 /* SettingsView.swift */; };
+		0A6DFE6C2B02B4D20096D8E1 /* SettingsModelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6DFE6B2B02B4D20096D8E1 /* SettingsModelsView.swift */; };
+		0A6DFE6E2B02C0E70096D8E1 /* Int+FormattedByteCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6DFE6D2B02C0E70096D8E1 /* Int+FormattedByteCount.swift */; };
+		0A6DFE702B02C25E0096D8E1 /* Date+RelativeDateString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6DFE6F2B02C25E0096D8E1 /* Date+RelativeDateString.swift */; };
+		0A8E83BC2B02D13300C36956 /* SettingsModelsListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8E83BB2B02D13300C36956 /* SettingsModelsListItemView.swift */; };
 		0AA41A142AF613BF0053B8DB /* OptionalKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA41A132AF613BF0053B8DB /* OptionalKit */; };
 		0AA41A172AF635AD0053B8DB /* ViewState in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA41A162AF635AD0053B8DB /* ViewState */; };
 		0ACA4D4A2AF7946A000DA76F /* ChatSidebarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D492AF7946A000DA76F /* ChatSidebarListView.swift */; };
@@ -58,6 +63,11 @@
 		0A4D35C12AF56FD500846890 /* AddChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChatView.swift; sourceTree = "<group>"; };
 		0A4D35C32AF575E700846890 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		0A4D35C52AF57D8800846890 /* MessageListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListItemView.swift; sourceTree = "<group>"; };
+		0A6DFE692B02B4400096D8E1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		0A6DFE6B2B02B4D20096D8E1 /* SettingsModelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModelsView.swift; sourceTree = "<group>"; };
+		0A6DFE6D2B02C0E70096D8E1 /* Int+FormattedByteCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+FormattedByteCount.swift"; sourceTree = "<group>"; };
+		0A6DFE6F2B02C25E0096D8E1 /* Date+RelativeDateString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+RelativeDateString.swift"; sourceTree = "<group>"; };
+		0A8E83BB2B02D13300C36956 /* SettingsModelsListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModelsListItemView.swift; sourceTree = "<group>"; };
 		0ACA4D492AF7946A000DA76F /* ChatSidebarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSidebarListView.swift; sourceTree = "<group>"; };
 		0ACA4D4B2AF794B8000DA76F /* CommandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandViewModel.swift; sourceTree = "<group>"; };
 		0ACA4D4D2AF799A1000DA76F /* RenameChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameChatView.swift; sourceTree = "<group>"; };
@@ -146,6 +156,7 @@
 		0A4D35962AF5422A00846890 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0A6DFE682B02B42C0096D8E1 /* SettingsViews */,
 				0A4D35982AF5425900846890 /* AppView.swift */,
 				0ACA4D4F2AF799A5000DA76F /* ChatViews */,
 				0A3D250F2AFFBD370014351D /* CommonViews */,
@@ -186,6 +197,16 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		0A6DFE682B02B42C0096D8E1 /* SettingsViews */ = {
+			isa = PBXGroup;
+			children = (
+				0A6DFE692B02B4400096D8E1 /* SettingsView.swift */,
+				0A6DFE6B2B02B4D20096D8E1 /* SettingsModelsView.swift */,
+				0A8E83BB2B02D13300C36956 /* SettingsModelsListItemView.swift */,
+			);
+			path = SettingsViews;
+			sourceTree = "<group>";
+		};
 		0AA41A1D2AF666670053B8DB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +219,8 @@
 			isa = PBXGroup;
 			children = (
 				0ACA4D502AF7A34D000DA76F /* ModelContext+SaveChanges.swift */,
+				0A6DFE6D2B02C0E70096D8E1 /* Int+FormattedByteCount.swift */,
+				0A6DFE6F2B02C25E0096D8E1 /* Date+RelativeDateString.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -312,14 +335,17 @@
 			files = (
 				0A4D35BA2AF563BE00846890 /* Chat.swift in Sources */,
 				0A4D359F2AF5429500846890 /* OllamaModel.swift in Sources */,
+				0A8E83BC2B02D13300C36956 /* SettingsModelsListItemView.swift in Sources */,
 				0A3D25192B0078080014351D /* PromptEditor.swift in Sources */,
 				0A4D35B62AF562CB00846890 /* MessageViewModel.swift in Sources */,
 				0A4D35BE2AF56E7A00846890 /* OllamaViewModel.swift in Sources */,
 				0A4D35C42AF575E700846890 /* MessageView.swift in Sources */,
 				0ACA4D4A2AF7946A000DA76F /* ChatSidebarListView.swift in Sources */,
 				0A4D35992AF5425900846890 /* AppView.swift in Sources */,
+				0A6DFE6E2B02C0E70096D8E1 /* Int+FormattedByteCount.swift in Sources */,
 				0A3D25112AFFBD500014351D /* FormErrorView.swift in Sources */,
 				0ACA4D4E2AF799A1000DA76F /* RenameChatView.swift in Sources */,
+				0A6DFE702B02C25E0096D8E1 /* Date+RelativeDateString.swift in Sources */,
 				0ACA4D512AF7A34D000DA76F /* ModelContext+SaveChanges.swift in Sources */,
 				0A3D25152AFFF82D0014351D /* PromptEditorExpandedView.swift in Sources */,
 				0AE024862AFB8EB900347C18 /* UpdaterViewModel.swift in Sources */,
@@ -330,7 +356,9 @@
 				0ACA4D4C2AF794B8000DA76F /* CommandViewModel.swift in Sources */,
 				0A4D35852AF541D900846890 /* OllamacApp.swift in Sources */,
 				0A4D35BC2AF565CB00846890 /* ChatViewModel.swift in Sources */,
+				0A6DFE6C2B02B4D20096D8E1 /* SettingsModelsView.swift in Sources */,
 				0ACA4D842AF94A9C000DA76F /* ChatContextMenu.swift in Sources */,
+				0A6DFE6A2B02B4400096D8E1 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

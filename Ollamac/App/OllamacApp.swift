@@ -87,5 +87,9 @@ struct OllamacApp: App {
                 }
             }
         }
+        
+        Settings {
+            SettingsView(ollamaViewModel: ollamaViewModel)
+        }
     }
 }
