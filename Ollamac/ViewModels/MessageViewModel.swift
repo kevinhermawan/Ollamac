@@ -40,69 +40,85 @@ final class MessageViewModel {
         modelContext.insert(message)
         try? modelContext.saveChanges()
         
-        ollamaKit.generate(data: message.convertToOKGenerateRequestData()) { [weak self] stream in
-            guard let strongSelf = self else { return }
-            
-            switch stream.event {
-            case let .stream(result):
-                switch result {
-                case .success(let response):
-                    strongSelf.write(response)
-                    strongSelf.sendViewState = .loading
-                case .failure:
-                    strongSelf.sendViewState = .error
-                    try? strongSelf.modelContext.saveChanges()
+        if await ollamaKit.reachable() {
+            ollamaKit.generate(data: message.convertToOKGenerateRequestData()) { [weak self] stream in
+                guard let self = self else { return }
+                
+                switch stream.event {
+                case let .stream(result):
+                    switch result {
+                    case .success(let response):
+                        self.handleSuccess(response)
+                    case .failure(let error):
+                        self.handleError(error.localizedDescription)
+                    }
+                case .complete:
+                    self.handleComplete()
                 }
-            case .complete:
-                try? strongSelf.modelContext.saveChanges()
-                strongSelf.sendViewState = nil
             }
+        } else {
+            self.handleError(AppMessages.ollamaServerUnreachable)
         }
-    }
-    
-    func revertSend(_ message: Message) {
-        messages.removeLast()
-        modelContext.delete(message)
-        
-        try? modelContext.saveChanges()
     }
     
     @MainActor
     func regenerate(_ message: Message) async {
         self.sendViewState = .loading
         
-        messages[messages.endIndex - 1].response = nil
-        message.response = nil
+        messages[messages.endIndex - 1] = message
         try? modelContext.saveChanges()
+        
+        if await ollamaKit.reachable() {
+            ollamaKit.generate(data: message.convertToOKGenerateRequestData()) { [weak self] stream in
+                guard let self = self else { return }
                 
-        ollamaKit.generate(data: message.convertToOKGenerateRequestData()) { [weak self] stream in
-            guard let strongSelf = self else { return }
-            
-            switch stream.event {
-            case let .stream(result):
-                switch result {
-                case .success(let response):
-                    strongSelf.write(response)
-                    strongSelf.sendViewState = .loading
-                case .failure:
-                    strongSelf.sendViewState = .error
-                    try? strongSelf.modelContext.saveChanges()
+                switch stream.event {
+                case let .stream(result):
+                    switch result {
+                    case .success(let response):
+                        self.handleSuccess(response)
+                    case .failure(let error):
+                        self.handleError(error.localizedDescription)
+                    }
+                case .complete:
+                    self.handleComplete()
                 }
-            case .complete:
-                try? strongSelf.modelContext.saveChanges()
-                strongSelf.sendViewState = nil
             }
+        } else {
+            self.handleError(AppMessages.ollamaServerUnreachable)
         }
     }
     
-    private func write(_ response: OKGenerateResponse) {
+    private func handleSuccess(_ response: OKGenerateResponse) {
         if self.messages.isEmpty { return }
         
         let lastIndex = self.messages.count - 1
         let lastMessageResponse = self.messages[lastIndex].response ?? ""
-        
         self.messages[lastIndex].context = response.context
         self.messages[lastIndex].response = lastMessageResponse + response.response
+        
+        self.sendViewState = .loading
+    }
+    
+    private func handleError(_ errorMessage: String) {
+        if self.messages.isEmpty { return }
+        
+        let lastIndex = self.messages.count - 1
+        self.messages[lastIndex].error = true
+        self.messages[lastIndex].done = false
+        
+        try? self.modelContext.saveChanges()
+        self.sendViewState = .error(message: errorMessage)
+    }
+    
+    private func handleComplete() {
+        if self.messages.isEmpty { return }
+        
+        let lastIndex = self.messages.count - 1
+        self.messages[lastIndex].error = false
+        self.messages[lastIndex].done = true
+
+        try? self.modelContext.saveChanges()
+        self.sendViewState = nil
     }
 }
-

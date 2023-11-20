@@ -21,8 +21,8 @@ struct MessageView: View {
     
     @FocusState private var isEditorFocused: Bool
     @State private var isEditorExpanded: Bool = false
+    @State private var viewState: ViewState? = nil
     
-    @State private var errorMessage: String? = nil
     @State private var prompt: String = ""
     
     init(for chat: Chat) {
@@ -62,6 +62,7 @@ struct MessageView: View {
                 .assistant(true)
                 .generating(message.response.isNil && isGenerating)
                 .finalMessage(index == messageViewModel.messages.endIndex - 1)
+                .error(message.error, message: messageViewModel.sendViewState?.errorMessage)
                 .id(message)
             }
             .onAppear {
@@ -108,20 +109,6 @@ struct MessageView: View {
                     .disabled(sendButtonDisabled)
                 }
                 .padding(.horizontal)
-                
-                if let errorMessage {
-                    HStack(alignment: .center) {
-                        Text(errorMessage)
-                    }
-                    .foregroundStyle(.red)
-                }
-                
-                if messageViewModel.sendViewState == .error {
-                    HStack(alignment: .center) {
-                        Text(AppMessages.generalErrorMessage)
-                    }
-                    .foregroundStyle(.red)
-                }
             }
             .padding(.top, 8)
             .padding(.bottom, 16)
@@ -153,22 +140,13 @@ struct MessageView: View {
     }
     
     private func sendAction() {
-        try? chatViewModel.modify(chat)
-        
         let message = Message(prompt: prompt, response: nil)
         message.context = messageViewModel.messages.last?.context ?? []
         message.chat = chat
         
         Task {
+            try chatViewModel.modify(chat)
             await messageViewModel.send(message)
-            
-            if await ollamaViewModel.isReachable() {
-                errorMessage = nil
-                prompt = ""
-            } else {
-                errorMessage = AppMessages.ollamaServerUnreachable
-                messageViewModel.revertSend(message)
-            }
         }
     }
     
@@ -183,15 +161,11 @@ struct MessageView: View {
     }
     
     private func regenerateAction(for message: Message) {
-        try? chatViewModel.modify(chat)
-        
+        message.response = nil
+
         Task {
-            if await ollamaViewModel.isReachable() {
-                errorMessage = nil
-                await messageViewModel.regenerate(message)
-            } else {
-                errorMessage = AppMessages.ollamaServerUnreachable
-            }
+            try chatViewModel.modify(chat)
+            await messageViewModel.regenerate(message)
         }
     }
     
