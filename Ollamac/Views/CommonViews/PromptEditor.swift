@@ -10,28 +10,36 @@ import SwiftUIIntrospect
 
 struct PromptEditor: View {
     @Binding var prompt: String
+    let large: Bool
     
     var body: some View {
-        TextEditor(text: $prompt)
-            .introspect(.textEditor, on: .macOS(.v14)) { textView in
-                textView.enclosingScrollView?.hasVerticalScroller = false
-                textView.enclosingScrollView?.hasHorizontalScroller = false
-                textView.backgroundColor = .clear
-            }
-            .padding(8)
-            .lineSpacing(8)
-            .font(.title3.weight(.regular))
-            .background(Color(nsColor: .textBackgroundColor))
-            .clipShape(
-                RoundedRectangle(cornerRadius: 6)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 6)
-                    .stroke(Color(nsColor: .separatorColor))
-            )
+        if large {
+            TextEditor(text: $prompt)
+                .introspect(.textEditor, on: .macOS(.v14)) { textView in
+                    textView.enclosingScrollView?.hasVerticalScroller = false
+                    textView.enclosingScrollView?.hasHorizontalScroller = false
+                    textView.backgroundColor = .clear
+                }
+                .padding(8)
+                .modifier(PromptStyleModifier())
+        } else {
+            TextField("Type a message...", text: $prompt)
+                .padding(8)
+                .textFieldStyle(.plain)
+                .modifier(PromptStyleModifier())
+        }
     }
 }
 
-#Preview {
-    PromptEditor(prompt: .constant(""))
+struct PromptStyleModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .lineSpacing(8)
+            .font(.title3.weight(.regular))
+            .background(Color(nsColor: .textBackgroundColor))
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .overlay(RoundedRectangle(cornerRadius: 6)
+                .stroke(Color(nsColor: .separatorColor))
+            )
+    }
 }

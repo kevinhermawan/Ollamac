@@ -23,11 +23,11 @@ struct PromptEditorExpandedView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                PromptEditor(prompt: $prompt)
+                PromptEditor(prompt: $prompt, large: true)
             }
             .padding()
             .frame(minWidth: 768, minHeight: 512)
-            .navigationTitle("Write a message")
+            .navigationTitle("Type a message...")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(role: .cancel) {
@@ -43,7 +43,10 @@ struct PromptEditorExpandedView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         sendAction()
-                        dismiss()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            dismiss()
+                        }
                     } label: {
                         Label("Send", systemImage: "paperplane")
                             .padding(8)

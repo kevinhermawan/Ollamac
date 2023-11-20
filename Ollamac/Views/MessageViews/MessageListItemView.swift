@@ -88,7 +88,7 @@ struct MessageListItemView: View {
                 }
                 .buttonStyle(.accessoryBar)
                 .clipShape(.circle)
-                .help("Copy message")
+                .help("Copy")
                 .visible(if: isCopyButtonVisible)
                 
                 Button(action: regenerateAction) {
@@ -96,7 +96,7 @@ struct MessageListItemView: View {
                 }
                 .buttonStyle(.accessoryBar)
                 .clipShape(.circle)
-                .help("Regenerate response")
+                .help("Regenerate")
                 .visible(if: isRegenerateButtonVisible)
             }
             .padding(.top, 8)

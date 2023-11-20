@@ -34,7 +34,6 @@ struct MessageView: View {
     }
     
     var promptInputDisabled: Bool {
-        if isGenerating { return true }
         if let model = chat.model, model.isNotAvailable { return true }
         
         return false
@@ -42,7 +41,6 @@ struct MessageView: View {
     
     var sendButtonDisabled: Bool {
         if prompt.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return true }
-        if isGenerating { return true }
         if let model = chat.model, model.isNotAvailable { return true }
         
         return false
@@ -77,13 +75,14 @@ struct MessageView: View {
             
             VStack(spacing: 8) {
                 HStack(alignment: .bottom, spacing: 16) {
-                    PromptEditor(prompt: $prompt)
-                        .frame(minHeight: 32, maxHeight: 256)
-                        .fixedSize(horizontal: false, vertical: true)
+                    PromptEditor(prompt: $prompt, large: false)
                         .overlay(alignment: .topTrailing) {
-                            Button(action: { isEditorExpanded = true }) {
-                                Label("Expand", systemImage: "arrow.up.left.and.arrow.down.right")
-                                    .labelStyle(.iconOnly)
+                            Button {
+                                isEditorExpanded = true
+                            } label: {
+                                Image(systemName: "arrow.up.left.and.arrow.down.right")
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
                             }
                             .padding(8)
                             .buttonStyle(.plain)
@@ -92,12 +91,7 @@ struct MessageView: View {
                         }
                         .focused($isEditorFocused)
                         .disabled(promptInputDisabled)
-                        .onChange(of: messageViewModel.sendViewState) {
-                            isEditorFocused = messageViewModel.sendViewState.isNil
-                        }
-                        .onChange(of: prompt) {
-                            directSendAction()
-                        }
+                        .onSubmit(sendAction)
                     
                     Button(action: sendAction) {
                         Label("Send", systemImage: "paperplane")
@@ -112,7 +106,7 @@ struct MessageView: View {
             }
             .padding(.top, 8)
             .padding(.bottom, 16)
-            .hide(if: isEditorExpanded, removeCompletely: true)
+            .hide(if: isEditorExpanded)
         }
         .navigationTitle(chat.name)
         .navigationSubtitle(chat.model?.name ?? "")
@@ -122,12 +116,9 @@ struct MessageView: View {
         .onChange(of: chat) {
             initAction()
         }
-        .sheet(isPresented: $isEditorExpanded) {
+        .sheet(isPresented: $isEditorExpanded, onDismiss: { isEditorFocused = true }) {
             PromptEditorExpandedView(prompt: $prompt) {
                 sendAction()
-            }
-            .onDisappear {
-                isEditorFocused = true
             }
         }
     }
@@ -140,27 +131,23 @@ struct MessageView: View {
     }
     
     private func sendAction() {
+        guard !isGenerating else { return }
+
         let message = Message(prompt: prompt, response: nil)
         message.context = messageViewModel.messages.last?.context ?? []
         message.chat = chat
-        
+
         Task {
             try chatViewModel.modify(chat)
+            prompt = ""
             await messageViewModel.send(message)
         }
     }
     
-    private func directSendAction() {
-        let trimmedPrompt = prompt.trimmingCharacters(in: .whitespacesAndNewlines)
-        let isLastCharacterNewline = prompt.unicodeScalars.last
-            .map { CharacterSet.newlines.contains($0) } ?? false
-        
-        guard !trimmedPrompt.isEmpty && isLastCharacterNewline else { return }
-        
-        sendAction()
-    }
-    
     private func regenerateAction(for message: Message) {
+        guard !isGenerating else { return }
+
+        message.context = messageViewModel.messages.last?.context ?? []
         message.response = nil
 
         Task {
