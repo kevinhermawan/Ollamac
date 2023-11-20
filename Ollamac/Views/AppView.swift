@@ -14,6 +14,7 @@ struct AppView: View {
     var body: some View {
         NavigationSplitView {
             ChatSidebarListView()
+                .navigationSplitViewColumnWidth(min: 240, ideal: 240)
         } detail: {
             if let selectedChat = commandViewModel.selectedChat {
                 MessageView(for: selectedChat)
