@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A3D25112AFFBD500014351D /* FormErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D25102AFFBD500014351D /* FormErrorView.swift */; };
 		0A3D25152AFFF82D0014351D /* PromptEditorExpandedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D25142AFFF82D0014351D /* PromptEditorExpandedView.swift */; };
 		0A3D25192B0078080014351D /* PromptEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D25182B0078080014351D /* PromptEditor.swift */; };
 		0A4D35852AF541D900846890 /* OllamacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35842AF541D900846890 /* OllamacApp.swift */; };
@@ -25,6 +24,7 @@
 		0A4D35C62AF57D8800846890 /* MessageListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35C52AF57D8800846890 /* MessageListItemView.swift */; };
 		0AA41A142AF613BF0053B8DB /* OptionalKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA41A132AF613BF0053B8DB /* OptionalKit */; };
 		0AA41A172AF635AD0053B8DB /* ViewState in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA41A162AF635AD0053B8DB /* ViewState */; };
+		0AB5F2982B0B9C340040B72E /* TextError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB5F2972B0B9C340040B72E /* TextError.swift */; };
 		0ACA4D4A2AF7946A000DA76F /* ChatSidebarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D492AF7946A000DA76F /* ChatSidebarListView.swift */; };
 		0ACA4D4C2AF794B8000DA76F /* CommandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D4B2AF794B8000DA76F /* CommandViewModel.swift */; };
 		0ACA4D4E2AF799A1000DA76F /* RenameChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D4D2AF799A1000DA76F /* RenameChatView.swift */; };
@@ -40,7 +40,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A3D25102AFFBD500014351D /* FormErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormErrorView.swift; sourceTree = "<group>"; };
 		0A3D25142AFFF82D0014351D /* PromptEditorExpandedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptEditorExpandedView.swift; sourceTree = "<group>"; };
 		0A3D25182B0078080014351D /* PromptEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptEditor.swift; sourceTree = "<group>"; };
 		0A4D35812AF541D900846890 /* Ollamac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ollamac.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +57,7 @@
 		0A4D35C12AF56FD500846890 /* AddChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChatView.swift; sourceTree = "<group>"; };
 		0A4D35C32AF575E700846890 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		0A4D35C52AF57D8800846890 /* MessageListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListItemView.swift; sourceTree = "<group>"; };
+		0AB5F2972B0B9C340040B72E /* TextError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextError.swift; sourceTree = "<group>"; };
 		0ACA4D492AF7946A000DA76F /* ChatSidebarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSidebarListView.swift; sourceTree = "<group>"; };
 		0ACA4D4B2AF794B8000DA76F /* CommandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandViewModel.swift; sourceTree = "<group>"; };
 		0ACA4D4D2AF799A1000DA76F /* RenameChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameChatView.swift; sourceTree = "<group>"; };
@@ -89,9 +89,9 @@
 		0A3D250F2AFFBD370014351D /* CommonViews */ = {
 			isa = PBXGroup;
 			children = (
-				0A3D25102AFFBD500014351D /* FormErrorView.swift */,
 				0A3D25182B0078080014351D /* PromptEditor.swift */,
 				0A3D25142AFFF82D0014351D /* PromptEditorExpandedView.swift */,
+				0AB5F2972B0B9C340040B72E /* TextError.swift */,
 			);
 			path = CommonViews;
 			sourceTree = "<group>";
@@ -318,10 +318,10 @@
 				0A4D35C42AF575E700846890 /* MessageView.swift in Sources */,
 				0ACA4D4A2AF7946A000DA76F /* ChatSidebarListView.swift in Sources */,
 				0A4D35992AF5425900846890 /* AppView.swift in Sources */,
-				0A3D25112AFFBD500014351D /* FormErrorView.swift in Sources */,
 				0ACA4D4E2AF799A1000DA76F /* RenameChatView.swift in Sources */,
 				0ACA4D512AF7A34D000DA76F /* ModelContext+SaveChanges.swift in Sources */,
 				0A3D25152AFFF82D0014351D /* PromptEditorExpandedView.swift in Sources */,
+				0AB5F2982B0B9C340040B72E /* TextError.swift in Sources */,
 				0AE024862AFB8EB900347C18 /* UpdaterViewModel.swift in Sources */,
 				0A4D35B82AF5630600846890 /* Message.swift in Sources */,
 				0A4D35C22AF56FD500846890 /* AddChatView.swift in Sources */,
@@ -556,7 +556,7 @@
 			repositoryURL = "https://github.com/kevinhermawan/ViewState.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.0;
+				minimumVersion = 1.2.1;
 			};
 		};
 		0ACA4D5C2AF7AC43000DA76F /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {

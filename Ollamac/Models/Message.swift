@@ -17,7 +17,10 @@ final class Message: Identifiable {
     var prompt: String?
     var response: String?
     var context: [Int]?
-    var createdAt: Date? = Date.now
+    var done: Bool = false
+    var error: Bool = false
+    var createdAt: Date = Date.now
+    
     @Relationship var chat: Chat?
         
     init(prompt: String?, response: String?) {

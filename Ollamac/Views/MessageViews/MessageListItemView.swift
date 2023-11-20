@@ -13,6 +13,8 @@ struct MessageListItemView: View {
     private var isAssistant: Bool = false
     private var isGenerating: Bool = false
     private var isFinalMessage: Bool = false
+    private var isError: Bool = false
+    private var errorMessage: String? = nil
     
     let text: String
     let regenerateAction: () -> Void
@@ -44,34 +46,41 @@ struct MessageListItemView: View {
                 .font(.title3.weight(.semibold))
                 .foregroundStyle(.accent)
             
-            if isGenerating {
-                ProgressView()
-                    .controlSize(.small)
-            } else {
-                Markdown(text)
-                    .textSelection(.enabled)
-                    .markdownTextStyle(\.text) {
-                        FontSize(NSFont.preferredFont(forTextStyle: .title3).pointSize)
-                    }
-                    .markdownTextStyle(\.code) {
-                        FontFamily(.system(.monospaced))
-                    }
-                    .markdownBlockStyle(\.codeBlock) { configuration in
-                        configuration
-                            .label
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .markdownTextStyle {
-                                FontSize(NSFont.preferredFont(forTextStyle: .title3).pointSize)
-                                FontFamily(.system(.monospaced))
-                            }
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(Color(nsColor: .separatorColor))
-                            }
-                            .padding(.bottom)
-                    }
+            ProgressView()
+                .controlSize(.small)
+                .visible(if: isGenerating, removeCompletely: true)
+            
+            if let errorMessage {
+                TextError(errorMessage)
+                    .visible(if: isError, removeCompletely: true)
+                    .hide(if: isGenerating, removeCompletely: true)
             }
+            
+            Markdown(text)
+                .textSelection(.enabled)
+                .markdownTextStyle(\.text) {
+                    FontSize(NSFont.preferredFont(forTextStyle: .title3).pointSize)
+                }
+                .markdownTextStyle(\.code) {
+                    FontFamily(.system(.monospaced))
+                }
+                .markdownBlockStyle(\.codeBlock) { configuration in
+                    configuration
+                        .label
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .markdownTextStyle {
+                            FontSize(NSFont.preferredFont(forTextStyle: .title3).pointSize)
+                            FontFamily(.system(.monospaced))
+                        }
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color(nsColor: .separatorColor))
+                        }
+                        .padding(.bottom)
+                }
+                .hide(if: isGenerating, removeCompletely: true)
+                .hide(if: isError, removeCompletely: true)
             
             HStack(alignment: .center, spacing: 8) {
                 Button(action: copyAction) {
@@ -134,17 +143,12 @@ struct MessageListItemView: View {
         
         return view
     }
-}
-
-#Preview {
-    List {
-        MessageListItemView("Hello, world!")
-            .assistant(false)
+    
+    public func error(_ isError: Bool, message: String?) -> MessageListItemView {
+        var view = self
+        view.isError = isError
+        view.errorMessage = message ?? AppMessages.generalErrorMessage
         
-        MessageListItemView("Hello, world!")
-            .assistant(true)
-        
-        MessageListItemView("Hello, world!")
-            .generating(true)
+        return view
     }
 }

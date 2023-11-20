@@ -7,6 +7,7 @@
 
 import SwiftData
 import SwiftUI
+import ViewCondition
 import ViewState
 
 struct AddChatView: View {
@@ -17,17 +18,16 @@ struct AddChatView: View {
     @Environment(ChatViewModel.self) private var chatViewModel
     @Environment(OllamaViewModel.self) private var ollamaViewModel
     
+    @State private var viewState: ViewState? = .loading
+    
     @State private var name: String = "New Chat"
     @State private var selectedModel: OllamaModel?
-    
-    @State private var errorMessage: String? = nil
-    @State private var taskActionViewState: ViewState? = .loading
     
     init(onCreated: @escaping (_ chat: Chat) -> Void) {
         self.onCreated = onCreated
     }
     
-    var createButtonDisabled: Bool {
+    private var createButtonDisabled: Bool {
         if name.isEmpty { return true }
         if selectedModel.isNil { return true }
         if let selectedModel, selectedModel.isNotAvailable { return true }
@@ -35,67 +35,65 @@ struct AddChatView: View {
         return false
     }
     
-    var isLoading: Bool {
-        taskActionViewState == .loading
+    private var isLoading: Bool {
+        viewState == .loading
     }
     
-    var isError: Bool {
-        taskActionViewState == .error
+    private var isError: Bool {
+        viewState?.errorMessage != nil
     }
     
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 16) {
-                TextField("Name", text: $name)
-                    .disabled(isLoading)
-                    .disabled(isError)
-                
-                Picker("Model", selection: $selectedModel) {
-                    Text("Select a model")
-                        .tag(nil as OllamaModel?)
+            Form {
+                Section {
+                    TextField("Name", text: $name)
+                        .disabled(isLoading)
                     
-                    ForEach(ollamaViewModel.models) { model in
-                        Text(model.name)
-                            .lineLimit(1)
-                            .tag(model as OllamaModel?)
-                    }
-                }
-                .disabled(isLoading)
-                .disabled(isError)
-                
-                if let selectedModel, selectedModel.isNotAvailable {
-                    Text(AppMessages.ollamaModelUnavailable)
-                        .foregroundStyle(.red)
-                        .frame(minHeight: 32)
-                }
-                
-                if isError, let errorMessage {
-                    FormErrorView(message: errorMessage) {
-                        if taskActionViewState == .error {
-                            Button("Try Again") {
-                                Task { await taskAction() }
-                            }
-                            .buttonStyle(.plain)
-                            .foregroundStyle(.accent)
+                    Picker("Model", selection: $selectedModel) {
+                        Text("Select a model")
+                            .tag(nil as OllamaModel?)
+                        
+                        ForEach(ollamaViewModel.models) { model in
+                            Text(model.name)
+                                .lineLimit(1)
+                                .tag(model as OllamaModel?)
                         }
+                    }
+                    .padding(.top, 8)
+                    .disabled(isLoading)
+                } footer: {
+                    if let selectedModel, selectedModel.isNotAvailable {
+                        TextError(AppMessages.ollamaModelUnavailable)
+                            .padding(.top, 8)
+                    }
+                    
+                    if let errorMessage = viewState?.errorMessage {
+                        HStack {
+                            TextError(errorMessage)
+                            
+                            Button("Try Again", action: fetchAction)
+                                .buttonStyle(.plain)
+                                .foregroundStyle(.accent)
+                                .visible(
+                                    if: errorMessage == AppMessages.ollamaServerUnreachable,
+                                    removeCompletely: true
+                                )
+                        }
+                        .padding(.top, 8)
                     }
                 }
             }
             .padding()
-            .frame(width: 400)
-            .navigationTitle(isLoading ? "Loading..." : "New Chat")
+            .frame(width: 512)
+            .navigationTitle("New Chat")
             .task {
-                await taskAction()
+                fetchAction()
             }
             .toolbar {
-                if taskActionViewState == .error {
-                    ToolbarItem(placement: .primaryAction) {
-                        Button("Try Again") {
-                            Task { await taskAction() }
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .foregroundStyle(.accent)
-                    }
+                ToolbarItem {
+                    Text("Loading...")
+                        .visible(if: isLoading, removeCompletely: true)
                 }
                 
                 ToolbarItem(placement: .cancellationAction) {
@@ -106,29 +104,32 @@ struct AddChatView: View {
                     Button("Create", action: createAction)
                         .disabled(createButtonDisabled)
                         .disabled(isLoading)
-                        .disabled(isError)
                 }
             }
         }
     }
     
     // MARK: - Actions
-    private func taskAction() async {
-        taskActionViewState = .loading
+    private func runIfReachable(_ function: @escaping () async -> Void) async {
+        viewState = .loading
         
         if await ollamaViewModel.isReachable() {
-            do {
-                try await ollamaViewModel.fetch()
-                let isEmpty = ollamaViewModel.models.isEmpty
-                
-                taskActionViewState = isEmpty ? .empty : nil
-            } catch {
-                errorMessage = AppMessages.generalErrorMessage
-                taskActionViewState = .error
-            }
+            await function()
         } else {
-            errorMessage = AppMessages.ollamaServerUnreachable
-            taskActionViewState = .error
+            viewState = .error(message: AppMessages.ollamaServerUnreachable)
+        }
+    }
+    
+    private func fetchAction() {
+        Task {
+            await runIfReachable {
+                do {
+                    try await ollamaViewModel.fetch()
+                    viewState = ollamaViewModel.models.isEmpty ? .empty : nil
+                } catch {
+                    viewState = .error(message: AppMessages.generalErrorMessage)
+                }
+            }
         }
     }
     
@@ -136,9 +137,16 @@ struct AddChatView: View {
         let chat = Chat(name: name)
         chat.model = selectedModel
         
-        try? chatViewModel.create(chat)
-        onCreated(chat)
-        
-        dismiss()
+        Task {
+            await runIfReachable {
+                do {
+                    try chatViewModel.create(chat)
+                    onCreated(chat)
+                    dismiss()
+                } catch {
+                    viewState = .error(message: AppMessages.generalErrorMessage)
+                }
+            }
+        }
     }
 }

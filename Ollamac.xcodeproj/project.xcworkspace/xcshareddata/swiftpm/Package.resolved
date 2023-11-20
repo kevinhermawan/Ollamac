@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/ViewState.git",
       "state" : {
-        "revision" : "88716b01e367f209f92b85c673bde03e6ff800a2",
-        "version" : "1.1.0"
+        "revision" : "8e5a5efbbf3fb5a2d2621533a115a9da031214cb",
+        "version" : "1.2.1"
       }
     }
   ],
