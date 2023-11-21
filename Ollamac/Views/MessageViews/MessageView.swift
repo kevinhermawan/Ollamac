@@ -56,8 +56,11 @@ struct MessageView: View {
             .onChange(of: messageViewModel.messages) {
                 scrollToBottom(scrollViewProxy)
             }
-            .onChange(of: messageViewModel.messages.last?.response?.count) {
+            .onChange(of: messageViewModel.messages.last?.response) {
                 scrollToBottom(scrollViewProxy)
+            }
+            .onChange(of: messageViewModel.messages.first?.response) {
+                messageViewModel.stopGenerate()
             }
             
             VStack(spacing: 8) {
