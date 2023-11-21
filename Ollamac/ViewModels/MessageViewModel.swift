@@ -13,7 +13,8 @@ import ViewState
 
 @Observable
 final class MessageViewModel {
-    private var subscription: AnyCancellable?
+    private var generation: AnyCancellable?
+    
     private var modelContext: ModelContext
     private var ollamaKit: OllamaKit
     
@@ -26,7 +27,7 @@ final class MessageViewModel {
     }
     
     deinit {
-        subscription?.cancel()
+        self.stopGenerate()
     }
     
     func fetch(for chat: Chat) throws {
@@ -49,7 +50,7 @@ final class MessageViewModel {
         if await ollamaKit.reachable() {
             let data = message.convertToOKGenerateRequestData()
             
-            subscription = ollamaKit.generate(data: data)
+            generation = ollamaKit.generate(data: data)
                 .sink(receiveCompletion: { [weak self] completion in
                     switch completion {
                     case .finished:
@@ -75,7 +76,7 @@ final class MessageViewModel {
         if await ollamaKit.reachable() {
             let data = message.convertToOKGenerateRequestData()
             
-            subscription = ollamaKit.generate(data: data)
+            generation = ollamaKit.generate(data: data)
                 .sink(receiveCompletion: { [weak self] completion in
                     switch completion {
                     case .finished:
@@ -93,7 +94,7 @@ final class MessageViewModel {
     
     func stopGenerate() {
         self.sendViewState = nil
-        self.subscription?.cancel()
+        self.generation?.cancel()
         try? self.modelContext.saveChanges()
     }
     
