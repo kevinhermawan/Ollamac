@@ -5,6 +5,7 @@
 //  Created by Kevin Hermawan on 04/11/23.
 //
 
+import Combine
 import Foundation
 import OllamaKit
 import SwiftData
@@ -12,6 +13,8 @@ import ViewState
 
 @Observable
 final class MessageViewModel {
+    private var generation: AnyCancellable?
+    
     private var modelContext: ModelContext
     private var ollamaKit: OllamaKit
     
@@ -21,6 +24,10 @@ final class MessageViewModel {
     init(modelContext: ModelContext, ollamaKit: OllamaKit) {
         self.modelContext = modelContext
         self.ollamaKit = ollamaKit
+    }
+    
+    deinit {
+        self.stopGenerate()
     }
     
     func fetch(for chat: Chat) throws {
@@ -41,21 +48,19 @@ final class MessageViewModel {
         try? modelContext.saveChanges()
         
         if await ollamaKit.reachable() {
-            ollamaKit.generate(data: message.convertToOKGenerateRequestData()) { [weak self] stream in
-                guard let self = self else { return }
-                
-                switch stream.event {
-                case let .stream(result):
-                    switch result {
-                    case .success(let response):
-                        self.handleSuccess(response)
+            let data = message.convertToOKGenerateRequestData()
+            
+            generation = ollamaKit.generate(data: data)
+                .sink(receiveCompletion: { [weak self] completion in
+                    switch completion {
+                    case .finished:
+                        self?.handleComplete()
                     case .failure(let error):
-                        self.handleError(error.localizedDescription)
+                        self?.handleError(error.localizedDescription)
                     }
-                case .complete:
-                    self.handleComplete()
-                }
-            }
+                }, receiveValue: { [weak self] response in
+                    self?.handleReceive(response)
+                })
         } else {
             self.handleError(AppMessages.ollamaServerUnreachable)
         }
@@ -69,27 +74,31 @@ final class MessageViewModel {
         try? modelContext.saveChanges()
         
         if await ollamaKit.reachable() {
-            ollamaKit.generate(data: message.convertToOKGenerateRequestData()) { [weak self] stream in
-                guard let self = self else { return }
-                
-                switch stream.event {
-                case let .stream(result):
-                    switch result {
-                    case .success(let response):
-                        self.handleSuccess(response)
+            let data = message.convertToOKGenerateRequestData()
+            
+            generation = ollamaKit.generate(data: data)
+                .sink(receiveCompletion: { [weak self] completion in
+                    switch completion {
+                    case .finished:
+                        self?.handleComplete()
                     case .failure(let error):
-                        self.handleError(error.localizedDescription)
+                        self?.handleError(error.localizedDescription)
                     }
-                case .complete:
-                    self.handleComplete()
-                }
-            }
+                }, receiveValue: { [weak self] response in
+                    self?.handleReceive(response)
+                })
         } else {
             self.handleError(AppMessages.ollamaServerUnreachable)
         }
     }
     
-    private func handleSuccess(_ response: OKGenerateResponse) {
+    func stopGenerate() {
+        self.sendViewState = nil
+        self.generation?.cancel()
+        try? self.modelContext.saveChanges()
+    }
+    
+    private func handleReceive(_ response: OKGenerateResponse) {
         if self.messages.isEmpty { return }
         
         let lastIndex = self.messages.count - 1
@@ -117,7 +126,7 @@ final class MessageViewModel {
         let lastIndex = self.messages.count - 1
         self.messages[lastIndex].error = false
         self.messages[lastIndex].done = true
-
+        
         try? self.modelContext.saveChanges()
         self.sendViewState = nil
     }
