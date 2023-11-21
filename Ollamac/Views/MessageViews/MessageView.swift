@@ -90,6 +90,14 @@ struct MessageView: View {
                     .buttonStyle(.borderedProminent)
                     .visible(if: isGenerating, removeCompletely: true)
                     
+                    Button(action: messageViewModel.resetHistory) {
+                        Image(systemName: "trash.circle.fill")
+                            .padding(8)
+                            .help("Reset History")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .visible(if: messageViewModel.messages.count > 1, removeCompletely: true)
+                    
                     Button(action: sendAction) {
                         Image(systemName: "paperplane.fill")
                             .padding(8)
