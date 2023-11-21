@@ -79,13 +79,21 @@ struct MessageView: View {
                         .focused($isEditorFocused)
                         .onSubmit(sendAction)
                     
-                    Button(action: sendAction) {
-                        Label("Send", systemImage: "paperplane.fill")
+                    Button(action: messageViewModel.stopGenerate) {
+                        Image(systemName: "stop.circle.fill")
                             .padding(8)
-                            .foregroundStyle(.white)
-                            .help("Send message (Return)")
+                            .help("Stop generate")
                     }
                     .buttonStyle(.borderedProminent)
+                    .visible(if: isGenerating, removeCompletely: true)
+                    
+                    Button(action: sendAction) {
+                        Image(systemName: "paperplane.fill")
+                            .padding(8)
+                            .help("Send message")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .hide(if: isGenerating, removeCompletely: true)
                 }
                 .padding(.horizontal)
             }
