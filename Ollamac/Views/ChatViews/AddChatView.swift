@@ -20,7 +20,6 @@ struct AddChatView: View {
     
     @State private var viewState: ViewState? = .loading
     
-    @State private var name: String = "New Chat"
     @State private var selectedModel: OllamaModel?
     
     init(onCreated: @escaping (_ chat: Chat) -> Void) {
@@ -28,7 +27,6 @@ struct AddChatView: View {
     }
     
     private var createButtonDisabled: Bool {
-        if name.isEmpty { return true }
         if selectedModel.isNil { return true }
         if let selectedModel, selectedModel.isNotAvailable { return true }
         
@@ -47,9 +45,6 @@ struct AddChatView: View {
         NavigationStack {
             Form {
                 Section {
-                    TextField("Name", text: $name)
-                        .disabled(isLoading)
-                    
                     Picker("Model", selection: $selectedModel) {
                         Text("Select a model")
                             .tag(nil as OllamaModel?)
@@ -134,7 +129,8 @@ struct AddChatView: View {
     }
     
     private func createAction() {
-        let chat = Chat(name: name)
+        let modelName = selectedModel?.name ?? "untitled"
+        let chat = Chat(name: modelName)
         chat.model = selectedModel
         
         Task {
