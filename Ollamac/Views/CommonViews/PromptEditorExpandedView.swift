@@ -48,7 +48,7 @@ struct PromptEditorExpandedView: View {
                             dismiss()
                         }
                     } label: {
-                        Label("Send", systemImage: "paperplane")
+                        Label("Send", systemImage: "paperplane.fill")
                             .padding(8)
                     }
                     .disabled(sendButtonDisabled)

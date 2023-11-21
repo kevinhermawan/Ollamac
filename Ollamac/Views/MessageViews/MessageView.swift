@@ -33,19 +33,6 @@ struct MessageView: View {
         messageViewModel.sendViewState == .loading
     }
     
-    var promptInputDisabled: Bool {
-        if let model = chat.model, model.isNotAvailable { return true }
-        
-        return false
-    }
-    
-    var sendButtonDisabled: Bool {
-        if prompt.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return true }
-        if let model = chat.model, model.isNotAvailable { return true }
-        
-        return false
-    }
-    
     var body: some View {
         ScrollViewReader { scrollViewProxy in
             List(messageViewModel.messages.indices, id: \.self) { index in
@@ -90,17 +77,15 @@ struct MessageView: View {
                             .help("Expand editor (⌘ + E)")
                         }
                         .focused($isEditorFocused)
-                        .disabled(promptInputDisabled)
                         .onSubmit(sendAction)
                     
                     Button(action: sendAction) {
-                        Label("Send", systemImage: "paperplane")
+                        Label("Send", systemImage: "paperplane.fill")
                             .padding(8)
                             .foregroundStyle(.white)
                             .help("Send message (Return)")
                     }
                     .buttonStyle(.borderedProminent)
-                    .disabled(sendButtonDisabled)
                 }
                 .padding(.horizontal)
             }
@@ -131,12 +116,13 @@ struct MessageView: View {
     }
     
     private func sendAction() {
-        guard !isGenerating else { return }
-
+        guard messageViewModel.sendViewState.isNil else { return }
+        guard prompt.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 else { return }
+        
         let message = Message(prompt: prompt, response: nil)
         message.context = messageViewModel.messages.last?.context ?? []
         message.chat = chat
-
+        
         Task {
             try chatViewModel.modify(chat)
             prompt = ""
@@ -145,11 +131,17 @@ struct MessageView: View {
     }
     
     private func regenerateAction(for message: Message) {
-        guard !isGenerating else { return }
-
-        message.context = messageViewModel.messages.last?.context ?? []
+        guard messageViewModel.sendViewState.isNil else { return }
+        
+        message.context = []
         message.response = nil
-
+        
+        let lastIndex = messageViewModel.messages.count - 1
+        
+        if lastIndex > 0 {
+            message.context = messageViewModel.messages[lastIndex - 1].context
+        }
+        
         Task {
             try chatViewModel.modify(chat)
             await messageViewModel.regenerate(message)
