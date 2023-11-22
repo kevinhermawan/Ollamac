@@ -98,6 +98,10 @@ final class MessageViewModel {
         try? self.modelContext.saveChanges()
     }
     
+    func resetHistory() {
+        self.messages = []
+    }
+    
     private func handleReceive(_ response: OKGenerateResponse) {
         if self.messages.isEmpty { return }
         
