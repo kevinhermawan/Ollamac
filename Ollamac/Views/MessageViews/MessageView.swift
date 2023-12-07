@@ -19,10 +19,9 @@ struct MessageView: View {
     @Environment(MessageViewModel.self) private var messageViewModel
     @Environment(OllamaViewModel.self) private var ollamaViewModel
     
-    @FocusState private var isEditorFocused: Bool
-    @State private var isEditorExpanded: Bool = false
     @State private var viewState: ViewState? = nil
     
+    @FocusState private var promptFocused: Bool
     @State private var prompt: String = ""
     
     init(for chat: Chat) {
@@ -63,46 +62,31 @@ struct MessageView: View {
                 messageViewModel.stopGenerate()
             }
             
-            VStack(spacing: 8) {
-                HStack(alignment: .bottom, spacing: 16) {
-                    PromptEditor(prompt: $prompt, large: false)
-                        .overlay(alignment: .topTrailing) {
-                            Button {
-                                isEditorExpanded = true
-                            } label: {
-                                Image(systemName: "arrow.up.left.and.arrow.down.right")
-                                    .font(.footnote)
-                                    .foregroundStyle(.secondary)
-                            }
-                            .padding(8)
-                            .buttonStyle(.plain)
-                            .keyboardShortcut("e", modifiers: .command)
-                            .help("Expand editor (⌘ + E)")
-                        }
-                        .focused($isEditorFocused)
-                        .onSubmit(sendAction)
-                    
-                    Button(action: messageViewModel.stopGenerate) {
-                        Image(systemName: "stop.circle.fill")
-                            .padding(8)
-                            .help("Stop generate")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .visible(if: isGenerating, removeCompletely: true)
-                    
-                    Button(action: sendAction) {
-                        Image(systemName: "paperplane.fill")
-                            .padding(8)
-                            .help("Send message")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .hide(if: isGenerating, removeCompletely: true)
+            HStack(alignment: .bottom, spacing: 16) {
+                PromptField(prompt: $prompt, onSubmit: sendAction)
+                    .focused($promptFocused)
+                
+                Button(action: messageViewModel.stopGenerate) {
+                    Image(systemName: "stop.circle.fill")
+                        .resizable()
+                        .frame(width: 28, height: 28)
                 }
-                .padding(.horizontal)
+                .buttonStyle(.plain)
+                .help("Stop generation")
+                .visible(if: isGenerating, removeCompletely: true)
+                
+                Button(action: sendAction) {
+                    Image(systemName: "arrow.up.circle.fill")
+                        .resizable()
+                        .frame(width: 28, height: 28)
+                }
+                .buttonStyle(.plain)
+                .help("Send message")
+                .hide(if: isGenerating, removeCompletely: true)
             }
             .padding(.top, 8)
             .padding(.bottom, 16)
-            .hide(if: isEditorExpanded)
+            .padding(.horizontal)
         }
         .navigationTitle(chat.name)
         .navigationSubtitle(chat.model?.name ?? "")
@@ -112,18 +96,13 @@ struct MessageView: View {
         .onChange(of: chat) {
             initAction()
         }
-        .sheet(isPresented: $isEditorExpanded, onDismiss: { isEditorFocused = true }) {
-            PromptEditorExpandedView(prompt: $prompt) {
-                sendAction()
-            }
-        }
     }
     
     // MARK: - Actions
     private func initAction() {
         try? messageViewModel.fetch(for: chat)
         
-        isEditorFocused = true
+        promptFocused = true
     }
     
     private func sendAction() {
@@ -131,7 +110,7 @@ struct MessageView: View {
         guard prompt.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 else { return }
         
         let message = Message(prompt: prompt, response: nil)
-        message.context = messageViewModel.messages.last?.context ?? []
+        message.context = chat.messages.last?.context ?? []
         message.chat = chat
         
         Task {
