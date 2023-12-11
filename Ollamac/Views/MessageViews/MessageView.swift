@@ -5,7 +5,7 @@
 //  Created by Kevin Hermawan on 04/11/23.
 //
 
-import OptionalKit
+import ChatField
 import SwiftUI
 import SwiftUIIntrospect
 import ViewCondition
@@ -62,18 +62,10 @@ struct MessageView: View {
                 messageViewModel.stopGenerate()
             }
             
-            HStack(alignment: .bottom, spacing: 16) {
-                PromptField(prompt: $prompt, onSubmit: sendAction)
+            HStack(alignment: .bottom) {
+                ChatField("Message", text: $prompt, action: sendAction)
+                    .textFieldStyle(CapsuleChatFieldStyle())
                     .focused($promptFocused)
-                
-                Button(action: messageViewModel.stopGenerate) {
-                    Image(systemName: "stop.circle.fill")
-                        .resizable()
-                        .frame(width: 28, height: 28)
-                }
-                .buttonStyle(.plain)
-                .help("Stop generation")
-                .visible(if: isGenerating, removeCompletely: true)
                 
                 Button(action: sendAction) {
                     Image(systemName: "arrow.up.circle.fill")
@@ -83,6 +75,15 @@ struct MessageView: View {
                 .buttonStyle(.plain)
                 .help("Send message")
                 .hide(if: isGenerating, removeCompletely: true)
+                
+                Button(action: messageViewModel.stopGenerate) {
+                    Image(systemName: "stop.circle.fill")
+                        .resizable()
+                        .frame(width: 28, height: 28)
+                }
+                .buttonStyle(.plain)
+                .help("Stop generation")
+                .visible(if: isGenerating, removeCompletely: true)
             }
             .padding(.top, 8)
             .padding(.bottom, 16)

@@ -7,7 +7,6 @@
 
 import OllamaKit
 import Foundation
-import OptionalKit
 import SwiftData
 
 @Model
