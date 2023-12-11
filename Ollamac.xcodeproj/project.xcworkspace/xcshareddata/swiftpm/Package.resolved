@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "chatfield",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kevinhermawan/ChatField.git",
+      "state" : {
+        "revision" : "36833e4ddc23308c3754083d4bdcfa837fa17799",
+        "version" : "1.0.1"
+      }
+    },
+    {
       "identity" : "networkimage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gonzalezreal/NetworkImage",
@@ -25,15 +34,6 @@
       "state" : {
         "revision" : "6f3258eb91145bbf26a263123ff88dbbb95208c2",
         "version" : "2.0.0"
-      }
-    },
-    {
-      "identity" : "optionalkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kevinhermawan/OptionalKit",
-      "state" : {
-        "revision" : "63f69214fb1266a59e4533a7aecc0e33cbe3b650",
-        "version" : "1.0.0"
       }
     },
     {
