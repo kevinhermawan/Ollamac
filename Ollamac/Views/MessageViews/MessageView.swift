@@ -58,9 +58,6 @@ struct MessageView: View {
             .onChange(of: messageViewModel.messages.last?.response) {
                 scrollToBottom(scrollViewProxy)
             }
-            .onChange(of: messageViewModel.messages.first?.response) {
-                messageViewModel.stopGenerate()
-            }
             
             HStack(alignment: .bottom) {
                 ChatField("Message", text: $prompt, action: sendAction)
