@@ -3,30 +3,28 @@
     <channel>
         <title>Ollamac</title>
         <item>
-            <title>1.1.0</title>
-            <pubDate>Wed, 22 Nov 2023 10:30:11 +0700</pubDate>
-            <sparkle:version>5</sparkle:version>
-            <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
+            <title>1.1.1</title>
+            <pubDate>Sun, 17 Dec 2023 12:25:45 +0700</pubDate>
+            <sparkle:version>6</sparkle:version>
+            <sparkle:shortVersionString>1.1.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <description><![CDATA[
                 <h2>Added</h2>
                 <ul>
-                    <li>Allows to cancel generation</li>
+                    <li>feat: new app icon</li>
                 </ul>
                 <h2>Fixed</h2>
                 <ul>
-                    <li>Sidebar min width</li>
-                    <li>Regeneration incorrect context</li>
-                    <li>generation isn't canceled when chat switched</li>
+                    <li>fix: first message bug</li>
                 </ul>
                 <h2>Improved</h2>
                 <ul>
-                    <li>Improves error user interface</li>
-                    <li>Improves prompt editor user interface</li>
+                    <li>refactor: removes expanded editor</li>
+                    <li>refactor: migrates from PromptField to ChatField</li>
                 </ul>
             ]]>
             </description>
-            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v1.1.0/Ollamac-1.1.0.dmg" length="6300527" type="application/octet-stream" sparkle:edSignature="12ENhE6RFtWNt5CNFE64eRU+zvaDCYsebpRRBJIXUczG36VaM3pjBwOKKn+bEeO4b1KB7WBYdomzuNyVIh+gBQ=="/>
+            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v1.1.1/Ollamac-1.1.1.dmg" length="5776572" type="application/octet-stream" sparkle:edSignature="R2r5Zx3vkxqzS3TENlSYkofO3086XyMhOdXD+7k1Ca4B8H4o6ppeFpnUMVc9f7Z6hsTHa5VXpHXwCevEwhAwBg==" />
         </item>
     </channel>
 </rss>
