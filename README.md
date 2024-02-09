@@ -21,7 +21,7 @@ Before using Ollamac, ensure the following requirements are met:
 brew install --cask ollamac
 ```
 
-### Download Directly
+### Download from GitHub
 
 You can download the latest version of Ollamac from the [releases page](https://github.com/kevinhermawan/Ollamac/releases).
 
