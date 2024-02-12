@@ -13,7 +13,15 @@ Before using Ollamac, ensure the following requirements are met:
 - **Operating System**: macOS 14 or later.
 - **Ollama Setup**: The Ollama system should be installed on your Mac. Ensure you have at least one Ollama model downloaded for interaction.
 
-## Download
+## Install
+
+### Homebrew
+
+```
+brew install --cask ollamac
+```
+
+### Download from GitHub
 
 You can download the latest version of Ollamac from the [releases page](https://github.com/kevinhermawan/Ollamac/releases).
 
