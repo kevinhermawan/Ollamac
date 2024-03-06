@@ -6,6 +6,11 @@
 
 A macOS app for interacting with the [Ollama](https://github.com/jmorganca/ollama) models.
 
+## Important Notice
+
+> [!IMPORTANT]  
+> Ollamac is always free and open-source. You can only download Ollamac from this official repository. Any commercial apps that use the name Ollamac are not affiliated with or endorsed by me, the original creator.
+
 ## Prerequisites
 
 Before using Ollamac, ensure the following requirements are met:
