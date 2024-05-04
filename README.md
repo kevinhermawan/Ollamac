@@ -50,6 +50,10 @@ And more...
   </picture>
 </div>
 
+## Supporters
+
+I'm grateful for the support from the community that enables me to continue developing open-source tools. Among these supporters is [BoltAI](https://boltai.com?ref=ollamac), another ChatGPT app for Mac that excels in both design and functionality. Like Ollamac, [BoltAI](https://boltai.com?ref=ollamac) offers offline capabilities through Ollama, providing a seamless experience even without internet access. If you value reliable and elegant tools, [BoltAI](https://boltai.com?ref=ollamac) is definitely worth exploring.
+
 ## Acknowledgements
 
 - [Ollama](https://github.com/jmorganca/ollama)
