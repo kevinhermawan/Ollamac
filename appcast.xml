@@ -3,28 +3,18 @@
     <channel>
         <title>Ollamac</title>
         <item>
-            <title>1.1.1</title>
-            <pubDate>Sun, 17 Dec 2023 12:25:45 +0700</pubDate>
-            <sparkle:version>6</sparkle:version>
-            <sparkle:shortVersionString>1.1.1</sparkle:shortVersionString>
+            <title>1.2.0</title>
+            <pubDate>Tue, 07 May 2024 20:41:05 +0700</pubDate>
+            <sparkle:version>7</sparkle:version>
+            <sparkle:shortVersionString>1.2.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <description><![CDATA[
-                <h2>Added</h2>
                 <ul>
-                    <li>feat: new app icon</li>
-                </ul>
-                <h2>Fixed</h2>
-                <ul>
-                    <li>fix: first message bug</li>
-                </ul>
-                <h2>Improved</h2>
-                <ul>
-                    <li>refactor: removes expanded editor</li>
-                    <li>refactor: migrates from PromptField to ChatField</li>
+                    <li>Bug fixes and performance improvements</li>
                 </ul>
             ]]>
             </description>
-            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v1.1.1/Ollamac-1.1.1.dmg" length="5776572" type="application/octet-stream" sparkle:edSignature="R2r5Zx3vkxqzS3TENlSYkofO3086XyMhOdXD+7k1Ca4B8H4o6ppeFpnUMVc9f7Z6hsTHa5VXpHXwCevEwhAwBg==" />
+            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v1.2.0/Ollamac-1.2.0.dmg" length="4103181" type="application/octet-stream" sparkle:edSignature="xucPaNKqTjlAj26Lg/Ir6zWV9OdFJj9jFnT3Lc61iWAWfy1St83Zgbb8CN2aoVjyc4g3zyvGcffp/DJRBuAIDw=="/>
         </item>
     </channel>
 </rss>
