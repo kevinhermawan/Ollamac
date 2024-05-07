@@ -596,7 +596,7 @@
 			repositoryURL = "https://github.com/kevinhermawan/OllamaKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 4.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
