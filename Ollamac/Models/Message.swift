@@ -28,7 +28,7 @@ final class Message: Identifiable {
     }
     
     @Transient var model: String {
-        chat?.model?.name ?? ""
+        chat?.model ?? ""
     }
 }
 

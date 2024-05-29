@@ -13,16 +13,15 @@ final class Chat: Identifiable {
     @Attribute(.unique) var id: UUID = UUID()
     
     var name: String
+    var model: String
     var createdAt: Date = Date.now
     var modifiedAt: Date = Date.now
-
-    @Relationship
-    var model: OllamaModel?
-
+    
     @Relationship(deleteRule: .cascade, inverse: \Message.chat)
     var messages: [Message] = []
     
-    init(name: String) {
+    init(name: String, model: String) {
         self.name = name
+        self.model = model
     }
 }

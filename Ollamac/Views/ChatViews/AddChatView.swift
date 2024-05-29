@@ -5,7 +5,6 @@
 //  Created by Kevin Hermawan on 04/11/23.
 //
 
-import SwiftData
 import SwiftUI
 import ViewCondition
 import ViewState
@@ -14,14 +13,13 @@ struct AddChatView: View {
     private var onCreated: (_ createdChat: Chat) -> Void
     
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.modelContext) private var modelContext
     @Environment(ChatViewModel.self) private var chatViewModel
     @Environment(OllamaViewModel.self) private var ollamaViewModel
     
     @State private var viewState: ViewState? = .loading
     
     @State private var name: String = "New Chat"
-    @State private var selectedModel: OllamaModel?
+    @State private var selectedModel: String?
     
     init(onCreated: @escaping (_ chat: Chat) -> Void) {
         self.onCreated = onCreated
@@ -30,7 +28,6 @@ struct AddChatView: View {
     private var createButtonDisabled: Bool {
         if name.isEmpty { return true }
         if selectedModel.isNil { return true }
-        if let selectedModel, selectedModel.isNotAvailable { return true }
         
         return false
     }
@@ -52,22 +49,17 @@ struct AddChatView: View {
                     
                     Picker("Model", selection: $selectedModel) {
                         Text("Select a model")
-                            .tag(nil as OllamaModel?)
+                            .tag(nil as String?)
                         
-                        ForEach(ollamaViewModel.models) { model in
-                            Text(model.name)
+                        ForEach(ollamaViewModel.models, id: \.self) { model in
+                            Text(model)
                                 .lineLimit(1)
-                                .tag(model as OllamaModel?)
+                                .tag(model as String?)
                         }
                     }
                     .padding(.top, 8)
                     .disabled(isLoading)
                 } footer: {
-                    if let selectedModel, selectedModel.isNotAvailable {
-                        TextError(AppMessages.ollamaModelUnavailable)
-                            .padding(.top, 8)
-                    }
-                    
                     if let errorMessage = viewState?.errorMessage {
                         HStack {
                             TextError(errorMessage)
@@ -134,13 +126,14 @@ struct AddChatView: View {
     }
     
     private func createAction() {
-        let chat = Chat(name: name)
-        chat.model = selectedModel
+        guard let model = selectedModel else { return }
+        let chat = Chat(name: name, model: model)
         
         Task {
             await runIfReachable {
                 do {
                     try chatViewModel.create(chat)
+                    
                     onCreated(chat)
                     dismiss()
                 } catch {

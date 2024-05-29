@@ -11,7 +11,6 @@
 		0A4D358B2AF541DA00846890 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A4D358A2AF541DA00846890 /* Assets.xcassets */; };
 		0A4D358E2AF541DA00846890 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A4D358D2AF541DA00846890 /* Preview Assets.xcassets */; };
 		0A4D35992AF5425900846890 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35982AF5425900846890 /* AppView.swift */; };
-		0A4D359F2AF5429500846890 /* OllamaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D359E2AF5429500846890 /* OllamaModel.swift */; };
 		0A4D35B62AF562CB00846890 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35B52AF562CB00846890 /* MessageViewModel.swift */; };
 		0A4D35B82AF5630600846890 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35B72AF5630600846890 /* Message.swift */; };
 		0A4D35BA2AF563BE00846890 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35B92AF563BE00846890 /* Chat.swift */; };
@@ -45,7 +44,6 @@
 		0A4D358D2AF541DA00846890 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0A4D358F2AF541DA00846890 /* Ollamac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ollamac.entitlements; sourceTree = "<group>"; };
 		0A4D35982AF5425900846890 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
-		0A4D359E2AF5429500846890 /* OllamaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaModel.swift; sourceTree = "<group>"; };
 		0A4D35B52AF562CB00846890 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 		0A4D35B72AF5630600846890 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		0A4D35B92AF563BE00846890 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 			children = (
 				0A4D35B92AF563BE00846890 /* Chat.swift */,
 				0A4D35B72AF5630600846890 /* Message.swift */,
-				0A4D359E2AF5429500846890 /* OllamaModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -308,7 +305,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A4D35BA2AF563BE00846890 /* Chat.swift in Sources */,
-				0A4D359F2AF5429500846890 /* OllamaModel.swift in Sources */,
 				0A4D35B62AF562CB00846890 /* MessageViewModel.swift in Sources */,
 				0A4D35BE2AF56E7A00846890 /* OllamaViewModel.swift in Sources */,
 				0A4D35C42AF575E700846890 /* MessageView.swift in Sources */,
