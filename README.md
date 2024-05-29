@@ -61,3 +61,7 @@ I'm grateful for the support from the community that enables me to continue deve
 - [Sparkle](https://github.com/sparkle-project/Sparkle)
 - [swift-markdown-ui](https://github.com/gonzalezreal/swift-markdown-ui)
 - [swiftui-introspect](https://github.com/siteline/swiftui-introspect)
+
+## License
+
+This repository is available under the [Apache License 2.0](/LICENSE), with a few additional restrictions.

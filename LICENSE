@@ -1,21 +1,31 @@
-MIT License
+# Open Source License
 
-Copyright (c) 2023 Kevin Hermawan
+Ollamac is licensed under the Apache License 2.0, with the following additional conditions:
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. Ollamac may be utilized commercially, including as a standalone macOS application. Should the conditions below be met, a commercial license must be obtained from the producer:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+   a. Redistribution Restriction: You may not redistribute Ollamac or any derivative works under the name "Ollamac" or any variation thereof, including but not limited to "Ollamac X". Here, "X" refers to any suffix that implies a different version or variant of the original Ollamac, such as "Ollamac Pro", etc. You must change the name of the Work or Derivative Works when distributing.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+   b. Branding and Copyright Information: You may not remove or modify the branding or copyright information in the Ollamac application. This restriction applies to the visual elements and branding present in the application.
+
+   Please contact kevin@hermawan.ai by email to inquire about licensing matters.
+
+2. As a contributor, you should agree that:
+
+   a. The producer can adjust the open-source agreement to be more strict or relaxed as deemed necessary.
+
+   b. Your contributed code may be used for commercial purposes, including but not limited to its use in business operations.
+
+Apart from the specific conditions mentioned above, all other rights and restrictions follow the Apache License 2.0. Detailed information about the Apache License 2.0 can be found at [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+The interactive design of this product is protected by an appearance patent.
+
+© 2024 Kevin Hermawan
+
+---
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+[http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
