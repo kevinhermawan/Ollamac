@@ -21,7 +21,7 @@ struct OllamacApp: App {
     @State private var messageViewModel: MessageViewModel
     
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema([Chat.self, Message.self, OllamaModel.self])
+        let schema = Schema([Chat.self, Message.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         
         do {
@@ -46,7 +46,7 @@ struct OllamacApp: App {
         let ollamaURL = URL(string: "http://localhost:11434")!
         let ollamaKit = OllamaKit(baseURL: ollamaURL)
                 
-        let ollamaViewModel = OllamaViewModel(modelContext: modelContext, ollamaKit: ollamaKit)
+        let ollamaViewModel = OllamaViewModel(ollamaKit: ollamaKit)
         _ollamaViewModel = State(initialValue: ollamaViewModel)
         
         let messageViewModel = MessageViewModel(modelContext: modelContext, ollamaKit: ollamaKit)

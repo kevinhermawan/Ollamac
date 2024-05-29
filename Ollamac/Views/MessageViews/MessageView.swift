@@ -87,7 +87,7 @@ struct MessageView: View {
             .padding(.horizontal)
         }
         .navigationTitle(chat.name)
-        .navigationSubtitle(chat.model?.name ?? "")
+        .navigationSubtitle(chat.model)
         .task {
             initAction()
         }
