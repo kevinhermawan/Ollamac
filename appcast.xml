@@ -3,18 +3,17 @@
     <channel>
         <title>Ollamac</title>
         <item>
-            <title>1.2.0</title>
-            <pubDate>Tue, 07 May 2024 20:41:05 +0700</pubDate>
-            <sparkle:version>7</sparkle:version>
-            <sparkle:shortVersionString>1.2.0</sparkle:shortVersionString>
+            <title>2.0.0</title>
+            <pubDate>Sun, 09 Jun 2024 05:53:05 +0700</pubDate>
+            <sparkle:version>8</sparkle:version>
+            <sparkle:shortVersionString>2.0.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <description><![CDATA[
                 <ul>
-                    <li>Bug fixes and performance improvements</li>
+                    <li><strong>Attention:</strong> We have changed the architecture of the app. When you update to this version, your previous messages will be removed.</li>
                 </ul>
-            ]]>
-            </description>
-            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v1.2.0/Ollamac-1.2.0.dmg" length="4103181" type="application/octet-stream" sparkle:edSignature="xucPaNKqTjlAj26Lg/Ir6zWV9OdFJj9jFnT3Lc61iWAWfy1St83Zgbb8CN2aoVjyc4g3zyvGcffp/DJRBuAIDw=="/>
+            ]]></description>
+            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v2.0.0/Ollamac-2.0.0.dmg" length="3207714" type="application/octet-stream" sparkle:edSignature="R+H/XDkCbbAxCM6cVkNyugbAfKQyAfoUHm7l/iIYXoIfwVW/Zkvd2DXUbpFE+v4GO1QEgBznrfSbc6yFtHzJBw=="/>
         </item>
     </channel>
 </rss>
