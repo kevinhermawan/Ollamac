@@ -2,15 +2,6 @@
   "originHash" : "ead8d9a08bbc4f561258fb8806b0a4d9350ddd34b86f0561538e7bd715f61687",
   "pins" : [
     {
-      "identity" : "alamofire",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Alamofire/Alamofire",
-      "state" : {
-        "revision" : "3dc6a42c7727c49bf26508e29b0a0b35f9c7e1ad",
-        "version" : "5.8.1"
-      }
-    },
-    {
       "identity" : "chatfield",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/ChatField.git",
@@ -33,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/OllamaKit",
       "state" : {
-        "revision" : "0b0ab9995e85ca7163ca4a4bb1aaa5e6ac2fd619",
-        "version" : "4.1.0"
+        "revision" : "8264a8766c391427944cd4d55304bdfdcb8fdfee",
+        "version" : "5.0.0"
       }
     },
     {
