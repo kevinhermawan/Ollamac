@@ -37,17 +37,16 @@ struct MessageView: View {
             List(messageViewModel.messages.indices, id: \.self) { index in
                 let message = messageViewModel.messages[index]
                 
-                MessageListItemView(message.prompt ?? "")
+                MessageCellView(message.prompt ?? "")
                     .assistant(false)
                 
-                MessageListItemView(message.response ?? "") {
-                    regenerateAction(for: message)
-                }
-                .assistant(true)
-                .generating(message.response.isNil && isGenerating)
-                .finalMessage(index == messageViewModel.messages.endIndex - 1)
-                .error(message.error, message: messageViewModel.sendViewState?.errorMessage)
-                .id(message)
+                MessageCellView(message.response ?? "", viewState: messageViewModel.sendViewState)
+                    .assistant(true)
+                    .lastMessage(index == messageViewModel.messages.endIndex - 1)
+                    .regenerate {
+                        regenerateAction(for: message)
+                    }
+                    .id(message)
             }
             .onAppear {
                 scrollToBottom(scrollViewProxy)
@@ -104,7 +103,6 @@ struct MessageView: View {
     }
     
     private func sendAction() {
-        guard messageViewModel.sendViewState.isNil else { return }
         guard prompt.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 else { return }
         
         let message = Message(prompt: prompt, response: nil)
@@ -119,8 +117,6 @@ struct MessageView: View {
     }
     
     private func regenerateAction(for message: Message) {
-        guard messageViewModel.sendViewState.isNil else { return }
-        
         message.context = []
         message.response = nil
         
