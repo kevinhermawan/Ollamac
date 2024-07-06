@@ -1,5 +1,5 @@
 {
-  "originHash" : "ead8d9a08bbc4f561258fb8806b0a4d9350ddd34b86f0561538e7bd715f61687",
+  "originHash" : "9c245a4b7b51241c09d6dff75dfa7abd1c4c2ab86b24dcaaa76fcf2226be87ba",
   "pins" : [
     {
       "identity" : "chatfield",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "36833e4ddc23308c3754083d4bdcfa837fa17799",
         "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "highlightr",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/raspu/Highlightr.git",
+      "state" : {
+        "revision" : "fa483d37c692961ecc2391eac568ba3d3935e663",
+        "version" : "2.2.0"
       }
     },
     {
@@ -26,6 +35,15 @@
       "state" : {
         "revision" : "8264a8766c391427944cd4d55304bdfdcb8fdfee",
         "version" : "5.0.0"
+      }
+    },
+    {
+      "identity" : "selectabletext",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kevinhermawan/SelectableText",
+      "state" : {
+        "revision" : "b55f8c56458b93c46bce08fd048138b749885bf6",
+        "version" : "1.0.0"
       }
     },
     {
