@@ -1,18 +1,17 @@
 //
-//  UpdaterViewModel.swift
+//  AppUpdater.swift
 //  Ollamac
 //
-//  Created by Kevin Hermawan on 08/11/23.
+//  Created by Kevin Hermawan on 06/07/24.
 //
 
 import Combine
+import Foundation
 import Sparkle
-import SwiftUI
 
 @Observable
-final class UpdaterViewModel {
+final class AppUpdater {
     private var cancellable: AnyCancellable?
-
     var canCheckForUpdates = false
     
     init(_ updater: SPUUpdater) {
