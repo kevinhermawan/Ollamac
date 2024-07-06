@@ -12,9 +12,9 @@ import SwiftData
 
 @main
 struct OllamacApp: App {
+    @State private var appUpdater: AppUpdater
     private var updater: SPUUpdater
     
-    @State private var updaterViewModel: UpdaterViewModel
     @State private var commandViewModel: CommandViewModel
     @State private var ollamaViewModel: OllamaViewModel
     @State private var chatViewModel: ChatViewModel
@@ -33,19 +33,13 @@ struct OllamacApp: App {
     
     init() {
         let modelContext = sharedModelContainer.mainContext
-        
-        let updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
-        updater = updaterController.updater
-        
-        let updaterViewModel = UpdaterViewModel(updater)
-        _updaterViewModel = State(initialValue: updaterViewModel)
-        
+                
         let commandViewModel = CommandViewModel()
         _commandViewModel = State(initialValue: commandViewModel)
         
         let ollamaURL = URL(string: "http://localhost:11434")!
         let ollamaKit = OllamaKit(baseURL: ollamaURL)
-                
+        
         let ollamaViewModel = OllamaViewModel(ollamaKit: ollamaKit)
         _ollamaViewModel = State(initialValue: ollamaViewModel)
         
@@ -54,12 +48,17 @@ struct OllamacApp: App {
         
         let chatViewModel = ChatViewModel(modelContext: modelContext)
         _chatViewModel = State(initialValue: chatViewModel)
+        
+        let updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+        updater = updaterController.updater
+        
+        let appUpdater = AppUpdater(updater)
+        _appUpdater = State(initialValue: appUpdater)
     }
     
     var body: some Scene {
         WindowGroup {
             AppView()
-                .environment(updaterViewModel)
                 .environment(commandViewModel)
                 .environment(chatViewModel)
                 .environment(messageViewModel)
@@ -71,7 +70,7 @@ struct OllamacApp: App {
                 Button("Check for Updates...") {
                     updater.checkForUpdates()
                 }
-                .disabled(!updaterViewModel.canCheckForUpdates)
+                .disabled(appUpdater.canCheckForUpdates == false)
             }
             
             CommandGroup(replacing: .newItem) {

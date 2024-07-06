@@ -22,6 +22,7 @@
 		0AA41A172AF635AD0053B8DB /* ViewState in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA41A162AF635AD0053B8DB /* ViewState */; };
 		0AB30EB22B272A67009C038A /* ChatField in Frameworks */ = {isa = PBXBuildFile; productRef = 0AB30EB12B272A67009C038A /* ChatField */; };
 		0AB30EB42B272D3C009C038A /* Optional+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB30EB32B272D3C009C038A /* Optional+Utils.swift */; };
+		0AB3629F2C398C3300DE3F31 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB3629E2C398C3300DE3F31 /* AppUpdater.swift */; };
 		0AB5F2982B0B9C340040B72E /* TextError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB5F2972B0B9C340040B72E /* TextError.swift */; };
 		0ACA4D4A2AF7946A000DA76F /* ChatSidebarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D492AF7946A000DA76F /* ChatSidebarListView.swift */; };
 		0ACA4D4C2AF794B8000DA76F /* CommandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D4B2AF794B8000DA76F /* CommandViewModel.swift */; };
@@ -33,7 +34,6 @@
 		0ACA4D822AF948C4000DA76F /* AppMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D812AF948C4000DA76F /* AppMessages.swift */; };
 		0ACA4D842AF94A9C000DA76F /* ChatContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D832AF94A9C000DA76F /* ChatContextMenu.swift */; };
 		0AE024832AFB898300347C18 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 0AE024822AFB898300347C18 /* Sparkle */; };
-		0AE024862AFB8EB900347C18 /* UpdaterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AE024852AFB8EB900347C18 /* UpdaterViewModel.swift */; };
 		0AE0248B2AFEA24600347C18 /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AE0248A2AFEA24600347C18 /* OllamaKit */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +53,7 @@
 		0A4D35C32AF575E700846890 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		0A4D35C52AF57D8800846890 /* MessageListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListItemView.swift; sourceTree = "<group>"; };
 		0AB30EB32B272D3C009C038A /* Optional+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Utils.swift"; sourceTree = "<group>"; };
+		0AB3629E2C398C3300DE3F31 /* AppUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
 		0AB5F2972B0B9C340040B72E /* TextError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextError.swift; sourceTree = "<group>"; };
 		0ACA4D492AF7946A000DA76F /* ChatSidebarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSidebarListView.swift; sourceTree = "<group>"; };
 		0ACA4D4B2AF794B8000DA76F /* CommandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandViewModel.swift; sourceTree = "<group>"; };
@@ -61,7 +62,6 @@
 		0ACA4D812AF948C4000DA76F /* AppMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMessages.swift; sourceTree = "<group>"; };
 		0ACA4D832AF94A9C000DA76F /* ChatContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContextMenu.swift; sourceTree = "<group>"; };
 		0AE024842AFB8D0E00347C18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0AE024852AFB8EB900347C18 /* UpdaterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				0A4D35842AF541D900846890 /* OllamacApp.swift */,
+				0AB3629E2C398C3300DE3F31 /* AppUpdater.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -174,7 +175,6 @@
 				0ACA4D4B2AF794B8000DA76F /* CommandViewModel.swift */,
 				0A4D35B52AF562CB00846890 /* MessageViewModel.swift */,
 				0A4D35BD2AF56E7A00846890 /* OllamaViewModel.swift */,
-				0AE024852AFB8EB900347C18 /* UpdaterViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -313,7 +313,7 @@
 				0ACA4D4E2AF799A1000DA76F /* RenameChatView.swift in Sources */,
 				0ACA4D512AF7A34D000DA76F /* ModelContext+SaveChanges.swift in Sources */,
 				0AB5F2982B0B9C340040B72E /* TextError.swift in Sources */,
-				0AE024862AFB8EB900347C18 /* UpdaterViewModel.swift in Sources */,
+				0AB3629F2C398C3300DE3F31 /* AppUpdater.swift in Sources */,
 				0A4D35B82AF5630600846890 /* Message.swift in Sources */,
 				0A4D35C22AF56FD500846890 /* AddChatView.swift in Sources */,
 				0A4D35C62AF57D8800846890 /* MessageListItemView.swift in Sources */,
@@ -576,7 +576,7 @@
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.0;
+				minimumVersion = 2.3.1;
 			};
 		};
 		0AE024812AFB898300347C18 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
