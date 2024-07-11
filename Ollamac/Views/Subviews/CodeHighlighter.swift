@@ -8,7 +8,6 @@
 import Highlightr
 import MarkdownUI
 import SwiftUI
-import SelectableText
 
 struct CodeHighlighter: CodeSyntaxHighlighter {
     private let highlightr: Highlightr
