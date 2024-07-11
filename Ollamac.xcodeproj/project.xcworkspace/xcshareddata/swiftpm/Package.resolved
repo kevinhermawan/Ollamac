@@ -1,5 +1,5 @@
 {
-  "originHash" : "9c245a4b7b51241c09d6dff75dfa7abd1c4c2ab86b24dcaaa76fcf2226be87ba",
+  "originHash" : "b6be7154a2154585afb0cef6b4e9bc6a18628607657139d58980e04e011a5197",
   "pins" : [
     {
       "identity" : "chatfield",
@@ -35,15 +35,6 @@
       "state" : {
         "revision" : "8264a8766c391427944cd4d55304bdfdcb8fdfee",
         "version" : "5.0.0"
-      }
-    },
-    {
-      "identity" : "selectabletext",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kevinhermawan/SelectableText",
-      "state" : {
-        "revision" : "b55f8c56458b93c46bce08fd048138b749885bf6",
-        "version" : "1.0.0"
       }
     },
     {
