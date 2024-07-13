@@ -6,6 +6,7 @@
 //
 
 import CoreExtensions
+import CoreModels
 import SwiftData
 import SwiftUI
 

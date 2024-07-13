@@ -6,6 +6,7 @@
 //
 
 import ChatField
+import CoreModels
 import SwiftUI
 import SwiftUIIntrospect
 import ViewCondition

@@ -6,6 +6,7 @@
 //
 
 import CoreExtensions
+import CoreModels
 import Combine
 import Foundation
 import OllamaKit
@@ -114,7 +115,6 @@ final class MessageViewModel {
         if self.messages.isEmpty { return }
         
         let lastIndex = self.messages.count - 1
-        self.messages[lastIndex].error = true
         self.messages[lastIndex].done = false
         
         try? self.modelContext.saveChanges()
@@ -125,7 +125,6 @@ final class MessageViewModel {
         if self.messages.isEmpty { return }
         
         let lastIndex = self.messages.count - 1
-        self.messages[lastIndex].error = false
         self.messages[lastIndex].done = true
         
         try? self.modelContext.saveChanges()
