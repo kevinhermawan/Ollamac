@@ -1,5 +1,4 @@
 {
-  "originHash" : "b6be7154a2154585afb0cef6b4e9bc6a18628607657139d58980e04e011a5197",
   "pins" : [
     {
       "identity" : "chatfield",
@@ -83,5 +82,5 @@
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }

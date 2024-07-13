@@ -5,8 +5,9 @@
 //  Created by Kevin Hermawan on 04/11/23.
 //
 
-import SwiftUI
+import CoreModels
 import CoreExtensions
+import SwiftUI
 import ViewCondition
 import ViewState
 

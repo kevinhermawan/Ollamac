@@ -5,6 +5,7 @@
 //  Created by Kevin Hermawan on 03/11/23.
 //
 
+import CoreModels
 import OllamaKit
 import Sparkle
 import SwiftUI
