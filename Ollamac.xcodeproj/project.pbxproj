@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A2C4E342C426974007794CC /* CoreExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 0A2C4E332C426974007794CC /* CoreExtensions */; };
 		0A4D35852AF541D900846890 /* OllamacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35842AF541D900846890 /* OllamacApp.swift */; };
 		0A4D358B2AF541DA00846890 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A4D358A2AF541DA00846890 /* Assets.xcassets */; };
 		0A4D358E2AF541DA00846890 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A4D358D2AF541DA00846890 /* Preview Assets.xcassets */; };
@@ -20,7 +21,6 @@
 		0A4D35C42AF575E700846890 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35C32AF575E700846890 /* MessageView.swift */; };
 		0AA41A172AF635AD0053B8DB /* ViewState in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA41A162AF635AD0053B8DB /* ViewState */; };
 		0AB30EB22B272A67009C038A /* ChatField in Frameworks */ = {isa = PBXBuildFile; productRef = 0AB30EB12B272A67009C038A /* ChatField */; };
-		0AB30EB42B272D3C009C038A /* Optional+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB30EB32B272D3C009C038A /* Optional+Utils.swift */; };
 		0AB3629F2C398C3300DE3F31 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB3629E2C398C3300DE3F31 /* AppUpdater.swift */; };
 		0AB362A22C398ED700DE3F31 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = 0AB362A12C398ED700DE3F31 /* Highlightr */; };
 		0AB362A62C39903200DE3F31 /* MessageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB362A52C39903200DE3F31 /* MessageCellView.swift */; };
@@ -32,7 +32,6 @@
 		0ACA4D4A2AF7946A000DA76F /* ChatSidebarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D492AF7946A000DA76F /* ChatSidebarListView.swift */; };
 		0ACA4D4C2AF794B8000DA76F /* CommandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D4B2AF794B8000DA76F /* CommandViewModel.swift */; };
 		0ACA4D4E2AF799A1000DA76F /* RenameChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D4D2AF799A1000DA76F /* RenameChatView.swift */; };
-		0ACA4D512AF7A34D000DA76F /* ModelContext+SaveChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D502AF7A34D000DA76F /* ModelContext+SaveChanges.swift */; };
 		0ACA4D5E2AF7AC43000DA76F /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 0ACA4D5D2AF7AC43000DA76F /* SwiftUIIntrospect */; };
 		0ACA4D732AF88DB6000DA76F /* ViewCondition in Frameworks */ = {isa = PBXBuildFile; productRef = 0ACA4D722AF88DB6000DA76F /* ViewCondition */; };
 		0ACA4D762AF89C27000DA76F /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0ACA4D752AF89C27000DA76F /* MarkdownUI */; };
@@ -56,7 +55,7 @@
 		0A4D35BD2AF56E7A00846890 /* OllamaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaViewModel.swift; sourceTree = "<group>"; };
 		0A4D35C12AF56FD500846890 /* AddChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChatView.swift; sourceTree = "<group>"; };
 		0A4D35C32AF575E700846890 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
-		0AB30EB32B272D3C009C038A /* Optional+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Utils.swift"; sourceTree = "<group>"; };
+		0A7F58F92C42606000091E44 /* CoreExtensions */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CoreExtensions; sourceTree = "<group>"; };
 		0AB3629E2C398C3300DE3F31 /* AppUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
 		0AB362A52C39903200DE3F31 /* MessageCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellView.swift; sourceTree = "<group>"; };
 		0AB362A72C39966400DE3F31 /* CodeHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeHighlighter.swift; sourceTree = "<group>"; };
@@ -67,7 +66,6 @@
 		0ACA4D492AF7946A000DA76F /* ChatSidebarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSidebarListView.swift; sourceTree = "<group>"; };
 		0ACA4D4B2AF794B8000DA76F /* CommandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandViewModel.swift; sourceTree = "<group>"; };
 		0ACA4D4D2AF799A1000DA76F /* RenameChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameChatView.swift; sourceTree = "<group>"; };
-		0ACA4D502AF7A34D000DA76F /* ModelContext+SaveChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelContext+SaveChanges.swift"; sourceTree = "<group>"; };
 		0ACA4D812AF948C4000DA76F /* AppMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMessages.swift; sourceTree = "<group>"; };
 		0ACA4D832AF94A9C000DA76F /* ChatContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContextMenu.swift; sourceTree = "<group>"; };
 		0AE024842AFB8D0E00347C18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -84,6 +82,7 @@
 				0ACA4D732AF88DB6000DA76F /* ViewCondition in Frameworks */,
 				0AB362A22C398ED700DE3F31 /* Highlightr in Frameworks */,
 				0AB30EB22B272A67009C038A /* ChatField in Frameworks */,
+				0A2C4E342C426974007794CC /* CoreExtensions in Frameworks */,
 				0ACA4D5E2AF7AC43000DA76F /* SwiftUIIntrospect in Frameworks */,
 				0AE0248B2AFEA24600347C18 /* OllamaKit in Frameworks */,
 			);
@@ -103,8 +102,10 @@
 		0A4D35782AF541D900846890 = {
 			isa = PBXGroup;
 			children = (
+				0A7F58F92C42606000091E44 /* CoreExtensions */,
 				0A4D35832AF541D900846890 /* Ollamac */,
 				0A4D35822AF541D900846890 /* Products */,
+				0A7F58FA2C42657E00091E44 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -120,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				0A4D35952AF5422000846890 /* App */,
-				0AA41A202AF669680053B8DB /* Extensions */,
 				0A4D359A2AF5427800846890 /* Models */,
 				0A4D358C2AF541DA00846890 /* Preview Content */,
 				0A4D35972AF5423900846890 /* Resources */,
@@ -151,6 +151,7 @@
 		0A4D35962AF5422A00846890 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0A7F58F72C425CA500091E44 /* ChatPreferences */,
 				0AB362A32C398F4000DE3F31 /* Subviews */,
 				0A4D35982AF5425900846890 /* AppView.swift */,
 				0ACA4D4F2AF799A5000DA76F /* ChatViews */,
@@ -190,21 +191,26 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		0A7F58F72C425CA500091E44 /* ChatPreferences */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ChatPreferences;
+			sourceTree = "<group>";
+		};
+		0A7F58FA2C42657E00091E44 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		0AA41A1D2AF666670053B8DB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				0ACA4D812AF948C4000DA76F /* AppMessages.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		0AA41A202AF669680053B8DB /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				0ACA4D502AF7A34D000DA76F /* ModelContext+SaveChanges.swift */,
-				0AB30EB32B272D3C009C038A /* Optional+Utils.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		0AB362A32C398F4000DE3F31 /* Subviews */ = {
@@ -263,6 +269,7 @@
 				0AE0248A2AFEA24600347C18 /* OllamaKit */,
 				0AB30EB12B272A67009C038A /* ChatField */,
 				0AB362A12C398ED700DE3F31 /* Highlightr */,
+				0A2C4E332C426974007794CC /* CoreExtensions */,
 			);
 			productName = Ollamac;
 			productReference = 0A4D35812AF541D900846890 /* Ollamac.app */;
@@ -337,13 +344,11 @@
 				0AB362A82C39966400DE3F31 /* CodeHighlighter.swift in Sources */,
 				0A4D35992AF5425900846890 /* AppView.swift in Sources */,
 				0ACA4D4E2AF799A1000DA76F /* RenameChatView.swift in Sources */,
-				0ACA4D512AF7A34D000DA76F /* ModelContext+SaveChanges.swift in Sources */,
 				0AB5F2982B0B9C340040B72E /* TextError.swift in Sources */,
 				0AB3629F2C398C3300DE3F31 /* AppUpdater.swift in Sources */,
 				0A4D35B82AF5630600846890 /* Message.swift in Sources */,
 				0A4D35C22AF56FD500846890 /* AddChatView.swift in Sources */,
 				0ACA4D822AF948C4000DA76F /* AppMessages.swift in Sources */,
-				0AB30EB42B272D3C009C038A /* Optional+Utils.swift in Sources */,
 				0ACA4D4C2AF794B8000DA76F /* CommandViewModel.swift in Sources */,
 				0A4D35852AF541D900846890 /* OllamacApp.swift in Sources */,
 				0AB362AD2C39A43600DE3F31 /* MessageCellHeader.swift in Sources */,
@@ -634,6 +639,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0A2C4E332C426974007794CC /* CoreExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CoreExtensions;
+		};
 		0AA41A162AF635AD0053B8DB /* ViewState */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0AA41A152AF635AD0053B8DB /* XCRemoteSwiftPackageReference "ViewState" */;
