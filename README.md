@@ -45,8 +45,8 @@ And more...
 
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/screenshot-dark.jpg">
-    <img alt="screenshot" src="./assets/screenshot.jpg">
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/screenshot-dark.png">
+    <img alt="screenshot" src="./assets/screenshot.png">
   </picture>
 </div>
 
