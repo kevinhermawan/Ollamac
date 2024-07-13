@@ -10,6 +10,8 @@
 		0A2C4E342C426974007794CC /* CoreExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 0A2C4E332C426974007794CC /* CoreExtensions */; };
 		0A2C4E392C426D05007794CC /* CoreModels in Frameworks */ = {isa = PBXBuildFile; productRef = 0A2C4E382C426D05007794CC /* CoreModels */; };
 		0A2C4E3C2C427094007794CC /* CoreViewModels in Frameworks */ = {isa = PBXBuildFile; productRef = 0A2C4E3B2C427094007794CC /* CoreViewModels */; };
+		0A2C4E3F2C427713007794CC /* SettingsModule in Frameworks */ = {isa = PBXBuildFile; productRef = 0A2C4E3E2C427713007794CC /* SettingsModule */; };
+		0A2C4E422C428F5E007794CC /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 0A2C4E412C428F5E007794CC /* Defaults */; };
 		0A4D35852AF541D900846890 /* OllamacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35842AF541D900846890 /* OllamacApp.swift */; };
 		0A4D358B2AF541DA00846890 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A4D358A2AF541DA00846890 /* Assets.xcassets */; };
 		0A4D358E2AF541DA00846890 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A4D358D2AF541DA00846890 /* Preview Assets.xcassets */; };
@@ -40,6 +42,7 @@
 /* Begin PBXFileReference section */
 		0A2C4E372C426C06007794CC /* CoreModels */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CoreModels; sourceTree = "<group>"; };
 		0A2C4E3A2C427059007794CC /* CoreViewModels */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CoreViewModels; sourceTree = "<group>"; };
+		0A2C4E3D2C427601007794CC /* SettingsModule */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SettingsModule; sourceTree = "<group>"; };
 		0A4D35812AF541D900846890 /* Ollamac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ollamac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A4D35842AF541D900846890 /* OllamacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamacApp.swift; sourceTree = "<group>"; };
 		0A4D358A2AF541DA00846890 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -69,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AE024832AFB898300347C18 /* Sparkle in Frameworks */,
+				0A2C4E3F2C427713007794CC /* SettingsModule in Frameworks */,
 				0AA41A172AF635AD0053B8DB /* ViewState in Frameworks */,
 				0A2C4E3C2C427094007794CC /* CoreViewModels in Frameworks */,
 				0ACA4D762AF89C27000DA76F /* MarkdownUI in Frameworks */,
@@ -78,6 +82,7 @@
 				0AB30EB22B272A67009C038A /* ChatField in Frameworks */,
 				0A2C4E342C426974007794CC /* CoreExtensions in Frameworks */,
 				0ACA4D5E2AF7AC43000DA76F /* SwiftUIIntrospect in Frameworks */,
+				0A2C4E422C428F5E007794CC /* Defaults in Frameworks */,
 				0AE0248B2AFEA24600347C18 /* OllamaKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,9 +101,10 @@
 		0A4D35782AF541D900846890 = {
 			isa = PBXGroup;
 			children = (
-				0A2C4E3A2C427059007794CC /* CoreViewModels */,
 				0A7F58F92C42606000091E44 /* CoreExtensions */,
 				0A2C4E372C426C06007794CC /* CoreModels */,
+				0A2C4E3A2C427059007794CC /* CoreViewModels */,
+				0A2C4E3D2C427601007794CC /* SettingsModule */,
 				0A7F58FA2C42657E00091E44 /* Frameworks */,
 				0A4D35832AF541D900846890 /* Ollamac */,
 				0A4D35822AF541D900846890 /* Products */,
@@ -145,12 +151,12 @@
 		0A4D35962AF5422A00846890 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0A7F58F72C425CA500091E44 /* ChatPreferences */,
-				0AB362A32C398F4000DE3F31 /* Subviews */,
 				0A4D35982AF5425900846890 /* AppView.swift */,
+				0A7F58F72C425CA500091E44 /* ChatPreferences */,
 				0ACA4D4F2AF799A5000DA76F /* ChatViews */,
 				0A20FFA12B21463F00112783 /* Commons */,
 				0ACA4D522AF7A788000DA76F /* MessageViews */,
+				0AB362A32C398F4000DE3F31 /* Subviews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -246,6 +252,8 @@
 				0A2C4E332C426974007794CC /* CoreExtensions */,
 				0A2C4E382C426D05007794CC /* CoreModels */,
 				0A2C4E3B2C427094007794CC /* CoreViewModels */,
+				0A2C4E3E2C427713007794CC /* SettingsModule */,
+				0A2C4E412C428F5E007794CC /* Defaults */,
 			);
 			productName = Ollamac;
 			productReference = 0A4D35812AF541D900846890 /* Ollamac.app */;
@@ -284,6 +292,7 @@
 				0AE024892AFEA24600347C18 /* XCRemoteSwiftPackageReference "OllamaKit" */,
 				0AB30EB02B272A67009C038A /* XCRemoteSwiftPackageReference "ChatField" */,
 				0AB362A02C398ED700DE3F31 /* XCRemoteSwiftPackageReference "Highlightr" */,
+				0A2C4E402C428F5E007794CC /* XCRemoteSwiftPackageReference "Defaults" */,
 			);
 			productRefGroup = 0A4D35822AF541D900846890 /* Products */;
 			projectDirPath = "";
@@ -542,6 +551,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0A2C4E402C428F5E007794CC /* XCRemoteSwiftPackageReference "Defaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Defaults.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
+			};
+		};
 		0AA41A152AF635AD0053B8DB /* XCRemoteSwiftPackageReference "ViewState" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kevinhermawan/ViewState.git";
@@ -620,6 +637,15 @@
 		0A2C4E3B2C427094007794CC /* CoreViewModels */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CoreViewModels;
+		};
+		0A2C4E3E2C427713007794CC /* SettingsModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SettingsModule;
+		};
+		0A2C4E412C428F5E007794CC /* Defaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A2C4E402C428F5E007794CC /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = Defaults;
 		};
 		0AA41A162AF635AD0053B8DB /* ViewState */ = {
 			isa = XCSwiftPackageProductDependency;

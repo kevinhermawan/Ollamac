@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "defaults",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sindresorhus/Defaults.git",
+      "state" : {
+        "revision" : "38925e3cfacf3fb89a81a35b1cd44fd5a5b7e0fa",
+        "version" : "8.2.0"
+      }
+    },
+    {
       "identity" : "highlightr",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/raspu/Highlightr.git",
@@ -77,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/ViewState.git",
       "state" : {
-        "revision" : "8e5a5efbbf3fb5a2d2621533a115a9da031214cb",
-        "version" : "1.2.1"
+        "revision" : "6c85c207c23edf487007542651e3533a80dfa0bc",
+        "version" : "1.2.2"
       }
     }
   ],
