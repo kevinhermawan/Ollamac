@@ -6,6 +6,7 @@
 //
 
 import CoreModels
+import CoreViewModels
 import OllamaKit
 import Sparkle
 import SwiftUI

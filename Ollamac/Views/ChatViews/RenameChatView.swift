@@ -6,6 +6,7 @@
 //
 
 import CoreModels
+import CoreViewModels
 import SwiftUI
 import ViewState
 

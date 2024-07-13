@@ -1,29 +1,29 @@
 //
 //  OllamaViewModel.swift
-//  Ollamac
 //
-//  Created by Kevin Hermawan on 04/11/23.
+//
+//  Created by Kevin Hermawan on 13/07/24.
 //
 
 import SwiftUI
 import OllamaKit
 
 @Observable
-final class OllamaViewModel {
+public final class OllamaViewModel {
     private var ollamaKit: OllamaKit
     
-    var models: [String] = []
+    public var models: [String] = []
     
-    init(ollamaKit: OllamaKit) {
+    public init(ollamaKit: OllamaKit) {
         self.ollamaKit = ollamaKit
     }
     
-    func isReachable() async -> Bool {
+    public func isReachable() async -> Bool {
         await ollamaKit.reachable()
     }
     
     @MainActor
-    func fetch() async throws {
+    public func fetch() async throws {
         let response = try await ollamaKit.models()
         
         self.models = response.models.map { $0.name }
