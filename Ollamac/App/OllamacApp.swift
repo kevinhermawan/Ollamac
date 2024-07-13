@@ -7,7 +7,9 @@
 
 import CoreModels
 import CoreViewModels
+import Defaults
 import OllamaKit
+import SettingsModule
 import Sparkle
 import SwiftUI
 import SwiftData
@@ -35,11 +37,11 @@ struct OllamacApp: App {
     
     init() {
         let modelContext = sharedModelContainer.mainContext
-                
+        
         let commandViewModel = CommandViewModel()
         _commandViewModel = State(initialValue: commandViewModel)
         
-        let ollamaURL = URL(string: "http://localhost:11434")!
+        let ollamaURL = URL(string: Defaults[.defaultHost])!
         let ollamaKit = OllamaKit(baseURL: ollamaURL)
         
         let ollamaViewModel = OllamaViewModel(ollamaKit: ollamaKit)
@@ -87,6 +89,10 @@ struct OllamacApp: App {
                     ChatContextMenu(commandViewModel, for: selectedChat)
                 }
             }
+        }
+        
+        Settings {
+            SettingsView()
         }
     }
 }
