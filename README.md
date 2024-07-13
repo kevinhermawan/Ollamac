@@ -1,28 +1,28 @@
-<div align="center">
-  <img alt="app icon" height="256px" src="./assets/app-icon.png">
-</div>
+<div>
+  <div align="center">
+    <img alt="app icon" src="./Ollamac/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon_256x256.png" width="128px" height="128px">
+    <h1>Ollamac - Mac app for <a href="https://github.com/ollama/ollama">Ollama</a></h1>
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/banner-night.jpg">
+      <img alt="banner" src="./assets/banner.jpg">
+    </picture>
+  </div>
+<div>
 
-# Ollamac
+## ⚠️ Important Notice
 
-A macOS app for interacting with the [Ollama](https://github.com/jmorganca/ollama) models.
-
-## Important Notice
-
-> [!IMPORTANT]  
 > Ollamac is always free and open-source. You can only download Ollamac from this official repository. Any commercial apps that use the name Ollamac are not affiliated with or endorsed by me, the original creator.
 
 ## Prerequisites
 
-Before using Ollamac, ensure the following requirements are met:
+- macOS 14.0 Sonoma or later.
+- Ollama should be installed on your Mac and ensure you have at least one Ollama model pulled.
 
-- **Operating System**: macOS 14 or later.
-- **Ollama Setup**: The Ollama system should be installed on your Mac. Ensure you have at least one Ollama model downloaded for interaction.
+## Installation
 
-## Install
+### Using Homebrew
 
-### Homebrew
-
-```
+```bash
 brew install --cask ollamac
 ```
 
@@ -32,12 +32,12 @@ You can download the latest version of Ollamac from the [releases page](https://
 
 ## Features
 
-- **Open-Source Nature**: Dive into the code, contribute, and enhance Ollamac’s capabilities.
-- **Optimized for macOS**: Experience smooth and efficient performance on macOS.
-- **Universal Model Compatibility**: Use Ollamac with any model from the [Ollama library](https://ollama.ai/library).
-- **User-Friendly Interface**: Navigate easily through a straightforward design.
-- **Chat Archive**: Automatically save your interactions for future reference.
-- **Real-Time Communication**: Enjoy immediate responses with HTTP streaming technology.
+- Works with all Ollama models.
+- Customizable host.
+- Syntax highlighting.
+- Simple and easy to use.
+- Free and open source.
+- Native.
 
 And more...
 
@@ -45,8 +45,8 @@ And more...
 
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/screenshot-dark.png">
-    <img alt="screenshot" src="./assets/screenshot.png">
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/screenshot-dark.jpg">
+    <img alt="screenshot" src="./assets/screenshot.jpg">
   </picture>
 </div>
 
@@ -56,11 +56,15 @@ I'm grateful for the support from the community that enables me to continue deve
 
 ## Acknowledgements
 
-- [Ollama](https://github.com/jmorganca/ollama)
-- [OllamaKit](https://github.com/kevinhermawan/OllamaKit)
-- [Sparkle](https://github.com/sparkle-project/Sparkle)
-- [swift-markdown-ui](https://github.com/gonzalezreal/swift-markdown-ui)
-- [swiftui-introspect](https://github.com/siteline/swiftui-introspect)
+- [ChatField by @kevinhermawan](https://github.com/kevinhermawan/ChatField)
+- [Defaults by @sindresorhus](https://github.com/sindresorhus/Defaults)
+- [Highlightr by @raspu](https://github.com/raspu/Highlightr)
+- [OllamaKit by @kevinhermawan](https://github.com/kevinhermawan/OllamaKit)
+- [Sparkle by @sparkle-project](https://github.com/sparkle-project/Sparkle)
+- [swift-markdown-ui by @gonzalezreal](https://github.com/gonzalezreal/swift-markdown-ui)
+- [ViewCondition by @kevinhermawan](https://github.com/kevinhermawan/ViewCondition)
+- [ViewState by @kevinhermawan](https://github.com/kevinhermawan/ViewState)
+- [swiftui-introspect by @siteline](https://github.com/siteline/swiftui-introspect)
 
 ## License
 
