@@ -3,17 +3,28 @@
     <channel>
         <title>Ollamac</title>
         <item>
-            <title>2.0.0</title>
-            <pubDate>Sun, 09 Jun 2024 05:53:05 +0700</pubDate>
-            <sparkle:version>8</sparkle:version>
-            <sparkle:shortVersionString>2.0.0</sparkle:shortVersionString>
+            <title>2.1.0</title>
+            <pubDate>Sat, 13 Jul 2024 19:02:01 +0700</pubDate>
+            <sparkle:version>9</sparkle:version>
+            <sparkle:shortVersionString>2.1.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[
+            <description>
+                <![CDATA[
+                <h1>Ollamac v2.1.0</h1>
+                <h3>What's New</h3>
                 <ul>
-                    <li><strong>Attention:</strong> We have changed the architecture of the app. When you update to this version, your previous messages will be removed.</li>
+                    <li><strong>New App Icon</strong>: Enjoy our fresh, new look with the updated app icon.</li>
+                    <li><strong>Code Highlighting</strong>: We've added code highlighting.</li>
+                    <li><strong>Custom Ollama Host</strong>: You can now add a custom Ollama host.</li>
                 </ul>
-            ]]></description>
-            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v2.0.0/Ollamac-2.0.0.dmg" length="3207714" type="application/octet-stream" sparkle:edSignature="R+H/XDkCbbAxCM6cVkNyugbAfKQyAfoUHm7l/iIYXoIfwVW/Zkvd2DXUbpFE+v4GO1QEgBznrfSbc6yFtHzJBw=="/>
+                <h3>Miscellaneous</h3>
+                <ul>
+                    <li>Bug fixes and performance improvements.</li>
+                </ul>
+                <p>For a complete list of changes, visit our <a href="https://github.com/kevinhermawan/Ollamac/releases/tag/v2.1.0">Full Changelog</a>.</p>
+                ]]>
+            </description>
+            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v2.1.0/Ollamac-2.1.0.dmg" length="4971380" type="application/octet-stream" sparkle:edSignature="8sLpEFUhjYbYyf0Ko/W67bP0fst5o6LPHAb8ZVxCBtiy9SqEkomGxRERWnC83mo8mP7eGQpPHFb8oVmHsjJPBQ=="/>
         </item>
     </channel>
 </rss>
