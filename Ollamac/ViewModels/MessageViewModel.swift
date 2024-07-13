@@ -5,6 +5,7 @@
 //  Created by Kevin Hermawan on 04/11/23.
 //
 
+import CoreExtensions
 import Combine
 import Foundation
 import OllamaKit

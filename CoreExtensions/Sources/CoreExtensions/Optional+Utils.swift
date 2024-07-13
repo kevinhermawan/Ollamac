@@ -1,13 +1,13 @@
 //
 //  Optional+Utils.swift
-//  Ollamac
+//  CoreExtensions
 //
-//  Created by Kevin Hermawan on 11/12/23.
+//  Created by Kevin Hermawan on 13/07/24.
 //
 
 import Foundation
 
-extension Optional {
+public extension Optional {
     var isNil: Bool {
         self == nil
     }

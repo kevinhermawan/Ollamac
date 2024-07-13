@@ -1,13 +1,13 @@
 //
 //  ModelContext+SaveChanges.swift
-//  Ollamac
+//  CoreExtensions
 //
-//  Created by Kevin Hermawan on 05/11/23.
+//  Created by Kevin Hermawan on 13/07/24.
 //
 
 import SwiftData
 
-extension ModelContext {
+public extension ModelContext {
     func saveChanges() throws {
         if self.hasChanges {
             try self.save()

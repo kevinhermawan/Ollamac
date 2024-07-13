@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreExtensions
 import ViewCondition
 import ViewState
 
