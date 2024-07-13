@@ -1,8 +1,8 @@
 //
 //  MessageViewModel.swift
-//  Ollamac
+//  
 //
-//  Created by Kevin Hermawan on 04/11/23.
+//  Created by Kevin Hermawan on 13/07/24.
 //
 
 import CoreExtensions
@@ -14,16 +14,16 @@ import SwiftData
 import ViewState
 
 @Observable
-final class MessageViewModel {
+public final class MessageViewModel {
     private var generation: AnyCancellable?
     
     private var modelContext: ModelContext
     private var ollamaKit: OllamaKit
     
-    var messages: [Message] = []
-    var sendViewState: ViewState? = nil
+    public var messages: [Message] = []
+    public var sendViewState: ViewState? = nil
     
-    init(modelContext: ModelContext, ollamaKit: OllamaKit) {
+    public init(modelContext: ModelContext, ollamaKit: OllamaKit) {
         self.modelContext = modelContext
         self.ollamaKit = ollamaKit
     }
@@ -32,7 +32,7 @@ final class MessageViewModel {
         self.stopGenerate()
     }
     
-    func fetch(for chat: Chat) throws {
+    public func fetch(for chat: Chat) throws {
         let chatId = chat.id
         let predicate = #Predicate<Message>{ $0.chat?.id == chatId }
         let sortDescriptor = SortDescriptor(\Message.createdAt)
@@ -42,7 +42,7 @@ final class MessageViewModel {
     }
     
     @MainActor
-    func send(_ message: Message) async {
+    public func send(_ message: Message) async {
         self.sendViewState = .loading
         
         messages.append(message)
@@ -69,7 +69,7 @@ final class MessageViewModel {
     }
     
     @MainActor
-    func regenerate(_ message: Message) async {
+    public func regenerate(_ message: Message) async {
         self.sendViewState = .loading
         
         messages[messages.endIndex - 1] = message
@@ -94,7 +94,7 @@ final class MessageViewModel {
         }
     }
     
-    func stopGenerate() {
+    public func stopGenerate() {
         self.sendViewState = nil
         self.generation?.cancel()
         try? self.modelContext.saveChanges()

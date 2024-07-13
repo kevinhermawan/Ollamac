@@ -7,6 +7,7 @@
 
 import ChatField
 import CoreModels
+import CoreViewModels
 import SwiftUI
 import SwiftUIIntrospect
 import ViewCondition
