@@ -14,13 +14,15 @@ import ViewState
 struct GeneralView: View {
     @State private var defaultHost: String = ""
     @Default(.defaultHost) private var defaultHostDefault
-    
+    @Default(.defaultFontSize) private var defaultFontSize
     @State private var defaultHostViewState: ViewState? = nil
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             GroupBox {
                 DefaultHostTextField(defaultHost: $defaultHost, viewState: $defaultHostViewState, saveAction: saveDefaultHostAction)
+                
+                DefaultFontSizeField(defaultFontSize: $defaultFontSize, range: 8.0...100)
             }
         }
         .onAppear {
