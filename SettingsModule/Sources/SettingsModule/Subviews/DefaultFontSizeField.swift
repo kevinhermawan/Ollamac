@@ -14,7 +14,12 @@ struct DefaultFontSizeField: View {
     var range: ClosedRange<Double> = 8...100
 
     @State private var fontSize: Double = 16.0
+
     @ScaledMetric(relativeTo: .headline) private var width: CGFloat = 48
+
+    private var systemFontSize: Int {
+        Int(NSFont.systemFont(ofSize: 0).pointSize)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -23,7 +28,7 @@ struct DefaultFontSizeField: View {
 
 
             HStack {
-                TextField(String(defaultFontSize), value: $fontSize, format: .number.precision(.fractionLength(0)))
+                TextField(String(systemFontSize), value: $fontSize, format: .number.precision(.fractionLength(0)))
                     .frame(width: width)
                     .textFieldStyle(.roundedBorder)
                 Stepper("Font size", value: $fontSize, in: range)
