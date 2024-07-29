@@ -22,10 +22,12 @@ struct CodeHighlighter: CodeSyntaxHighlighter {
     }
     
     func highlightCode(_ code: String, language: String?) -> Text {
-        guard let highlightedCode = highlightr.highlight(code, as: language) else {
+        guard language?.isEmpty == false,
+              let highlightedCode = highlightr.highlight(code, as: language)
+        else {
             return Text(code)
         }
-        
+
         var attributedCode = AttributedString(highlightedCode)
         attributedCode.font = .system(size: 16, design: .monospaced)
         
