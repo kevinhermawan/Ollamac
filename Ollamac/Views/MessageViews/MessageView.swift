@@ -59,7 +59,8 @@ struct MessageView: View {
             .onChange(of: messageViewModel.messages.last?.response) {
                 scrollToBottom(scrollViewProxy)
             }
-            
+            .markdownStyling()
+
             HStack(alignment: .bottom) {
                 ChatField("Message", text: $prompt, action: sendAction)
                     .textFieldStyle(CapsuleChatFieldStyle())
