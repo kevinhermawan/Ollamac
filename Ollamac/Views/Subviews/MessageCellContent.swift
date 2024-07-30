@@ -11,7 +11,9 @@ import ViewState
 
 struct MessageCellContent: View {
     @Environment(\.colorScheme) private var colorScheme
-    
+   
+    @AppStorage("defaultFontSize") private var fontSize: Double = NSFont.systemFont(ofSize: 0).pointSize
+
     private var isLastMessage: Bool = false
     
     private let content: String
@@ -39,12 +41,12 @@ struct MessageCellContent: View {
     var body: some View {
         Markdown(content)
             .textSelection(.enabled)
-            .markdownCodeSyntaxHighlighter(.codeHighlighter(theme: theme))
+            .markdownCodeSyntaxHighlighter(.codeHighlighter(theme: theme, fontSize: fontSize))
             .markdownTextStyle(\.text) {
-                FontSize(NSFont.systemFont(ofSize: 16).pointSize)
+                FontSize(fontSize)
             }
             .markdownTextStyle(\.code) {
-                FontSize(NSFont.systemFont(ofSize: 16).pointSize)
+                FontSize(fontSize)
                 FontFamily(.system(.monospaced))
             }
             .markdownBlockStyle(\.paragraph) { configuration in
@@ -68,7 +70,7 @@ struct MessageCellContent: View {
             }
             .whenError(errorViewState) { message in
                 Text(message)
-                    .font(.system(size: 16))
+                    .font(.system(size: fontSize))
                     .foregroundStyle(.red)
             }
     }
@@ -86,5 +88,16 @@ struct MessageCellContent: View {
         MessageCellContent("The quick brown fox jumps over the lazy dog", viewState: nil)
         MessageCellContent("The quick brown fox jumps over the lazy dog", viewState: .loading)
         MessageCellContent("The quick brown fox jumps over the lazy dog", viewState: .error(message: "Unexpected error"))
+        MessageCellContent("""
+## Mix of blocks
+Some text introducing a code block.
+```swift
+public func lastMessage(_ isLastMessage: Bool) -> Message {
+    // Some important logic
+
+    return message
+}
+```
+""", viewState: nil)
     }
 }
