@@ -37,6 +37,7 @@
 		0ACA4D842AF94A9C000DA76F /* ChatContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA4D832AF94A9C000DA76F /* ChatContextMenu.swift */; };
 		0AE024832AFB898300347C18 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 0AE024822AFB898300347C18 /* Sparkle */; };
 		0AE0248B2AFEA24600347C18 /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AE0248A2AFEA24600347C18 /* OllamaKit */; };
+		177D5A8D2C58D97700AC1FDD /* MarkdownStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177D5A8C2C58D97700AC1FDD /* MarkdownStyling.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		0ACA4D812AF948C4000DA76F /* AppMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMessages.swift; sourceTree = "<group>"; };
 		0ACA4D832AF94A9C000DA76F /* ChatContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContextMenu.swift; sourceTree = "<group>"; };
 		0AE024842AFB8D0E00347C18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		177D5A8C2C58D97700AC1FDD /* MarkdownStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownStyling.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				0A4D35C32AF575E700846890 /* MessageView.swift */,
+				177D5A8C2C58D97700AC1FDD /* MarkdownStyling.swift */,
 			);
 			path = MessageViews;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				0A4D35852AF541D900846890 /* OllamacApp.swift in Sources */,
 				0AB362AD2C39A43600DE3F31 /* MessageCellHeader.swift in Sources */,
 				0ACA4D842AF94A9C000DA76F /* ChatContextMenu.swift in Sources */,
+				177D5A8D2C58D97700AC1FDD /* MarkdownStyling.swift in Sources */,
 				0AB362B12C39B16E00DE3F31 /* MessageCellFooter.swift in Sources */,
 				0AB362A62C39903200DE3F31 /* MessageCellView.swift in Sources */,
 			);
