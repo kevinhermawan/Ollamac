@@ -90,10 +90,7 @@ struct ChatView: View {
         }
         .navigationTitle(chat.name)
         .navigationSubtitle(chat.model)
-        .task {
-            initAction()
-        }
-        .onChange(of: chat) {
+        .onAppear() {
             initAction()
         }
     }
