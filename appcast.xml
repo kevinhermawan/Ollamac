@@ -3,22 +3,22 @@
     <channel>
         <title>Ollamac</title>
         <item>
-            <title>2.1.1</title>
-            <pubDate>Thu, 25 Jul 2024 23:55:40 +0700</pubDate>
-            <sparkle:version>10</sparkle:version>
-            <sparkle:shortVersionString>2.1.1</sparkle:shortVersionString>
+            <title>2.1.2</title>
+            <pubDate>Tue, 30 Jul 2024 23:30:44 +0700</pubDate>
+            <sparkle:version>11</sparkle:version>
+            <sparkle:shortVersionString>2.1.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <description>
             <![CDATA[
-                <h1>Ollamac v2.1.1</h1>
+                <h1>Ollamac v2.1.2</h1>
                 <h3>Bug Fixes</h3>
                 <ul>
-                    <li>Fixed: Default host field couldn't accept IP address input</li>
+                    <li>Fixed: code blocks showing "undefined" (Thanks to <a href="https://github.com/pd95">@pd95</a>)</li>
                 </ul>
-                <p>For a complete list of changes, visit our <a href="https://github.com/kevinhermawan/Ollamac/releases/tag/v2.1.1">Full Changelog</a>.</p>
+                <p>For a complete list of changes, visit our <a href="https://github.com/kevinhermawan/Ollamac/releases/tag/v2.1.2">Full Changelog</a>.</p>
             ]]>
             </description>
-            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v2.1.1/Ollamac-2.1.1.dmg" length="4960656" type="application/octet-stream" sparkle:edSignature="xT4SApJecO0lj3fidXMnt9M70AFg63EKUxTlC0C1QKHPYSnhRqah31++6gdZDoMO1L+BpdhwXbQ2JP5ecxHbBQ=="/>
+            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v2.1.2/Ollamac-2.1.2.dmg" length="4961644" type="application/octet-stream" sparkle:edSignature="1WNndntUQ2hOuKz1xhWs88sbGpD4WMKYAQtPt1d8GeRzPuX6h6QsXpfDv6CzglQaVLDq00XmjEpvwzR0Vy+hBQ=="/>
         </item>
     </channel>
 </rss>
