@@ -19,6 +19,7 @@ struct AppView: View {
         } detail: {
             if let selectedChat = commandViewModel.selectedChat {
                 ChatView(for: selectedChat)
+                    .id(selectedChat.id)
             } else {
                 ContentUnavailableView {
                     Text("No Chat Selected")
