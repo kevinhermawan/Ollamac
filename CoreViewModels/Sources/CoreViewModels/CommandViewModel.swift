@@ -5,6 +5,7 @@
 //  Created by Kevin Hermawan on 13/07/24.
 //
 
+import Defaults
 import CoreModels
 import Foundation
 
@@ -32,5 +33,13 @@ public final class CommandViewModel {
                 isDeleteChatConfirmationPresented = true
             }
         }
+    }
+
+    public func increaseFontSize() {
+        Defaults[.defaultFontSize] += 1
+    }
+
+    public func decreaseFontSize() {
+        Defaults[.defaultFontSize] = max(Defaults[.defaultFontSize] - 1, 8)
     }
 }

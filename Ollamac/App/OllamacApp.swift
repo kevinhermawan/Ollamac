@@ -89,6 +89,15 @@ struct OllamacApp: App {
                     ChatContextMenu(commandViewModel, for: selectedChat)
                 }
             }
+
+            CommandGroup(after: .textEditing) {
+                Divider()
+                Button("Increase font size", action: commandViewModel.increaseFontSize)
+                    .keyboardShortcut("+", modifiers: [.command], localization: .custom)
+
+                Button("Decrease font size", action: commandViewModel.decreaseFontSize)
+                    .keyboardShortcut("-", modifiers: [.command], localization: .custom)
+            }
         }
         
         Settings {
