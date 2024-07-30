@@ -22,7 +22,7 @@ struct ChatView: View {
     @Environment(OllamaViewModel.self) private var ollamaViewModel
 
     @Namespace private var bottomID
-    @State private var viewState: ViewState? = nil
+    @State private var isLoading = true
 
     @FocusState private var promptFocused: Bool
     @State private var prompt: String = ""
@@ -37,68 +37,74 @@ struct ChatView: View {
 
     var body: some View {
         ScrollViewReader { scrollViewProxy in
-            List {
-                let lastMessage = messageViewModel.messages.last
-                ForEach(messageViewModel.messages) { message in
-                    MessageView(message: message, isLastMessage: message == lastMessage) {
-                        regenerateAction(for: message)
+            if isLoading {
+                ProgressView()
+            } else {
+                List {
+                    let lastMessage = messageViewModel.messages.last
+                    ForEach(messageViewModel.messages) { message in
+                        MessageView(message: message, isLastMessage: message == lastMessage) {
+                            regenerateAction(for: message)
+                        }
                     }
+
+                    Color.clear
+                        .frame(height: 0.1)
+                        .id(bottomID)
+                        .listRowSeparator(.hidden)
                 }
-
-                Color.clear
-                    .frame(height: 0.1)
-                    .id(bottomID)
-                    .listRowSeparator(.hidden)
-            }
-            .onAppear {
-                scrollToBottom(scrollViewProxy)
-            }
-            .onChange(of: messageViewModel.messages) {
-                scrollToBottom(scrollViewProxy)
-            }
-            .onChange(of: messageViewModel.messages.last?.response) {
-                scrollToBottom(scrollViewProxy)
-            }
-            .markdownStyling()
-
-            HStack(alignment: .bottom) {
-                ChatField("Message", text: $prompt, action: sendAction)
-                    .textFieldStyle(CapsuleChatFieldStyle())
-                    .focused($promptFocused)
-
-                Button(action: sendAction) {
-                    Image(systemName: "arrow.up.circle.fill")
-                        .resizable()
-                        .frame(width: 28, height: 28)
+                .onAppear {
+                    scrollToBottom(scrollViewProxy)
                 }
-                .buttonStyle(.plain)
-                .help("Send message")
-                .hide(if: isGenerating, removeCompletely: true)
-
-                Button(action: messageViewModel.stopGenerate) {
-                    Image(systemName: "stop.circle.fill")
-                        .resizable()
-                        .frame(width: 28, height: 28)
+                .onChange(of: messageViewModel.messages) {
+                    scrollToBottom(scrollViewProxy)
                 }
-                .buttonStyle(.plain)
-                .help("Stop generation")
-                .visible(if: isGenerating, removeCompletely: true)
+                .onChange(of: messageViewModel.messages.last?.response) {
+                    scrollToBottom(scrollViewProxy)
+                }
+                .markdownStyling()
+
+                HStack(alignment: .bottom) {
+                    ChatField("Message", text: $prompt, action: sendAction)
+                        .textFieldStyle(CapsuleChatFieldStyle())
+                        .focused($promptFocused)
+
+                    Button(action: sendAction) {
+                        Image(systemName: "arrow.up.circle.fill")
+                            .resizable()
+                            .frame(width: 28, height: 28)
+                    }
+                    .buttonStyle(.plain)
+                    .help("Send message")
+                    .hide(if: isGenerating, removeCompletely: true)
+
+                    Button(action: messageViewModel.stopGenerate) {
+                        Image(systemName: "stop.circle.fill")
+                            .resizable()
+                            .frame(width: 28, height: 28)
+                    }
+                    .buttonStyle(.plain)
+                    .help("Stop generation")
+                    .visible(if: isGenerating, removeCompletely: true)
+                }
+                .padding(.top, 8)
+                .padding(.bottom, 16)
+                .padding(.horizontal)
             }
-            .padding(.top, 8)
-            .padding(.bottom, 16)
-            .padding(.horizontal)
         }
         .navigationTitle(chat.name)
         .navigationSubtitle(chat.model)
-        .onAppear() {
+        .task {
             initAction()
         }
     }
 
     // MARK: - Actions
     private func initAction() {
+        isLoading = true
         try? messageViewModel.fetch(for: chat)
 
+        isLoading = false
         promptFocused = true
     }
 
