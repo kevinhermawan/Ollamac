@@ -53,12 +53,6 @@ struct ChatView: View {
                         .id(bottomID)
                         .listRowSeparator(.hidden)
                 }
-                .onAppear {
-                    scrollToBottom(scrollViewProxy)
-                }
-                .onChange(of: messageViewModel.messages) {
-                    scrollToBottom(scrollViewProxy)
-                }
                 .onChange(of: messageViewModel.messages.last?.response) {
                     scrollToBottom(scrollViewProxy)
                 }
@@ -68,6 +62,13 @@ struct ChatView: View {
                     ChatField("Message", text: $prompt, action: sendAction)
                         .textFieldStyle(CapsuleChatFieldStyle())
                         .focused($promptFocused)
+                        .onChange(of: promptFocused) { _, newValue in
+                            if newValue {
+                                withAnimation(.snappy) {
+                                    scrollToBottom(scrollViewProxy)
+                                }
+                            }
+                        }
 
                     Button(action: sendAction) {
                         Image(systemName: "arrow.up.circle.fill")
@@ -104,8 +105,10 @@ struct ChatView: View {
         isLoading = true
         try? messageViewModel.fetch(for: chat)
 
-        isLoading = false
-        promptFocused = true
+        withAnimation(.snappy) {
+            isLoading = false
+            promptFocused = true
+        }
     }
 
     private func sendAction() {
