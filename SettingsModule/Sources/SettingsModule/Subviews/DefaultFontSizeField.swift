@@ -5,11 +5,12 @@
 //  Created by Philipp on 28.07.2024.
 //
 
+import Defaults
 import SwiftUI
 
 struct DefaultFontSizeField: View {
 
-    @Binding var defaultFontSize: Double
+    @Default(.defaultFontSize) private var defaultFontSize
 
     var range: ClosedRange<Double> = 8...100
 
@@ -42,6 +43,11 @@ struct DefaultFontSizeField: View {
                     fontSize = defaultFontSize
                 }
             }
+            .onChange(of: defaultFontSize) { oldValue, newValue in
+                if newValue != fontSize {
+                    fontSize = newValue
+                }
+            }
         }
         .padding(4)
         .onAppear() {
@@ -54,7 +60,7 @@ struct DefaultFontSizeField: View {
 #Preview("Default") {
     VStack {
         GroupBox {
-            DefaultFontSizeField(defaultFontSize: .constant(16.0))
+            DefaultFontSizeField()
         }
     }
     .padding(16)
