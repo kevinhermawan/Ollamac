@@ -21,6 +21,7 @@ struct ChatView: View {
     @Environment(MessageViewModel.self) private var messageViewModel
     @Environment(OllamaViewModel.self) private var ollamaViewModel
 
+    @Namespace private var bottomID
     @State private var viewState: ViewState? = nil
 
     @FocusState private var promptFocused: Bool
@@ -36,13 +37,18 @@ struct ChatView: View {
 
     var body: some View {
         ScrollViewReader { scrollViewProxy in
-            let lastMessage = messageViewModel.messages.last
             List {
+                let lastMessage = messageViewModel.messages.last
                 ForEach(messageViewModel.messages) { message in
                     MessageView(message: message, isLastMessage: message == lastMessage) {
                         regenerateAction(for: message)
                     }
                 }
+
+                Color.clear
+                    .frame(height: 0.1)
+                    .id(bottomID)
+                    .listRowSeparator(.hidden)
             }
             .onAppear {
                 scrollToBottom(scrollViewProxy)
@@ -131,9 +137,7 @@ struct ChatView: View {
 
     private func scrollToBottom(_ proxy: ScrollViewProxy) {
         guard messageViewModel.messages.count > 0 else { return }
-        let lastIndex = messageViewModel.messages.count - 1
-        let lastMessage = messageViewModel.messages[lastIndex]
 
-        proxy.scrollTo(lastMessage, anchor: .bottom)
+        proxy.scrollTo(bottomID, anchor: .bottom)
     }
 }
