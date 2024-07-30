@@ -18,7 +18,7 @@ struct AppView: View {
                 .navigationSplitViewColumnWidth(min: 240, ideal: 240)
         } detail: {
             if let selectedChat = commandViewModel.selectedChat {
-                MessageView(for: selectedChat)
+                ChatView(for: selectedChat)
             } else {
                 ContentUnavailableView {
                     Text("No Chat Selected")
