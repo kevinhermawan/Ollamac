@@ -16,10 +16,8 @@ import ViewState
 struct ChatView: View {
     private var chat: Chat
 
-    @Environment(\.modelContext) private var modelContext
     @Environment(ChatViewModel.self) private var chatViewModel
     @Environment(MessageViewModel.self) private var messageViewModel
-    @Environment(OllamaViewModel.self) private var ollamaViewModel
 
     @Namespace private var bottomID
     @State private var isLoading = true
