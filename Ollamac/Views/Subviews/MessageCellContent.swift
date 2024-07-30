@@ -10,8 +10,6 @@ import SwiftUI
 import ViewState
 
 struct MessageCellContent: View {
-    @Environment(\.colorScheme) private var colorScheme
-    
     private var isLastMessage: Bool = false
     
     private let content: String
@@ -20,10 +18,6 @@ struct MessageCellContent: View {
     init(_ content: String, viewState: ViewState?) {
         self.content = content
         self.viewState = viewState
-    }
-    
-    private var theme: String {
-        colorScheme == .dark ? "atom-one-dark" : "atom-one-light"
     }
     
     private var generatingViewState: ViewState? {
@@ -39,29 +33,6 @@ struct MessageCellContent: View {
     var body: some View {
         Markdown(content)
             .textSelection(.enabled)
-            .markdownCodeSyntaxHighlighter(.codeHighlighter(theme: theme))
-            .markdownTextStyle(\.text) {
-                FontSize(NSFont.systemFont(ofSize: 16).pointSize)
-            }
-            .markdownTextStyle(\.code) {
-                FontSize(NSFont.systemFont(ofSize: 16).pointSize)
-                FontFamily(.system(.monospaced))
-            }
-            .markdownBlockStyle(\.paragraph) { configuration in
-                configuration.label
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .markdownBlockStyle(\.codeBlock) { configuration in
-                configuration.label
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color(nsColor: .tertiarySystemFill))
-                    .cornerRadius(8)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(.separator, lineWidth: 1)
-                    )
-            }
             .when(generatingViewState, is: .loading) {
                 ProgressView()
                     .controlSize(.small)

@@ -23,7 +23,8 @@ struct OllamacApp: App {
     @State private var ollamaViewModel: OllamaViewModel
     @State private var chatViewModel: ChatViewModel
     @State private var messageViewModel: MessageViewModel
-    
+    @State private var codeHighlighter: CodeHighlighter
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([Chat.self, Message.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
@@ -49,10 +50,13 @@ struct OllamacApp: App {
         
         let messageViewModel = MessageViewModel(modelContext: modelContext, ollamaKit: ollamaKit)
         _messageViewModel = State(initialValue: messageViewModel)
-        
+
+        let codeHighlighter =  CodeHighlighter()
+        _codeHighlighter = State(initialValue: codeHighlighter)
+
         let chatViewModel = ChatViewModel(modelContext: modelContext)
         _chatViewModel = State(initialValue: chatViewModel)
-        
+
         let updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
         updater = updaterController.updater
         
@@ -66,6 +70,7 @@ struct OllamacApp: App {
                 .environment(commandViewModel)
                 .environment(chatViewModel)
                 .environment(messageViewModel)
+                .environment(codeHighlighter)
                 .environment(ollamaViewModel)
         }
         .modelContainer(sharedModelContainer)

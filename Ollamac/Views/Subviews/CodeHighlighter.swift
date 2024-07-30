@@ -9,16 +9,16 @@ import Highlightr
 import MarkdownUI
 import SwiftUI
 
-struct CodeHighlighter: CodeSyntaxHighlighter {
+@Observable
+class CodeHighlighter: CodeSyntaxHighlighter {
     private let highlightr: Highlightr
     
-    init(theme: String) {
+    init() {
         guard let highlightrInstance = Highlightr() else {
             fatalError("Failed to initialize Highlightr")
         }
         
         self.highlightr = highlightrInstance
-        self.highlightr.setTheme(to: theme)
     }
     
     func highlightCode(_ code: String, language: String?) -> Text {
@@ -37,10 +37,8 @@ struct CodeHighlighter: CodeSyntaxHighlighter {
         
         return Text(attributedCode)
     }
-}
 
-extension CodeSyntaxHighlighter where Self == CodeHighlighter {
-    static func codeHighlighter(theme: String) -> Self {
-        CodeHighlighter(theme: theme)
+    func setTheme(to theme: String) {
+        self.highlightr.setTheme(to: theme)
     }
 }

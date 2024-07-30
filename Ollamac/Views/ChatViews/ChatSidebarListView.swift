@@ -95,9 +95,6 @@ struct ChatSidebarListView: View {
                 .help("New Chat (⌘ + N)")
             }
         }
-        .navigationDestination(for: Chat.self) { chat in
-            MessageView(for: chat)
-        }
         .sheet(
             isPresented: $commandViewModelBindable.isAddChatViewPresented
         ) {
