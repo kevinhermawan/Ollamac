@@ -11,31 +11,36 @@ import SwiftData
 
 @Model
 public final class Message: Identifiable {
-    @Attribute(.unique) public var id: UUID = UUID()
+    @Attribute(.unique) public var id: UUID
     
-    public var prompt: String?
+    public var prompt: String
     public var response: String?
-    public var context: [Int]?
-    public var done: Bool = false
-    public var createdAt: Date = Date.now
+    public var createdAt: Date
     
     @Relationship
     public var chat: Chat?
     
-    public init(prompt: String?, response: String?) {
+    public init(prompt: String) {
+        self.id = UUID()
         self.prompt = prompt
-        self.response = response
+        self.createdAt = Date.now
     }
     
     @Transient var model: String {
-        chat?.model ?? ""
+        self.chat?.model ?? ""
     }
 }
 
 public extension Message {
-    func convertToOKGenerateRequestData() -> OKGenerateRequestData {
-        var data = OKGenerateRequestData(model: self.model, prompt: self.prompt ?? "")
-        data.context = self.context
+    func toOKChatRequestData(messages: [Message]) -> OKChatRequestData {
+        let messages = messages.flatMap { message in
+            return [
+                OKChatRequestData.Message(role: .user, content: message.prompt),
+                OKChatRequestData.Message(role: .assistant, content: message.response ?? "")
+            ]
+        }
+        
+        let data = OKChatRequestData(model: self.model, messages: messages)
         
         return data
     }

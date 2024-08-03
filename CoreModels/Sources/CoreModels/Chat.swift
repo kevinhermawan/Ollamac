@@ -10,18 +10,19 @@ import SwiftData
 
 @Model
 public final class Chat: Identifiable {
-    @Attribute(.unique) public var id: UUID = UUID()
+    @Attribute(.unique) public var id: UUID
     
     public var name: String
     public var model: String
     public var createdAt: Date = Date.now
     public var modifiedAt: Date = Date.now
     
-    @Relationship(deleteRule: .cascade, inverse: \Message.chat)
+    @Relationship(deleteRule: .cascade)
     public var messages: [Message] = []
     
-    public init(name: String, model: String) {
-        self.name = name
+    public init(model: String) {
+        self.id = UUID()
+        self.name = "New Chat"
         self.model = model
     }
 }
