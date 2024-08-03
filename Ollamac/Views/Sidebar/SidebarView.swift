@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import CoreModels
 import ViewCondition
 
 struct SidebarView: View {

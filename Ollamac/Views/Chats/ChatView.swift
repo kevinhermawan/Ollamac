@@ -15,6 +15,7 @@ struct ChatView: View {
     
     @State private var prompt: String = ""
     @State private var scrollProxy: ScrollViewProxy? = nil
+    @State private var isPreferencesPresented: Bool = false
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -69,6 +70,17 @@ struct ChatView: View {
         }
         .navigationTitle(chatViewModel.activeChat?.name ?? "Ollamac")
         .navigationSubtitle(chatViewModel.activeChat?.model ?? "")
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button("Show Preferences", systemImage: "sidebar.trailing") {
+                    isPreferencesPresented.toggle()
+                }
+            }
+        }
+        .inspector(isPresented: $isPreferencesPresented) {
+            ChatPreferencesView()
+                .inspectorColumnWidth(min: 320, ideal: 320)
+        }
         .onChange(of: chatViewModel.activeChat) {
             prompt = ""
         }

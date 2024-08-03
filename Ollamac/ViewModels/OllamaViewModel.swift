@@ -14,21 +14,33 @@ final class OllamaViewModel {
     var ollamaKit: OllamaKit
     
     var models: [String] = []
+    
+    var loading: OllamaViewModelLoading?
     var error: OllamaViewModelError?
     
     init(ollamaKit: OllamaKit) {
         self.ollamaKit = ollamaKit
     }
     
-    func fetchModels() async {
-        do {
-            let response = try await ollamaKit.models()
+    func fetchModels() {
+        self.loading = .fetchModels
+        
+        Task {
+            defer { self.loading = nil }
             
-            self.models = response.models.map { $0.name }
-        } catch {
-            self.error = .fetchModels(error.localizedDescription)
+            do {
+                let response = try await ollamaKit.models()
+                
+                self.models = response.models.map { $0.name }
+            } catch {
+                self.error = .fetchModels(error.localizedDescription)
+            }
         }
     }
+}
+
+enum OllamaViewModelLoading {
+    case fetchModels
 }
 
 enum OllamaViewModelError: Error {

@@ -13,7 +13,7 @@ struct DefaultHostTextField: View {
     @Binding private var viewState: ViewState?
     private var saveAction: () -> Void
     
-    public init(defaultHost: Binding<String>, viewState: Binding<ViewState?>, saveAction: @escaping () -> Void) {
+    init(defaultHost: Binding<String>, viewState: Binding<ViewState?>, saveAction: @escaping () -> Void) {
         self._defaultHost = defaultHost
         self._viewState = viewState
         self.saveAction = saveAction

@@ -5,31 +5,29 @@
 //  Created by Kevin Hermawan on 13/07/24.
 //
 
-import CoreModels
 import Foundation
 import OllamaKit
 import SwiftData
 
 @MainActor
 @Observable
-public final class MessageViewModel {
-    private var generationTask: Task<Void, Never>?
-    
+final class MessageViewModel {
     private var modelContext: ModelContext
     private var ollamaKit: OllamaKit
+    private var generationTask: Task<Void, Never>?
     
-    public var messages: [Message] = []
-    public var isErrorWhenLoad: Bool = false
+    var messages: [Message] = []
     
-    public var isGenerating: Bool = false
-    public var generationErrorMessage: String? = nil
+    var isErrorWhenLoad: Bool = false
+    var isGenerating: Bool = false
+    var generationErrorMessage: String? = nil
     
-    public init(modelContext: ModelContext, ollamaKit: OllamaKit) {
+    init(modelContext: ModelContext, ollamaKit: OllamaKit) {
         self.modelContext = modelContext
         self.ollamaKit = ollamaKit
     }
     
-    public func load(of chat: Chat?) {
+    func load(of chat: Chat?) {
         guard let chat = chat else { return }
         
         let chatId = chat.id
@@ -44,7 +42,7 @@ public final class MessageViewModel {
         }
     }
     
-    public func generate(activeChat: Chat, prompt: String) {
+    func generate(activeChat: Chat, prompt: String) {
         let message = Message(prompt: prompt)
         message.chat = activeChat
         messages.append(message)
@@ -75,7 +73,7 @@ public final class MessageViewModel {
     }
     
     
-    public func regenerate(activeChat: Chat) {
+    func regenerate(activeChat: Chat) {
         guard let lastMessage = messages.last else { return }
         lastMessage.response = nil
         
@@ -103,7 +101,7 @@ public final class MessageViewModel {
         }
     }
     
-    public func cancelGeneration() {
+    func cancelGeneration() {
         generationTask?.cancel()
         isGenerating = false
     }

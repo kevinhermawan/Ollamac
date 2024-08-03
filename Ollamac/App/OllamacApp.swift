@@ -5,7 +5,6 @@
 //  Created by Kevin Hermawan on 03/11/23.
 //
 
-import CoreModels
 import Defaults
 import OllamaKit
 import SettingsModule

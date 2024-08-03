@@ -5,7 +5,6 @@
 //  Created by Kevin Hermawan on 13/07/24.
 //
 
-import CoreExtensions
 import Defaults
 import OllamaKit
 import SwiftUI
@@ -53,8 +52,4 @@ struct GeneralView: View {
             defaultHostViewState = .success(message: "The default host is updated")
         }
     }
-}
-
-#Preview {
-    GeneralView()
 }

@@ -5,25 +5,23 @@
 //  Created by Kevin Hermawan on 13/07/24.
 //
 
-import CoreModels
 import SwiftData
 import SwiftUI
 
 @Observable
-public final class ChatViewModel {
+final class ChatViewModel {
     private var modelContext: ModelContext
-    
-    public var chats: [Chat] = []
-    public var activeChat: Chat? = nil
-    public var selectedChats = Set<Chat>()
-    
-    public var isErrorWhenLoad = false
-    public var isRenameChatPresented = false
-    public var isDeleteConfirmationPresented = false
-    
     private var _chatNameTemp: String = ""
     
-    public var chatNameTemp: String {
+    var chats: [Chat] = []
+    var activeChat: Chat? = nil
+    var selectedChats = Set<Chat>()
+    
+    var isErrorWhenLoad = false
+    var isRenameChatPresented = false
+    var isDeleteConfirmationPresented = false
+    
+    var chatNameTemp: String {
         get {
             if isRenameChatPresented, let activeChat {
                 return activeChat.name
@@ -37,11 +35,11 @@ public final class ChatViewModel {
         }
     }
     
-    public init(modelContext: ModelContext) {
+    init(modelContext: ModelContext) {
         self.modelContext = modelContext
     }
     
-    public func load() {
+    func load() {
         do {
             let sortDescriptor = SortDescriptor(\Chat.modifiedAt, order: .reverse)
             let fetchDescriptor = FetchDescriptor<Chat>(sortBy: [sortDescriptor])
@@ -52,33 +50,26 @@ public final class ChatViewModel {
         }
     }
     
-    public func create(model: String) {
+    func create(model: String) {
         let chat = Chat(model: model)
         
         self.modelContext.insert(chat)
         self.chats.insert(chat, at: 0)
     }
     
-    public func rename() {
+    func rename() {
         guard let activeChat else { return }
         
         if let index = self.chats.firstIndex(where: { $0.id == activeChat.id }) {
             self.chats[index].name = _chatNameTemp
+            self.chats[index].modifiedAt = .now
         }
     }
     
-    public func remove() {
+    func remove() {
         for chat in selectedChats {
             self.modelContext.delete(chat)
             self.chats.removeAll(where: { $0.id == chat.id })
-        }
-    }
-    
-    public func modify() {
-        guard let activeChat else { return }
-
-        if let index = self.chats.firstIndex(where: { $0.id == activeChat.id }) {
-            self.chats[index].modifiedAt = .now
         }
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension String {
+extension String {
     func removeTrailingSlash() -> String {
         return self.hasSuffix("/") ? String(self.dropLast()) : self
     }

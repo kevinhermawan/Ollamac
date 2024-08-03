@@ -17,8 +17,6 @@ struct AppView: View {
         } detail: {
             ChatView()
         }
-        .task {
-            await ollamaViewModel.fetchModels()
-        }
+        .onAppear(perform: ollamaViewModel.fetchModels)
     }
 }

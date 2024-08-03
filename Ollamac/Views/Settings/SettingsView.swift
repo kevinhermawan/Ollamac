@@ -7,10 +7,8 @@
 
 import SwiftUI
 
-public struct SettingsView: View {
-    public init() {}
-    
-    public var body: some View {
+struct SettingsView: View {
+    var body: some View {
         VStack {
             TabView {
                 GeneralView()
@@ -22,8 +20,4 @@ public struct SettingsView: View {
         .padding()
         .frame(width: 450)
     }
-}
-
-#Preview {
-    SettingsView()
 }
