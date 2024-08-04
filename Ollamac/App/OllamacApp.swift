@@ -5,8 +5,6 @@
 //  Created by Kevin Hermawan on 03/11/23.
 //
 
-import CoreModels
-import CoreViewModels
 import Defaults
 import OllamaKit
 import SettingsModule
@@ -19,7 +17,6 @@ struct OllamacApp: App {
     @State private var appUpdater: AppUpdater
     private var updater: SPUUpdater
     
-    @State private var commandViewModel: CommandViewModel
     @State private var ollamaViewModel: OllamaViewModel
     @State private var chatViewModel: ChatViewModel
     @State private var messageViewModel: MessageViewModel
@@ -37,10 +34,7 @@ struct OllamacApp: App {
     
     init() {
         let modelContext = sharedModelContainer.mainContext
-        
-        let commandViewModel = CommandViewModel()
-        _commandViewModel = State(initialValue: commandViewModel)
-        
+                
         let ollamaURL = URL(string: Defaults[.defaultHost])!
         let ollamaKit = OllamaKit(baseURL: ollamaURL)
         
@@ -63,31 +57,23 @@ struct OllamacApp: App {
     var body: some Scene {
         WindowGroup {
             AppView()
-                .environment(commandViewModel)
                 .environment(chatViewModel)
                 .environment(messageViewModel)
                 .environment(ollamaViewModel)
         }
         .modelContainer(sharedModelContainer)
         .commands {
+            CommandGroup(replacing: .textEditing) {
+                if chatViewModel.selectedChats.count > 0 {
+                    SidebarContextMenu(chatViewModel: chatViewModel)
+                }
+            }
+            
             CommandGroup(after: .appInfo) {
                 Button("Check for Updates...") {
                     updater.checkForUpdates()
                 }
                 .disabled(appUpdater.canCheckForUpdates == false)
-            }
-            
-            CommandGroup(replacing: .newItem) {
-                Button("New Chat") {
-                    commandViewModel.isAddChatViewPresented = true
-                }
-                .keyboardShortcut("n", modifiers: .command)
-            }
-            
-            CommandGroup(replacing: .textEditing) {
-                if let selectedChat = commandViewModel.selectedChat {
-                    ChatContextMenu(commandViewModel, for: selectedChat)
-                }
             }
         }
         

@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/ChatField.git",
       "state" : {
-        "revision" : "36833e4ddc23308c3754083d4bdcfa837fa17799",
-        "version" : "1.0.1"
+        "branch" : "main",
+        "revision" : "b850d2f2e59b106e2a1aa7a40eef370887b5ea5b"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/raspu/Highlightr.git",
       "state" : {
-        "revision" : "fa483d37c692961ecc2391eac568ba3d3935e663",
-        "version" : "2.2.0"
+        "revision" : "bcf2d0590f32ac2528feb72d7e34f5b463801a47",
+        "version" : "2.2.1"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/OllamaKit",
       "state" : {
-        "revision" : "8264a8766c391427944cd4d55304bdfdcb8fdfee",
-        "version" : "5.0.0"
+        "revision" : "46a2cf8a105c9e68e20d194d1caa5bcddc6a4d83",
+        "version" : "5.0.4"
       }
     },
     {
@@ -57,7 +57,7 @@
     {
       "identity" : "swift-markdown-ui",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
+      "location" : "https://github.com/gonzalezreal/swift-markdown-ui.git",
       "state" : {
         "revision" : "9a8119b37e09a770367eeb26e05267c75d854053",
         "version" : "2.3.1"
