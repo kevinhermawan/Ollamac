@@ -17,56 +17,80 @@ struct ChatView: View {
     @State private var scrollProxy: ScrollViewProxy? = nil
     @State private var isPreferencesPresented: Bool = false
     
+    var isGenerating: Bool {
+        messageViewModel.loading == .generate
+    }
+    
+    var isNotGenerating: Bool {
+        !isGenerating
+    }
+    
     var body: some View {
         ScrollViewReader { proxy in
-            List(messageViewModel.messages) { message in
-                UserMessageView(content: message.prompt)
-                    .padding(.top)
-                    .padding(.horizontal)
-                    .listRowSeparator(.hidden)
+            VStack {
+                List(messageViewModel.messages) { message in
+                    UserMessageView(content: message.prompt)
+                        .padding(.top)
+                        .padding(.horizontal)
+                        .listRowSeparator(.hidden)
+                    
+                    AssistantMessageView(content: message.response)
+                        .id(message)
+                        .padding(.top)
+                        .padding(.horizontal)
+                        .listRowSeparator(.hidden)
+                        .if(messageViewModel.messages.last?.id == message.id) { view in
+                            view.padding(.bottom)
+                        }
+                }
                 
-                AssistantMessageView(content: message.response)
-                    .padding(.top)
-                    .padding(.horizontal)
-                    .listRowSeparator(.hidden)
-                    .id(message)
+                VStack {
+                    ChatField("Write your message here", text: $prompt) {
+                        if isNotGenerating {
+                            generateAction()
+                        }
+                    } trailingAccessory: {
+                        Button(action: generateAction) {
+                            Image(systemName: isGenerating ? "stop.fill" : "arrow.up")
+                                .imageScale(.medium)
+                                .padding(6)
+                                .fontWeight(.bold)
+                                .background(Color(nsColor: .labelColor))
+                                .foregroundColor(Color(nsColor: .textBackgroundColor))
+                                .clipShape(Circle())
+                        }
+                        .buttonStyle(.plain)
+                    } footer: {
+                        if let activeChat = chatViewModel.activeChat, activeChat.model.isEmpty {
+                            ChatFieldFooterView("You don't have any Ollama model. Please pull at least one Ollama model first.")
+                                .foregroundColor(.red)
+                        } else {
+                            ChatFieldFooterView("AI can make mistakes. Please double-check responses.")
+                        }
+                    }
+                    .chatFieldStyle(.capsule)
+                    .font(Font.system(size: 16))
+                }
+                .padding(.top, 8)
+                .padding(.bottom, 12)
+                .padding(.horizontal)
+                .visible(if: chatViewModel.activeChat.isNotNil, removeCompletely: true)
             }
             .onAppear {
-                scrollToBottom(proxy: proxy)
+                scrollProxy = proxy
             }
-            .onChange(of: messageViewModel.messages) {
-                scrollToBottom(proxy: proxy)
+            .onChange(of: chatViewModel.activeChat?.id) {
+                prompt = ""
+                
+                if let proxy = scrollProxy {
+                    scrollToBottom(proxy: proxy)
+                }
             }
             .onChange(of: messageViewModel.messages.last?.response) {
-                scrollToBottom(proxy: proxy)
-            }
-            
-            VStack {
-                ChatField("Write your message here", text: $prompt) {
-                    generateAction()
-                } trailingAccessory: {
-                    Button(action: generateAction) {
-                        Image(systemName: messageViewModel.isGenerating ? "stop.fill" : "arrow.up")
-                            .imageScale(.medium)
-                            .padding(6)
-                            .fontWeight(.bold)
-                            .background(Color(nsColor: .labelColor))
-                            .foregroundColor(Color(nsColor: .textBackgroundColor))
-                            .clipShape(Circle())
-                    }
-                    .buttonStyle(.plain)
-                } footer: {
-                    Text("AI can make mistakes. Please double-check responses.")
-                        .padding(.top, 4)
-                        .font(.callout)
-                        .foregroundColor(.secondary)
+                if let proxy = scrollProxy {
+                    scrollToBottom(proxy: proxy)
                 }
-                .chatFieldStyle(.capsule)
-                .font(Font.system(size: 16))
             }
-            .padding(.top, 8)
-            .padding(.bottom, 12)
-            .padding(.horizontal)
         }
         .navigationTitle(chatViewModel.activeChat?.name ?? "Ollamac")
         .navigationSubtitle(chatViewModel.activeChat?.model ?? "")
@@ -81,13 +105,12 @@ struct ChatView: View {
             ChatPreferencesView()
                 .inspectorColumnWidth(min: 320, ideal: 320)
         }
-        .onChange(of: chatViewModel.activeChat) {
-            prompt = ""
-        }
     }
     
     private func generateAction() {
-        if messageViewModel.isGenerating {
+        guard let activeChat = chatViewModel.activeChat, !activeChat.model.isEmpty else { return }
+        
+        if isGenerating {
             messageViewModel.cancelGeneration()
         } else {
             guard let activeChat = chatViewModel.activeChat else { return }
@@ -100,9 +123,10 @@ struct ChatView: View {
     
     private func scrollToBottom(proxy: ScrollViewProxy) {
         guard messageViewModel.messages.count > 0 else { return }
-        let lastIndex = messageViewModel.messages.count - 1
-        let lastMessage = messageViewModel.messages[lastIndex]
+        guard let lastMessage = messageViewModel.messages.last else { return }
         
-        proxy.scrollTo(lastMessage, anchor: .bottom)
+        DispatchQueue.main.async {
+            proxy.scrollTo(lastMessage, anchor: .bottomTrailing)
+        }
     }
 }

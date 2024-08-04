@@ -17,10 +17,8 @@ final class MessageViewModel {
     private var generationTask: Task<Void, Never>?
     
     var messages: [Message] = []
-    
-    var isErrorWhenLoad: Bool = false
-    var isGenerating: Bool = false
-    var generationErrorMessage: String? = nil
+    var loading: MessageViewModelLoading? = nil
+    var error: MessageViewModelError? = nil
     
     init(modelContext: ModelContext, ollamaKit: OllamaKit) {
         self.modelContext = modelContext
@@ -35,10 +33,13 @@ final class MessageViewModel {
         let sortDescriptor = SortDescriptor(\Message.createdAt)
         let fetchDescriptor = FetchDescriptor<Message>(predicate: predicate, sortBy: [sortDescriptor])
         
+        self.loading = .load
+        
         do {
+            defer { self.loading = nil }
             self.messages = try self.modelContext.fetch(fetchDescriptor)
         } catch {
-            self.isErrorWhenLoad = true
+            self.error = .load(error.localizedDescription)
         }
     }
     
@@ -50,11 +51,11 @@ final class MessageViewModel {
         
         let data = message.toOKChatRequestData(messages: messages)
         
-        isGenerating = true
-        generationErrorMessage = nil
+        self.loading = .generate
+        self.error = nil
         
         generationTask = Task {
-            defer { isGenerating = false }
+            defer { self.loading = nil }
             
             do {
                 for try await chunk in ollamaKit.chat(data: data) {
@@ -67,7 +68,7 @@ final class MessageViewModel {
                     }
                 }
             } catch {
-                generationErrorMessage = error.localizedDescription
+                self.error = .generate(error.localizedDescription)
             }
         }
     }
@@ -79,11 +80,11 @@ final class MessageViewModel {
         
         let data = lastMessage.toOKChatRequestData(messages: messages)
         
-        isGenerating = true
-        generationErrorMessage = nil
+        self.loading = .generate
+        self.error = nil
         
         generationTask = Task {
-            defer { isGenerating = false }
+            defer { self.loading = nil }
             
             do {
                 for try await chunk in ollamaKit.chat(data: data) {
@@ -96,13 +97,23 @@ final class MessageViewModel {
                     }
                 }
             } catch {
-                generationErrorMessage = error.localizedDescription
+                self.error = .generate(error.localizedDescription)
             }
         }
     }
     
     func cancelGeneration() {
-        generationTask?.cancel()
-        isGenerating = false
+        self.generationTask?.cancel()
+        self.loading = .generate
     }
+}
+
+enum MessageViewModelLoading {
+    case load
+    case generate
+}
+
+enum MessageViewModelError: Error {
+    case load(String)
+    case generate(String)
 }

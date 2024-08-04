@@ -100,9 +100,12 @@ struct SidebarView: View {
         }
         .onAppear(perform: chatViewModel.load)
         .onChange(of: chatViewModel.chats) { _, chats in
-            guard let chat = chats.first else { return }
-            
-            chatViewModel.selectedChats = [chat]
+            if let chat = chats.first {
+                chatViewModel.selectedChats = [chat]
+            } else {
+                chatViewModel.selectedChats = []
+                messageViewModel.messages = []
+            }
         }
         .onChange(of: chatViewModel.selectedChats) { _, selectedChats in
             if selectedChats.count > 1 {

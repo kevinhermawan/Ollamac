@@ -27,6 +27,8 @@
 		0A6E852B2C5E9A250030A4AA /* ChatPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E852A2C5E9A250030A4AA /* ChatPreferencesView.swift */; };
 		0A6E852E2C5EAA750030A4AA /* ChatPreferencesFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E852D2C5EAA750030A4AA /* ChatPreferencesFooterView.swift */; };
 		0A6E85302C5EB5F90030A4AA /* SystemPromptEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E852F2C5EB5F90030A4AA /* SystemPromptEditorView.swift */; };
+		0A6E85322C5F980E0030A4AA /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E85312C5F980E0030A4AA /* ScrollOffsetPreferenceKey.swift */; };
+		0A6E85342C5F9DA00030A4AA /* ChatFieldFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E85332C5F9DA00030A4AA /* ChatFieldFooterView.swift */; };
 		0AA41A172AF635AD0053B8DB /* ViewState in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA41A162AF635AD0053B8DB /* ViewState */; };
 		0AB30EB22B272A67009C038A /* ChatField in Frameworks */ = {isa = PBXBuildFile; productRef = 0AB30EB12B272A67009C038A /* ChatField */; };
 		0AB3629F2C398C3300DE3F31 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB3629E2C398C3300DE3F31 /* AppUpdater.swift */; };
@@ -70,6 +72,8 @@
 		0A6E852A2C5E9A250030A4AA /* ChatPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPreferencesView.swift; sourceTree = "<group>"; };
 		0A6E852D2C5EAA750030A4AA /* ChatPreferencesFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPreferencesFooterView.swift; sourceTree = "<group>"; };
 		0A6E852F2C5EB5F90030A4AA /* SystemPromptEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPromptEditorView.swift; sourceTree = "<group>"; };
+		0A6E85312C5F980E0030A4AA /* ScrollOffsetPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetPreferenceKey.swift; sourceTree = "<group>"; };
+		0A6E85332C5F9DA00030A4AA /* ChatFieldFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFieldFooterView.swift; sourceTree = "<group>"; };
 		0AB3629E2C398C3300DE3F31 /* AppUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
 		0ADB95E12C5D345100EB0C60 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		0ADB95E32C5D34B200EB0C60 /* SidebarListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarListItemView.swift; sourceTree = "<group>"; };
@@ -215,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				0A6E852D2C5EAA750030A4AA /* ChatPreferencesFooterView.swift */,
+				0A6E85332C5F9DA00030A4AA /* ChatFieldFooterView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				0ADB96122C5D5CC400EB0C60 /* CodeHighlighter.swift */,
+				0A6E85312C5F980E0030A4AA /* ScrollOffsetPreferenceKey.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -375,6 +381,7 @@
 				0A6E85282C5E98B20030A4AA /* DefaultHostTextField.swift in Sources */,
 				0A6E852B2C5E9A250030A4AA /* ChatPreferencesView.swift in Sources */,
 				0A6E851D2C5E98770030A4AA /* String+RemoveTrailingSlash.swift in Sources */,
+				0A6E85322C5F980E0030A4AA /* ScrollOffsetPreferenceKey.swift in Sources */,
 				0A6E851E2C5E98770030A4AA /* String+IsValidURL.swift in Sources */,
 				0A6E851F2C5E98770030A4AA /* Defaults+Keys.swift in Sources */,
 				0A6E85202C5E98770030A4AA /* Optional+Utils.swift in Sources */,
@@ -390,6 +397,7 @@
 				0A6E850F2C5E6C670030A4AA /* OllamaViewModel.swift in Sources */,
 				0A6E85102C5E6C670030A4AA /* MessageViewModel.swift in Sources */,
 				0A6E85112C5E6C670030A4AA /* ChatViewModel.swift in Sources */,
+				0A6E85342C5F9DA00030A4AA /* ChatFieldFooterView.swift in Sources */,
 				0ADB96162C5D5DE700EB0C60 /* Color+Hex.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
