@@ -58,4 +58,23 @@ extension Message {
         
         return data
     }
+    
+    func toOKChatRequestDataForTitle(model: String, messages: [Message]) -> OKChatRequestData {
+        var requestMessages = [OKChatRequestData.Message]()
+        
+        for message in messages {
+            let userMessage = OKChatRequestData.Message(role: .user, content: message.prompt)
+            let assistantMessage = OKChatRequestData.Message(role: .assistant, content: message.response ?? "")
+            
+            requestMessages.append(userMessage)
+            requestMessages.append(assistantMessage)
+        }
+        
+        let userMessage = OKChatRequestData.Message(role: .user, content: self.prompt)
+        requestMessages.append(userMessage)
+        
+        let data = OKChatRequestData(model: model, messages: requestMessages)
+        
+        return data
+    }
 }
