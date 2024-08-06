@@ -23,10 +23,9 @@
 		0A6E85202C5E98770030A4AA /* Optional+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E85192C5E98770030A4AA /* Optional+Utils.swift */; };
 		0A6E85262C5E98B20030A4AA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E85252C5E98B20030A4AA /* SettingsView.swift */; };
 		0A6E85272C5E98B20030A4AA /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E85242C5E98B20030A4AA /* GeneralView.swift */; };
-		0A6E85282C5E98B20030A4AA /* DefaultHostTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E85222C5E98B20030A4AA /* DefaultHostTextField.swift */; };
 		0A6E852B2C5E9A250030A4AA /* ChatPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E852A2C5E9A250030A4AA /* ChatPreferencesView.swift */; };
 		0A6E852E2C5EAA750030A4AA /* ChatPreferencesFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E852D2C5EAA750030A4AA /* ChatPreferencesFooterView.swift */; };
-		0A6E85302C5EB5F90030A4AA /* SystemPromptEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E852F2C5EB5F90030A4AA /* SystemPromptEditorView.swift */; };
+		0A6E85302C5EB5F90030A4AA /* UpdateSystemPromptSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E852F2C5EB5F90030A4AA /* UpdateSystemPromptSheet.swift */; };
 		0A6E85342C5F9DA00030A4AA /* ChatFieldFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E85332C5F9DA00030A4AA /* ChatFieldFooterView.swift */; };
 		0AA41A172AF635AD0053B8DB /* ViewState in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA41A162AF635AD0053B8DB /* ViewState */; };
 		0AB30EB22B272A67009C038A /* ChatField in Frameworks */ = {isa = PBXBuildFile; productRef = 0AB30EB12B272A67009C038A /* ChatField */; };
@@ -47,6 +46,8 @@
 		0ADB96162C5D5DE700EB0C60 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADB96152C5D5DE700EB0C60 /* Color+Hex.swift */; };
 		0AE024832AFB898300347C18 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 0AE024822AFB898300347C18 /* Sparkle */; };
 		0AE0248B2AFEA24600347C18 /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AE0248A2AFEA24600347C18 /* OllamaKit */; };
+		0AF5CB622C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF5CB612C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift */; };
+		0AF5CB642C62B7E100DF8DA8 /* GeneralBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF5CB632C62B7E100DF8DA8 /* GeneralBox.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,12 +66,11 @@
 		0A6E85192C5E98770030A4AA /* Optional+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Utils.swift"; sourceTree = "<group>"; };
 		0A6E851A2C5E98770030A4AA /* String+IsValidURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+IsValidURL.swift"; sourceTree = "<group>"; };
 		0A6E851B2C5E98770030A4AA /* String+RemoveTrailingSlash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveTrailingSlash.swift"; sourceTree = "<group>"; };
-		0A6E85222C5E98B20030A4AA /* DefaultHostTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHostTextField.swift; sourceTree = "<group>"; };
 		0A6E85242C5E98B20030A4AA /* GeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
 		0A6E85252C5E98B20030A4AA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0A6E852A2C5E9A250030A4AA /* ChatPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPreferencesView.swift; sourceTree = "<group>"; };
 		0A6E852D2C5EAA750030A4AA /* ChatPreferencesFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPreferencesFooterView.swift; sourceTree = "<group>"; };
-		0A6E852F2C5EB5F90030A4AA /* SystemPromptEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPromptEditorView.swift; sourceTree = "<group>"; };
+		0A6E852F2C5EB5F90030A4AA /* UpdateSystemPromptSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSystemPromptSheet.swift; sourceTree = "<group>"; };
 		0A6E85332C5F9DA00030A4AA /* ChatFieldFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFieldFooterView.swift; sourceTree = "<group>"; };
 		0AB3629E2C398C3300DE3F31 /* AppUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
 		0ADB95E12C5D345100EB0C60 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
@@ -84,6 +84,8 @@
 		0ADB96122C5D5CC400EB0C60 /* CodeHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeHighlighter.swift; sourceTree = "<group>"; };
 		0ADB96152C5D5DE700EB0C60 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		0AE024842AFB8D0E00347C18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0AF5CB612C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateOllamaHostSheet.swift; sourceTree = "<group>"; };
+		0AF5CB632C62B7E100DF8DA8 /* GeneralBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,11 +128,12 @@
 		0A4D35832AF541D900846890 /* Ollamac */ = {
 			isa = PBXGroup;
 			children = (
-				0A6E85122C5E98580030A4AA /* Models */,
 				0A4D35952AF5422000846890 /* App */,
 				0ADB96142C5D5DD900EB0C60 /* Extensions */,
+				0A6E85122C5E98580030A4AA /* Models */,
 				0A4D358C2AF541DA00846890 /* Preview Content */,
 				0A4D35972AF5423900846890 /* Resources */,
+				0AF5CB652C62B9EC00DF8DA8 /* Sheets */,
 				0AA41A1D2AF666670053B8DB /* Utils */,
 				0A6E850B2C5E6C610030A4AA /* ViewModels */,
 				0A4D35962AF5422A00846890 /* Views */,
@@ -208,7 +211,7 @@
 		0A6E85232C5E98B20030A4AA /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				0A6E85222C5E98B20030A4AA /* DefaultHostTextField.swift */,
+				0AF5CB632C62B7E100DF8DA8 /* GeneralBox.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -256,7 +259,6 @@
 				0ADB95EC2C5D42E200EB0C60 /* UserMessageView.swift */,
 				0ADB95EE2C5D42FF00EB0C60 /* AssistantMessageView.swift */,
 				0A6E852A2C5E9A250030A4AA /* ChatPreferencesView.swift */,
-				0A6E852F2C5EB5F90030A4AA /* SystemPromptEditorView.swift */,
 			);
 			path = Chats;
 			sourceTree = "<group>";
@@ -272,6 +274,15 @@
 				0A6E851B2C5E98770030A4AA /* String+RemoveTrailingSlash.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0AF5CB652C62B9EC00DF8DA8 /* Sheets */ = {
+			isa = PBXGroup;
+			children = (
+				0A6E852F2C5EB5F90030A4AA /* UpdateSystemPromptSheet.swift */,
+				0AF5CB612C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift */,
+			);
+			path = Sheets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -370,16 +381,16 @@
 				0ADB95E22C5D345100EB0C60 /* SidebarView.swift in Sources */,
 				0ADB95ED2C5D42E200EB0C60 /* UserMessageView.swift in Sources */,
 				0ADB95EF2C5D42FF00EB0C60 /* AssistantMessageView.swift in Sources */,
-				0A6E85302C5EB5F90030A4AA /* SystemPromptEditorView.swift in Sources */,
+				0A6E85302C5EB5F90030A4AA /* UpdateSystemPromptSheet.swift in Sources */,
 				0A6E85152C5E98620030A4AA /* Message.swift in Sources */,
 				0A6E85162C5E98620030A4AA /* Chat.swift in Sources */,
 				0A6E85262C5E98B20030A4AA /* SettingsView.swift in Sources */,
 				0A6E85272C5E98B20030A4AA /* GeneralView.swift in Sources */,
-				0A6E85282C5E98B20030A4AA /* DefaultHostTextField.swift in Sources */,
 				0A6E852B2C5E9A250030A4AA /* ChatPreferencesView.swift in Sources */,
 				0A6E851D2C5E98770030A4AA /* String+RemoveTrailingSlash.swift in Sources */,
 				0A6E851E2C5E98770030A4AA /* String+IsValidURL.swift in Sources */,
 				0A6E851F2C5E98770030A4AA /* Defaults+Keys.swift in Sources */,
+				0AF5CB642C62B7E100DF8DA8 /* GeneralBox.swift in Sources */,
 				0A6E85202C5E98770030A4AA /* Optional+Utils.swift in Sources */,
 				0ADB96132C5D5CC400EB0C60 /* CodeHighlighter.swift in Sources */,
 				0ADB96112C5D585500EB0C60 /* Theme+Ollamac.swift in Sources */,
@@ -391,6 +402,7 @@
 				0AB3629F2C398C3300DE3F31 /* AppUpdater.swift in Sources */,
 				0A4D35852AF541D900846890 /* OllamacApp.swift in Sources */,
 				0A6E850F2C5E6C670030A4AA /* OllamaViewModel.swift in Sources */,
+				0AF5CB622C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift in Sources */,
 				0A6E85102C5E6C670030A4AA /* MessageViewModel.swift in Sources */,
 				0A6E85112C5E6C670030A4AA /* ChatViewModel.swift in Sources */,
 				0A6E85342C5F9DA00030A4AA /* ChatFieldFooterView.swift in Sources */,

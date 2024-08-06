@@ -1,5 +1,5 @@
 //
-//  SystemPromptEditorView.swift
+//  UpdateSystemPromptSheet.swift
 //  Ollamac
 //
 //  Created by Kevin Hermawan on 8/4/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SystemPromptEditorView: View {
+struct UpdateSystemPromptSheet: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var prompt: String
@@ -30,7 +30,7 @@ struct SystemPromptEditorView: View {
             .padding(.vertical, 16)
             .padding(.horizontal, 10)
             .frame(minWidth: 512, minHeight: 256)
-            .navigationTitle("System Prompt")
+            .navigationTitle("Update System Prompt")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel", role: .cancel, action: { dismiss() })

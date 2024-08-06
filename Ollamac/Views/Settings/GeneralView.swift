@@ -6,50 +6,34 @@
 //
 
 import Defaults
-import OllamaKit
 import SwiftUI
-import ViewState
 
 struct GeneralView: View {
-    @State private var defaultHost: String = ""
-    @Default(.defaultHost) private var defaultHostDefault
+    @Default(.defaultHost) private var defaultHost
+    @Default(.defaultSystemPrompt) private var defaultSystemPrompt
     
-    @State private var defaultHostViewState: ViewState? = nil
+    @State private var isUpdateOllamaHostPresented = false
+    @State private var isUpdateSystemPromptPresented = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            GroupBox {
-                DefaultHostTextField(defaultHost: $defaultHost, viewState: $defaultHostViewState, saveAction: saveDefaultHostAction)
-            }
-        }
-        .onAppear {
-            defaultHost = defaultHostDefault
-        }
-        .onDisappear {
-            defaultHostViewState = nil
-        }
-    }
-    
-    func saveDefaultHostAction() {
-        defaultHostViewState = .loading
-        
-        Task {
-            let sanitizedHost = defaultHost.removeTrailingSlash()
-            
-            guard sanitizedHost.isValidURL(), let baseURL = URL(string: sanitizedHost) else {
-                defaultHostViewState = .error(message: "The URL is invalid")
-                return
+            GeneralBox(label: "Default Ollama Host", value: defaultHost) {
+                isUpdateOllamaHostPresented = true
             }
             
-            let ollamaKit = OllamaKit(baseURL: baseURL)
-            
-            guard await ollamaKit.reachable() else {
-                defaultHostViewState = .error(message: "The host is not reachable")
-                return
+            GeneralBox(label: "Default System Prompt", value: defaultSystemPrompt) {
+                isUpdateSystemPromptPresented = true
             }
-            
-            defaultHostDefault = sanitizedHost
-            defaultHostViewState = .success(message: "The default host is updated")
+        }
+        .sheet(isPresented: $isUpdateOllamaHostPresented) {
+            UpdateOllamaHostSheet(host: defaultHost) { host in
+                self.defaultHost = host
+            }
+        }
+        .sheet(isPresented: $isUpdateSystemPromptPresented) {
+            UpdateSystemPromptSheet(prompt: defaultSystemPrompt) { prompt in
+                self.defaultSystemPrompt = prompt
+            }
         }
     }
 }
