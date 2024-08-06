@@ -7,7 +7,6 @@
 
 import Defaults
 import OllamaKit
-import SettingsModule
 import Sparkle
 import SwiftUI
 import SwiftData

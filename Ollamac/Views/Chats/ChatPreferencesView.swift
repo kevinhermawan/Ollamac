@@ -5,6 +5,7 @@
 //  Created by Kevin Hermawan on 8/4/24.
 //
 
+import Defaults
 import SwiftUI
 import SwiftUIIntrospect
 
@@ -14,11 +15,20 @@ struct ChatPreferencesView: View {
     
     @State private var isSystemPromptEditorPresented: Bool = false
     
-    @State private var model: String = ""
-    @State private var systemPrompt: String = ""
-    @State private var temperature: Double = 0.7
-    @State private var topP: Double = 0.9
-    @State private var topK: Int = 40
+    @Default(.defaultModel) private var model: String
+    @State private var host: String
+    @State private var systemPrompt: String
+    @State private var temperature: Double
+    @State private var topP: Double
+    @State private var topK: Int
+    
+    init() {
+        self.host = Defaults[.defaultHost]
+        self.systemPrompt = Defaults[.defaultSystemPrompt]
+        self.temperature = Defaults[.defaultTemperature]
+        self.topP = Defaults[.defaultTopP]
+        self.topK = Defaults[.defaultTopK]
+    }
     
     var body: some View {
         Form {
@@ -36,7 +46,8 @@ struct ChatPreferencesView: View {
                     
                     Button(action: ollamaViewModel.fetchModels) {
                         if ollamaViewModel.loading == .fetchModels {
-                            ProgressView() .controlSize(.small)
+                            ProgressView()
+                                .controlSize(.small)
                         } else {
                             Text("Refresh")
                                 .foregroundColor(.accent)
@@ -51,7 +62,24 @@ struct ChatPreferencesView: View {
             }
             
             Section {
+                Text(host)
+                    .help(host)
+                    .lineLimit(1)
+            } header: {
+                HStack {
+                    Text("Host")
+                    
+                    Spacer()
+                    
+                    Button("Change", action: { isSystemPromptEditorPresented = true })
+                        .buttonStyle(.accessoryBar)
+                        .foregroundColor(.accent)
+                }
+            }
+            
+            Section {
                 Text(systemPrompt)
+                    .help(systemPrompt)
                     .lineLimit(3)
             } header: {
                 HStack {
@@ -118,10 +146,25 @@ struct ChatPreferencesView: View {
                 self.model = model
             }
             
-            self.systemPrompt = newValue?.systemPrompt ?? ""
-            self.temperature = newValue?.temperature ?? 0.7
-            self.topP = newValue?.topP ?? 0.9
-            self.topK = newValue?.topK ?? 40
+            if let host = newValue?.host {
+                self.host = host
+            }
+            
+            if let systemPrompt = newValue?.systemPrompt {
+                self.systemPrompt = systemPrompt
+            }
+            
+            if let temperature = newValue?.temperature {
+                self.temperature = temperature
+            }
+            
+            if let topP = newValue?.topP {
+                self.topP = topP
+            }
+            
+            if let topK = newValue?.topK {
+                self.topK = topK
+            }
         }
         .sheet(isPresented: $isSystemPromptEditorPresented) {
             SystemPromptEditorView(prompt: systemPrompt) { prompt in

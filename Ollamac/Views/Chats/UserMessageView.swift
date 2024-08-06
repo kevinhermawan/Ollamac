@@ -24,6 +24,7 @@ struct UserMessageView: View {
                 .padding(12)
                 .background(.accent)
                 .foregroundColor(.white)
+                .textSelection(.enabled)
                 .font(Font.system(size: 16))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .frame(maxWidth: windowWidth / 2, alignment: .trailing)

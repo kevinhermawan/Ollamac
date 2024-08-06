@@ -5,6 +5,7 @@
 //  Created by Kevin Hermawan on 8/2/24.
 //
 
+import Defaults
 import SwiftUI
 import ViewCondition
 
@@ -79,7 +80,13 @@ struct SidebarView: View {
         .listStyle(.sidebar)
         .toolbar {
             SidebarToolbarContent {
-                chatViewModel.create(model: ollamaViewModel.models.first ?? "")
+                var selectedModel = Defaults[.defaultModel]
+                
+                if selectedModel.isEmpty {
+                    selectedModel = ollamaViewModel.models.first ?? ""
+                }
+                
+                chatViewModel.create(model: selectedModel)
             }
         }
         .alert("Unexpected Error", isPresented: $chatViewModelBindable.isErrorWhenLoad) {
