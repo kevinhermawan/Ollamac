@@ -13,7 +13,8 @@ struct ChatPreferencesView: View {
     @Environment(OllamaViewModel.self) private var ollamaViewModel
     @Environment(ChatViewModel.self) private var chatViewModel
     
-    @State private var isSystemPromptEditorPresented: Bool = false
+    @State private var isUpdateOllamaHostPresented: Bool = false
+    @State private var isUpdateSystemPromptPresented: Bool = false
     
     @Default(.defaultModel) private var model: String
     @State private var host: String
@@ -71,10 +72,13 @@ struct ChatPreferencesView: View {
                     
                     Spacer()
                     
-                    Button("Change", action: { isSystemPromptEditorPresented = true })
+                    Button("Change", action: { isUpdateOllamaHostPresented = true })
                         .buttonStyle(.accessoryBar)
                         .foregroundColor(.accent)
                 }
+            }
+            .onChange(of: host) { _, newValue in
+                self.chatViewModel.activeChat?.host = newValue
             }
             
             Section {
@@ -87,7 +91,7 @@ struct ChatPreferencesView: View {
                     
                     Spacer()
                     
-                    Button("Change", action: { isSystemPromptEditorPresented = true })
+                    Button("Change", action: { isUpdateSystemPromptPresented = true })
                         .buttonStyle(.accessoryBar)
                         .foregroundColor(.accent)
                 }
@@ -166,9 +170,14 @@ struct ChatPreferencesView: View {
                 self.topK = topK
             }
         }
-        .sheet(isPresented: $isSystemPromptEditorPresented) {
-            SystemPromptEditorView(prompt: systemPrompt) { prompt in
-                systemPrompt = prompt
+        .sheet(isPresented: $isUpdateOllamaHostPresented) {
+            UpdateOllamaHostSheet(host: host) { host in
+                self.host = host
+            }
+        }
+        .sheet(isPresented: $isUpdateSystemPromptPresented) {
+            UpdateSystemPromptSheet(prompt: systemPrompt) { prompt in
+                self.systemPrompt = prompt
             }
         }
     }
