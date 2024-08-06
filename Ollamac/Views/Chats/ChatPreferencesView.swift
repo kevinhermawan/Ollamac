@@ -6,12 +6,14 @@
 //
 
 import Defaults
+import OllamaKit
 import SwiftUI
 import SwiftUIIntrospect
 
 struct ChatPreferencesView: View {
-    @Environment(OllamaViewModel.self) private var ollamaViewModel
     @Environment(ChatViewModel.self) private var chatViewModel
+    
+    @Binding private var ollamaKit: OllamaKit
     
     @State private var isUpdateOllamaHostPresented: Bool = false
     @State private var isUpdateSystemPromptPresented: Bool = false
@@ -23,7 +25,9 @@ struct ChatPreferencesView: View {
     @State private var topP: Double
     @State private var topK: Int
     
-    init() {
+    init(ollamaKit: Binding<OllamaKit>) {
+        self._ollamaKit = ollamaKit
+        
         self.host = Defaults[.defaultHost]
         self.systemPrompt = Defaults[.defaultSystemPrompt]
         self.temperature = Defaults[.defaultTemperature]
@@ -35,7 +39,7 @@ struct ChatPreferencesView: View {
         Form {
             Section {
                 Picker("Selected Model", selection: $model) {
-                    ForEach(ollamaViewModel.models, id: \.self) { model in
+                    ForEach(chatViewModel.models, id: \.self) { model in
                         Text(model).tag(model)
                     }
                 }
@@ -45,8 +49,8 @@ struct ChatPreferencesView: View {
                     
                     Spacer()
                     
-                    Button(action: ollamaViewModel.fetchModels) {
-                        if ollamaViewModel.loading == .fetchModels {
+                    Button(action: { chatViewModel.fetchModels(ollamaKit) }) {
+                        if chatViewModel.loading == .fetchModels {
                             ProgressView()
                                 .controlSize(.small)
                         } else {
@@ -55,7 +59,7 @@ struct ChatPreferencesView: View {
                         }
                     }
                     .buttonStyle(.accessoryBar)
-                    .disabled(ollamaViewModel.loading == .fetchModels)
+                    .disabled(chatViewModel.loading == .fetchModels)
                 }
             }
             .onChange(of: model) { _, newValue in
@@ -79,6 +83,10 @@ struct ChatPreferencesView: View {
             }
             .onChange(of: host) { _, newValue in
                 self.chatViewModel.activeChat?.host = newValue
+                
+                if let baseURL = URL(string: newValue) {
+                    self.ollamaKit = OllamaKit(baseURL: baseURL)
+                }
             }
             
             Section {

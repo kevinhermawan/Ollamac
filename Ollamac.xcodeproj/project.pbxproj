@@ -12,7 +12,6 @@
 		0A4D358B2AF541DA00846890 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A4D358A2AF541DA00846890 /* Assets.xcassets */; };
 		0A4D358E2AF541DA00846890 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A4D358D2AF541DA00846890 /* Preview Assets.xcassets */; };
 		0A4D35992AF5425900846890 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4D35982AF5425900846890 /* AppView.swift */; };
-		0A6E850F2C5E6C670030A4AA /* OllamaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E850E2C5E6C670030A4AA /* OllamaViewModel.swift */; };
 		0A6E85102C5E6C670030A4AA /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E850D2C5E6C670030A4AA /* MessageViewModel.swift */; };
 		0A6E85112C5E6C670030A4AA /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E850C2C5E6C670030A4AA /* ChatViewModel.swift */; };
 		0A6E85152C5E98620030A4AA /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E85142C5E98620030A4AA /* Message.swift */; };
@@ -48,6 +47,7 @@
 		0AE0248B2AFEA24600347C18 /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AE0248A2AFEA24600347C18 /* OllamaKit */; };
 		0AF5CB622C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF5CB612C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift */; };
 		0AF5CB642C62B7E100DF8DA8 /* GeneralBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF5CB632C62B7E100DF8DA8 /* GeneralBox.swift */; };
+		0AF5CB682C62BCA100DF8DA8 /* AppInfo in Frameworks */ = {isa = PBXBuildFile; productRef = 0AF5CB672C62BCA100DF8DA8 /* AppInfo */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,7 +59,6 @@
 		0A4D35982AF5425900846890 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		0A6E850C2C5E6C670030A4AA /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		0A6E850D2C5E6C670030A4AA /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
-		0A6E850E2C5E6C670030A4AA /* OllamaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaViewModel.swift; sourceTree = "<group>"; };
 		0A6E85132C5E98620030A4AA /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		0A6E85142C5E98620030A4AA /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		0A6E85172C5E98770030A4AA /* Defaults+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Defaults+Keys.swift"; sourceTree = "<group>"; };
@@ -93,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AF5CB682C62BCA100DF8DA8 /* AppInfo in Frameworks */,
 				0AE024832AFB898300347C18 /* Sparkle in Frameworks */,
 				0AA41A172AF635AD0053B8DB /* ViewState in Frameworks */,
 				0ADB960E2C5D57D500EB0C60 /* MarkdownUI in Frameworks */,
@@ -184,7 +184,6 @@
 			children = (
 				0A6E850C2C5E6C670030A4AA /* ChatViewModel.swift */,
 				0A6E850D2C5E6C670030A4AA /* MessageViewModel.swift */,
-				0A6E850E2C5E6C670030A4AA /* OllamaViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -311,6 +310,7 @@
 				0AB362A12C398ED700DE3F31 /* Highlightr */,
 				0A2C4E412C428F5E007794CC /* Defaults */,
 				0ADB960D2C5D57D500EB0C60 /* MarkdownUI */,
+				0AF5CB672C62BCA100DF8DA8 /* AppInfo */,
 			);
 			productName = Ollamac;
 			productReference = 0A4D35812AF541D900846890 /* Ollamac.app */;
@@ -350,6 +350,7 @@
 				0AB362A02C398ED700DE3F31 /* XCRemoteSwiftPackageReference "Highlightr" */,
 				0A2C4E402C428F5E007794CC /* XCRemoteSwiftPackageReference "Defaults" */,
 				0ADB960C2C5D57D500EB0C60 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				0AF5CB662C62BCA100DF8DA8 /* XCRemoteSwiftPackageReference "AppInfo" */,
 			);
 			productRefGroup = 0A4D35822AF541D900846890 /* Products */;
 			projectDirPath = "";
@@ -401,7 +402,6 @@
 				0ADB95E82C5D3BE900EB0C60 /* SidebarContextMenu.swift in Sources */,
 				0AB3629F2C398C3300DE3F31 /* AppUpdater.swift in Sources */,
 				0A4D35852AF541D900846890 /* OllamacApp.swift in Sources */,
-				0A6E850F2C5E6C670030A4AA /* OllamaViewModel.swift in Sources */,
 				0AF5CB622C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift in Sources */,
 				0A6E85102C5E6C670030A4AA /* MessageViewModel.swift in Sources */,
 				0A6E85112C5E6C670030A4AA /* ChatViewModel.swift in Sources */,
@@ -695,6 +695,14 @@
 				minimumVersion = 5.0.5;
 			};
 		};
+		0AF5CB662C62BCA100DF8DA8 /* XCRemoteSwiftPackageReference "AppInfo" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kevinhermawan/AppInfo.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -742,6 +750,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0AE024892AFEA24600347C18 /* XCRemoteSwiftPackageReference "OllamaKit" */;
 			productName = OllamaKit;
+		};
+		0AF5CB672C62BCA100DF8DA8 /* AppInfo */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0AF5CB662C62BCA100DF8DA8 /* XCRemoteSwiftPackageReference "AppInfo" */;
+			productName = AppInfo;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

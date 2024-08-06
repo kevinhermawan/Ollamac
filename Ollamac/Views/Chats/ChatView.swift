@@ -5,7 +5,9 @@
 //  Created by Kevin Hermawan on 8/2/24.
 //
 
+import Defaults
 import ChatField
+import OllamaKit
 import SwiftUI
 import ViewCondition
 
@@ -13,6 +15,7 @@ struct ChatView: View {
     @Environment(ChatViewModel.self) private var chatViewModel
     @Environment(MessageViewModel.self) private var messageViewModel
     
+    @State private var ollamaKit: OllamaKit
     @State private var prompt: String = ""
     @State private var scrollProxy: ScrollViewProxy? = nil
     @State private var isPreferencesPresented: Bool = false
@@ -23,6 +26,11 @@ struct ChatView: View {
     
     var isNotGenerating: Bool {
         !isGenerating
+    }
+    
+    init() {
+        let baseURL = URL(string: Defaults[.defaultHost])!
+        self._ollamaKit = State(initialValue: OllamaKit(baseURL: baseURL))
     }
     
     var body: some View {
@@ -61,11 +69,15 @@ struct ChatView: View {
                         }
                         .buttonStyle(.plain)
                     } footer: {
-                        if let activeChat = chatViewModel.activeChat, activeChat.model.isEmpty {
+                        if chatViewModel.models.isEmpty {
                             ChatFieldFooterView("You don't have any Ollama model. Please pull at least one Ollama model first.")
+                                .foregroundColor(.red)
+                        } else if let activeChat = chatViewModel.activeChat, !chatViewModel.models.contains(where: { $0 == activeChat.model }) {
+                            ChatFieldFooterView("Please select a model from the list on the right side of the chat.")
                                 .foregroundColor(.red)
                         } else {
                             ChatFieldFooterView("AI can make mistakes. Please double-check responses.")
+                                .foregroundColor(.secondary)
                         }
                     }
                     .chatFieldStyle(.capsule)
@@ -77,13 +89,18 @@ struct ChatView: View {
                 .visible(if: chatViewModel.activeChat.isNotNil, removeCompletely: true)
             }
             .onAppear {
-                scrollProxy = proxy
+                self.scrollProxy = proxy
             }
             .onChange(of: chatViewModel.activeChat?.id) {
-                prompt = ""
+                self.prompt = ""
                 
-                if let proxy = scrollProxy {
-                    scrollToBottom(proxy: proxy)
+                if let scrollProxy {
+                    self.scrollToBottom(proxy: scrollProxy)
+                }
+                
+                if let activeChat = chatViewModel.activeChat, let host = activeChat.host, let baseURL = URL(string: host) {
+                    self.ollamaKit = OllamaKit(baseURL: baseURL)
+                    self.chatViewModel.fetchModels(self.ollamaKit)
                 }
             }
             .onChange(of: messageViewModel.messages.last?.response) {
@@ -102,7 +119,7 @@ struct ChatView: View {
             }
         }
         .inspector(isPresented: $isPreferencesPresented) {
-            ChatPreferencesView()
+            ChatPreferencesView(ollamaKit: $ollamaKit)
                 .inspectorColumnWidth(min: 320, ideal: 320)
         }
     }
@@ -115,7 +132,7 @@ struct ChatView: View {
         } else {
             guard let activeChat = chatViewModel.activeChat else { return }
             
-            messageViewModel.generate(activeChat: activeChat, prompt: prompt)
+            messageViewModel.generate(ollamaKit, activeChat: activeChat, prompt: prompt)
         }
         
         prompt = ""

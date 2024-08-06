@@ -13,16 +13,14 @@ import SwiftData
 @Observable
 final class MessageViewModel {
     private var modelContext: ModelContext
-    private var ollamaKit: OllamaKit
     private var generationTask: Task<Void, Never>?
     
     var messages: [Message] = []
     var loading: MessageViewModelLoading? = nil
     var error: MessageViewModelError? = nil
     
-    init(modelContext: ModelContext, ollamaKit: OllamaKit) {
+    init(modelContext: ModelContext) {
         self.modelContext = modelContext
-        self.ollamaKit = ollamaKit
     }
     
     func load(of chat: Chat?) {
@@ -43,7 +41,7 @@ final class MessageViewModel {
         }
     }
     
-    func generate(activeChat: Chat, prompt: String) {
+    func generate(_ ollamaKit: OllamaKit, activeChat: Chat, prompt: String) {
         let message = Message(prompt: prompt)
         message.chat = activeChat
         messages.append(message)
@@ -73,8 +71,7 @@ final class MessageViewModel {
         }
     }
     
-    
-    func regenerate(activeChat: Chat) {
+    func regenerate(_ ollamaKit: OllamaKit, activeChat: Chat) {
         guard let lastMessage = messages.last else { return }
         lastMessage.response = nil
         

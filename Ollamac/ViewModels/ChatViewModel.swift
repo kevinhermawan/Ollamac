@@ -5,19 +5,24 @@
 //  Created by Kevin Hermawan on 13/07/24.
 //
 
+import OllamaKit
 import SwiftData
 import SwiftUI
 
+@MainActor
 @Observable
 final class ChatViewModel {
     private var modelContext: ModelContext
     private var _chatNameTemp: String = ""
     
+    var models: [String] = []
+    
     var chats: [Chat] = []
     var activeChat: Chat? = nil
     var selectedChats = Set<Chat>()
+    var loading: ChatViewModelLoading? = nil
+    var error: ChatViewModelError? = nil
     
-    var isErrorWhenLoad = false
     var isRenameChatPresented = false
     var isDeleteConfirmationPresented = false
     
@@ -39,6 +44,26 @@ final class ChatViewModel {
         self.modelContext = modelContext
     }
     
+    func fetchModels(_ ollamaKit: OllamaKit) {
+        self.loading = .fetchModels
+        
+        Task {
+            do {
+                defer { self.loading = nil }
+                
+                let response = try await ollamaKit.models()
+                
+                self.models = response.models.map { $0.name }
+                
+                if let host = activeChat?.host, host.isEmpty {
+                    self.activeChat?.host = self.models.first
+                }
+            } catch {
+                self.error = .fetchModels(error.localizedDescription)
+            }
+        }
+    }
+    
     func load() {
         do {
             let sortDescriptor = SortDescriptor(\Chat.modifiedAt, order: .reverse)
@@ -46,7 +71,7 @@ final class ChatViewModel {
             
             self.chats = try self.modelContext.fetch(fetchDescriptor)
         } catch {
-            self.isErrorWhenLoad = true
+            self.error = .load(error.localizedDescription)
         }
     }
     
@@ -72,4 +97,13 @@ final class ChatViewModel {
             self.chats.removeAll(where: { $0.id == chat.id })
         }
     }
+}
+
+enum ChatViewModelLoading {
+    case fetchModels
+}
+
+enum ChatViewModelError: Error {
+    case fetchModels(String)
+    case load(String)
 }
