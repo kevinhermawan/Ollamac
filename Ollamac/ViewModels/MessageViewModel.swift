@@ -63,6 +63,10 @@ final class MessageViewModel {
                     
                     if chunk.done {
                         activeChat.modifiedAt = .now
+                        
+                        if messages.count == 1 {
+                            self.generateTitle(ollamaKit, activeChat: activeChat)
+                        }
                     }
                 }
             } catch {
@@ -75,16 +79,13 @@ final class MessageViewModel {
         guard let lastMessage = messages.last else { return }
         lastMessage.response = nil
         
-        let data = lastMessage.toOKChatRequestData(messages: messages)
-        
         self.loading = .generate
-        self.error = nil
         
         generationTask = Task {
             defer { self.loading = nil }
             
             do {
-                for try await chunk in ollamaKit.chat(data: data) {
+                for try await chunk in ollamaKit.chat(data: lastMessage.toOKChatRequestData(messages: messages)) {
                     if Task.isCancelled { break }
                     
                     lastMessage.response = (lastMessage.response ?? "") + (chunk.message?.content ?? "")
@@ -95,6 +96,44 @@ final class MessageViewModel {
                 }
             } catch {
                 self.error = .generate(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func generateTitle(_ ollamaKit: OllamaKit, activeChat: Chat) {
+        var requestMessages = [OKChatRequestData.Message]()
+        
+        for message in messages {
+            let userMessage = OKChatRequestData.Message(role: .user, content: message.prompt)
+            let assistantMessage = OKChatRequestData.Message(role: .assistant, content: message.response ?? "")
+            
+            requestMessages.append(userMessage)
+            requestMessages.append(assistantMessage)
+        }
+        
+        let userMessage = OKChatRequestData.Message(role: .user, content: "Just reply with a short title about this conversation.")
+        requestMessages.append(userMessage)
+        
+        generationTask = Task {
+            defer { self.loading = nil }
+            
+            do {
+                for try await chunk in ollamaKit.chat(data: OKChatRequestData(model: activeChat.model, messages: requestMessages)) {
+                    if Task.isCancelled { break }
+                    
+                    if activeChat.name == "New Chat" {
+                        activeChat.name = ""
+                        activeChat.name += chunk.message?.content ?? ""
+                    } else {
+                        activeChat.name += chunk.message?.content ?? ""
+                    }
+                    
+                    if chunk.done {
+                        activeChat.modifiedAt = .now
+                    }
+                }
+            } catch {
+                self.error = .generateTitle(error.localizedDescription)
             }
         }
     }
@@ -113,4 +152,5 @@ enum MessageViewModelLoading {
 enum MessageViewModelError: Error {
     case load(String)
     case generate(String)
+    case generateTitle(String)
 }
