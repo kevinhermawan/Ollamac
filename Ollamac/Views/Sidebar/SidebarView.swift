@@ -10,7 +10,6 @@ import SwiftUI
 import ViewCondition
 
 struct SidebarView: View {
-    @Environment(OllamaViewModel.self) private var ollamaViewModel
     @Environment(ChatViewModel.self) private var chatViewModel
     @Environment(MessageViewModel.self) private var messageViewModel
     
@@ -80,19 +79,8 @@ struct SidebarView: View {
         .listStyle(.sidebar)
         .toolbar {
             SidebarToolbarContent {
-                var selectedModel = Defaults[.defaultModel]
-                
-                if selectedModel.isEmpty {
-                    selectedModel = ollamaViewModel.models.first ?? ""
-                }
-                
-                chatViewModel.create(model: selectedModel)
+                chatViewModel.create(model: Defaults[.defaultModel])
             }
-        }
-        .alert("Unexpected Error", isPresented: $chatViewModelBindable.isErrorWhenLoad) {
-            Button("OK", role: .cancel, action: {})
-        } message: {
-            Text("Failed to load chats")
         }
         .alert("Rename Chat", isPresented: $chatViewModelBindable.isRenameChatPresented) {
             TextField("Chat name", text: $chatViewModelBindable.chatNameTemp)

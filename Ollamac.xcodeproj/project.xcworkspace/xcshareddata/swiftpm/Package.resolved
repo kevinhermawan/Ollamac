@@ -1,6 +1,15 @@
 {
-  "originHash" : "64d8f114701684f04be1d6f4e6bc2c657eca9fa3bf8eaa563a89679b385d9b6f",
+  "originHash" : "ba444886f4f52fac50b82c34d1a33c522271a20056b097348177ff9ad8c737d2",
   "pins" : [
+    {
+      "identity" : "appinfo",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kevinhermawan/AppInfo.git",
+      "state" : {
+        "revision" : "4b60b10c94c327083cb5fe5e73cdff21d1082b4c",
+        "version" : "1.0.2"
+      }
+    },
     {
       "identity" : "chatfield",
       "kind" : "remoteSourceControl",

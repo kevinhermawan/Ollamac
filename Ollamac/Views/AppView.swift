@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct AppView: View {
-    @Environment(OllamaViewModel.self) private var ollamaViewModel
-    
     var body: some View {
         NavigationSplitView {
             SidebarView()
@@ -17,6 +15,5 @@ struct AppView: View {
         } detail: {
             ChatView()
         }
-        .onAppear(perform: ollamaViewModel.fetchModels)
     }
 }

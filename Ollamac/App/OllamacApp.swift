@@ -5,6 +5,7 @@
 //  Created by Kevin Hermawan on 03/11/23.
 //
 
+import AppInfo
 import Defaults
 import OllamaKit
 import Sparkle
@@ -16,7 +17,6 @@ struct OllamacApp: App {
     @State private var appUpdater: AppUpdater
     private var updater: SPUUpdater
     
-    @State private var ollamaViewModel: OllamaViewModel
     @State private var chatViewModel: ChatViewModel
     @State private var messageViewModel: MessageViewModel
     
@@ -33,24 +33,18 @@ struct OllamacApp: App {
     
     init() {
         let modelContext = sharedModelContainer.mainContext
-                
-        let ollamaURL = URL(string: Defaults[.defaultHost])!
-        let ollamaKit = OllamaKit(baseURL: ollamaURL)
-        
-        let ollamaViewModel = OllamaViewModel(ollamaKit: ollamaKit)
-        _ollamaViewModel = State(initialValue: ollamaViewModel)
-        
-        let messageViewModel = MessageViewModel(modelContext: modelContext, ollamaKit: ollamaKit)
-        _messageViewModel = State(initialValue: messageViewModel)
-        
-        let chatViewModel = ChatViewModel(modelContext: modelContext)
-        _chatViewModel = State(initialValue: chatViewModel)
         
         let updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
-        updater = updaterController.updater
+        self.updater = updaterController.updater
         
         let appUpdater = AppUpdater(updater)
-        _appUpdater = State(initialValue: appUpdater)
+        self._appUpdater = State(initialValue: appUpdater)
+        
+        let chatViewModel = ChatViewModel(modelContext: modelContext)
+        self._chatViewModel = State(initialValue: chatViewModel)
+        
+        let messageViewModel = MessageViewModel(modelContext: modelContext)
+        self._messageViewModel = State(initialValue: messageViewModel)
     }
     
     var body: some Scene {
@@ -58,7 +52,6 @@ struct OllamacApp: App {
             AppView()
                 .environment(chatViewModel)
                 .environment(messageViewModel)
-                .environment(ollamaViewModel)
         }
         .modelContainer(sharedModelContainer)
         .commands {
@@ -73,6 +66,12 @@ struct OllamacApp: App {
                     updater.checkForUpdates()
                 }
                 .disabled(appUpdater.canCheckForUpdates == false)
+            }
+            
+            CommandGroup(replacing: .help) {
+                if let helpURL = AppInfo.value(for: "HELP_URL"), let url = URL(string: helpURL) {
+                    Link("Ollamac Help", destination: url)
+                }
             }
         }
         

@@ -18,6 +18,5 @@ struct ChatFieldFooterView: View {
         Text(text)
             .padding(.top, 4)
             .font(.callout)
-            .foregroundColor(.secondary)
     }
 }
