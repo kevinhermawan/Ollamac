@@ -11,19 +11,17 @@ import SwiftData
 
 @Model
 final class Message: Identifiable {
-    @Attribute(.unique) var id: UUID
+    @Attribute(.unique) var id: UUID = UUID()
     
     var prompt: String
     var response: String?
-    var createdAt: Date
+    var createdAt: Date = Date.now
     
     @Relationship
     var chat: Chat?
     
     init(prompt: String) {
-        self.id = UUID()
         self.prompt = prompt
-        self.createdAt = Date.now
     }
     
     @Transient var model: String {
@@ -49,10 +47,14 @@ extension Message {
             requestMessages.insert(systemMessage, at: 0)
         }
         
+        let options = OKCompletionOptions(
+            temperature: self.chat?.temperature,
+            topK: self.chat?.topK,
+            topP: self.chat?.topP
+        )
+        
         var data = OKChatRequestData(model: self.model, messages: requestMessages)
-        data.options?.temperature = self.chat?.temperature
-        data.options?.topP = self.chat?.topP
-        data.options?.topK = self.chat?.topK
+        data.options = options
         
         return data
     }
