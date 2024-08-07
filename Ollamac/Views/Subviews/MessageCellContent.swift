@@ -5,6 +5,7 @@
 //  Created by Kevin Hermawan on 06/07/24.
 //
 
+import Defaults
 import MarkdownUI
 import SwiftUI
 import ViewState
@@ -12,7 +13,7 @@ import ViewState
 struct MessageCellContent: View {
     @Environment(\.colorScheme) private var colorScheme
    
-    @AppStorage("defaultFontSize") private var fontSize: Double = NSFont.systemFont(ofSize: 0).pointSize
+    @Default(.fontSize) private var fontSize
 
     private var isLastMessage: Bool = false
     

@@ -36,10 +36,10 @@ public final class CommandViewModel {
     }
 
     public func increaseFontSize() {
-        Defaults[.defaultFontSize] += 1
+        Defaults[.fontSize] += 1
     }
 
     public func decreaseFontSize() {
-        Defaults[.defaultFontSize] = max(Defaults[.defaultFontSize] - 1, 8)
+        Defaults[.fontSize] = max(Defaults[.fontSize] - 1, 8)
     }
 }
