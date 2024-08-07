@@ -20,7 +20,9 @@ struct GeneralView: View {
         VStack(alignment: .leading, spacing: 16) {
             GroupBox {
                 DefaultHostTextField(defaultHost: $defaultHost, viewState: $defaultHostViewState, saveAction: saveDefaultHostAction)
-                
+            }
+
+            GroupBox {
                 DefaultFontSizeField()
             }
         }
