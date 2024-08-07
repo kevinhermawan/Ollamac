@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DefaultFontSizeField: View {
 
-    @Default(.defaultFontSize) private var defaultFontSize
+    @Default(.fontSize) private var defaultFontSize
 
     var range: ClosedRange<Double> = 8...100
 

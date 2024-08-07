@@ -7,8 +7,9 @@
 
 import Defaults
 import Foundation
+import AppKit.NSFont
 
 public extension Defaults.Keys {
     static let defaultHost = Key<String>("defaultHost", default: "http://localhost:11434")
-    static let defaultFontSize = Key<Double>("defaultFontSize", default: 16.0)
+    static let fontSize = Key<Double>("fontSize", default: NSFont.systemFontSize)
 }
