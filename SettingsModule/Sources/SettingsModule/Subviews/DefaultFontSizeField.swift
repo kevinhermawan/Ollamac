@@ -22,25 +22,27 @@ struct DefaultFontSizeField: View {
                 .font(.headline.weight(.semibold))
 
             HStack {
-                TextField(String(Default(.fontSize).defaultValue), value: $fontSize, format: .number.precision(.fractionLength(0)))
-                    .textFieldStyle(.roundedBorder)
-                    .frame(width: width)
+                HStack {
+                    TextField(String(Default(.fontSize).defaultValue), value: $fontSize, format: .number.precision(.fractionLength(0)))
+                        .textFieldStyle(.roundedBorder)
+                        .frame(width: width)
 
-                Stepper("Font size", value: $fontSize, in: range, step: 1)
-                    .labelsHidden()
+                    Stepper("Font size", value: $fontSize, in: range, step: 1)
+                        .labelsHidden()
+                }
+                .onChange(of: fontSize, { oldValue, newValue in
+                    if newValue < range.lowerBound {
+                        fontSize = range.lowerBound
+                    } else if newValue > range.upperBound {
+                        fontSize = range.upperBound
+                    }
+                })
 
                 Spacer()
-            }
-            .onChange(of: fontSize, { oldValue, newValue in
-                if newValue < range.lowerBound {
-                    fontSize = range.lowerBound
-                } else if newValue > range.upperBound {
-                    fontSize = range.upperBound
-                }
-            })
 
-            Button("Reset") {
-                Default(.fontSize).reset()
+                Button("Reset") {
+                    Default(.fontSize).reset()
+                }
             }
         }
         .padding(4)
