@@ -22,7 +22,7 @@ struct DefaultFontSizeField: View {
                 .font(.headline.weight(.semibold))
 
             HStack {
-                TextField(String(fontSize), value: $fontSize, format: .number.precision(.fractionLength(0)))
+                TextField(String(Default(.fontSize).defaultValue), value: $fontSize, format: .number.precision(.fractionLength(0)))
                     .textFieldStyle(.roundedBorder)
                     .frame(width: width)
 
@@ -40,7 +40,7 @@ struct DefaultFontSizeField: View {
             })
 
             Button("Reset") {
-                fontSize = NSFont.systemFontSize
+                Default(.fontSize).reset()
             }
         }
         .padding(4)
