@@ -10,49 +10,40 @@ import SwiftUI
 
 struct DefaultFontSizeField: View {
 
-    @Default(.fontSize) private var defaultFontSize
+    @Default(.fontSize) private var fontSize
 
     var range: ClosedRange<Double> = 8...100
 
-    @State private var fontSize: Double = 16.0
-
     @ScaledMetric(relativeTo: .headline) private var width: CGFloat = 48
-
-    private var systemFontSize: Int {
-        Int(NSFont.systemFont(ofSize: 0).pointSize)
-    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Font size")
                 .font(.headline.weight(.semibold))
 
-
             HStack {
-                TextField(String(systemFontSize), value: $fontSize, format: .number.precision(.fractionLength(0)))
-                    .frame(width: width)
+                TextField(String(fontSize), value: $fontSize, format: .number.precision(.fractionLength(0)))
                     .textFieldStyle(.roundedBorder)
-                Stepper("Font size", value: $fontSize, in: range)
+                    .frame(width: width)
+
+                Stepper("Font size", value: $fontSize, in: range, step: 1)
                     .labelsHidden()
+
                 Spacer()
             }
-            .onChange(of: fontSize) { oldValue, newValue in
-                if newValue > 7.9 && newValue < 100 {
-                    defaultFontSize = newValue
-                } else {
-                    fontSize = defaultFontSize
+            .onChange(of: fontSize, { oldValue, newValue in
+                if newValue < range.lowerBound {
+                    fontSize = range.lowerBound
+                } else if newValue > range.upperBound {
+                    fontSize = range.upperBound
                 }
-            }
-            .onChange(of: defaultFontSize) { oldValue, newValue in
-                if newValue != fontSize {
-                    fontSize = newValue
-                }
+            })
+
+            Button("Reset") {
+                fontSize = NSFont.systemFontSize
             }
         }
         .padding(4)
-        .onAppear() {
-            fontSize = defaultFontSize
-        }
     }
 }
 
