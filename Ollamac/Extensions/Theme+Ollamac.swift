@@ -16,7 +16,7 @@ extension Theme {
         }
         .paragraph { configuration in
             configuration.label
-                .relativeLineSpacing(.em(0.5))
+                .relativeLineSpacing(.em(0.25))
         }
         .code {
             FontSize(15.0)
@@ -27,7 +27,7 @@ extension Theme {
         }
         .listItem { configuration in
             configuration.label
-                .markdownMargin(top: .em(0.25))
+                .markdownMargin(top: .em(0.15))
         }
 }
 

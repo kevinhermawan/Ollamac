@@ -10,9 +10,11 @@ import SwiftUI
 
 struct AssistantMessageView: View {
     private let content: String?
+    private let isGenerating: Bool
     
-    init(content: String?) {
+    init(content: String?, isGenerating: Bool) {
         self.content = content
+        self.isGenerating = isGenerating
     }
     
     var body: some View {
@@ -26,7 +28,7 @@ struct AssistantMessageView: View {
                     .textSelection(.enabled)
                     .markdownTheme(.ollamac)
                     .markdownCodeSyntaxHighlighter(.ollamac)
-            } else {
+            } else if isGenerating {
                 ProgressView()
                     .controlSize(.small)
             }

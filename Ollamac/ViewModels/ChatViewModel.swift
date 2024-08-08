@@ -20,6 +20,8 @@ final class ChatViewModel {
     var chats: [Chat] = []
     var activeChat: Chat? = nil
     var selectedChats = Set<Chat>()
+    
+    var isHostReachable: Bool = true
     var loading: ChatViewModelLoading? = nil
     var error: ChatViewModelError? = nil
     
@@ -46,14 +48,26 @@ final class ChatViewModel {
     
     func fetchModels(_ ollamaKit: OllamaKit) {
         self.loading = .fetchModels
+        self.error = nil
         
         Task {
             do {
                 defer { self.loading = nil }
                 
-                let response = try await ollamaKit.models()
+                let isReachable = await ollamaKit.reachable()
                 
+                guard isReachable else {
+                    self.error = .fetchModels("Unable to connect to Ollama server. Please verify that Ollama is running and accessible.")
+                    return
+                }
+                
+                let response = try await ollamaKit.models()
                 self.models = response.models.map { $0.name }
+                
+                guard !self.models.isEmpty else {
+                    self.error = .fetchModels("You don't have any Ollama model. Please pull at least one Ollama model first.")
+                    return
+                }
                 
                 if let host = activeChat?.host, host.isEmpty {
                     self.activeChat?.host = self.models.first
