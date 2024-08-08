@@ -5,6 +5,7 @@
 //  Created by Kevin Hermawan on 06/07/24.
 //
 
+import Defaults
 import Highlightr
 import MarkdownUI
 import SwiftUI
@@ -16,7 +17,6 @@ struct CodeHighlighter: CodeSyntaxHighlighter {
         guard let highlightrInstance = Highlightr() else {
             fatalError("Failed to initialize Highlightr")
         }
-        
         self.highlightr = highlightrInstance
         self.highlightr.setTheme(to: "atom-one-dark")
     }
@@ -33,8 +33,8 @@ struct CodeHighlighter: CodeSyntaxHighlighter {
         guard let highlightedCode else { return Text(code) }
         
         var attributedCode = AttributedString(highlightedCode)
-        attributedCode.font = .system(size: 15, design: .monospaced)
-        
+        attributedCode.font = .system(size: Defaults[.fontSize], design: .monospaced)
+
         return Text(attributedCode)
     }
 }

@@ -5,10 +5,13 @@
 //  Created by Kevin Hermawan on 8/2/24.
 //
 
+import Defaults
 import MarkdownUI
 import SwiftUI
 
 struct AssistantMessageView: View {
+    @Default(.fontSize) private var fontSize
+
     private let content: String?
     private let isGenerating: Bool
     
@@ -26,6 +29,13 @@ struct AssistantMessageView: View {
             if let content {
                 Markdown(content)
                     .textSelection(.enabled)
+                    .markdownTextStyle(\.text) {
+                        FontSize(CGFloat(fontSize))
+                    }
+                    .markdownTextStyle(\.code) {
+                        FontSize(CGFloat(fontSize))
+                        FontFamily(.system(.monospaced))
+                    }
                     .markdownTheme(.ollamac)
                     .markdownCodeSyntaxHighlighter(.ollamac)
             } else if isGenerating {

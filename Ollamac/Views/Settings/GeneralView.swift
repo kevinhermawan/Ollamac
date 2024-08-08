@@ -24,6 +24,8 @@ struct GeneralView: View {
             GeneralBox(label: "Default System Prompt", value: defaultSystemPrompt) {
                 isUpdateSystemPromptPresented = true
             }
+
+            DefaultFontSizeField()
         }
         .sheet(isPresented: $isUpdateOllamaHostPresented) {
             UpdateOllamaHostSheet(host: defaultHost) { host in

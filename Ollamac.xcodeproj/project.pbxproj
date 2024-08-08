@@ -49,6 +49,7 @@
 		0AF5CB622C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF5CB612C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift */; };
 		0AF5CB642C62B7E100DF8DA8 /* GeneralBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF5CB632C62B7E100DF8DA8 /* GeneralBox.swift */; };
 		0AF5CB682C62BCA100DF8DA8 /* AppInfo in Frameworks */ = {isa = PBXBuildFile; productRef = 0AF5CB672C62BCA100DF8DA8 /* AppInfo */; };
+		175D318C2C64ADF9009B58E0 /* DefaultFontSizeField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175D318B2C64ADF9009B58E0 /* DefaultFontSizeField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +88,7 @@
 		0AF5662D2C6431FB00D6E01A /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		0AF5CB612C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateOllamaHostSheet.swift; sourceTree = "<group>"; };
 		0AF5CB632C62B7E100DF8DA8 /* GeneralBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralBox.swift; sourceTree = "<group>"; };
+		175D318B2C64ADF9009B58E0 /* DefaultFontSizeField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFontSizeField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				0AF5CB632C62B7E100DF8DA8 /* GeneralBox.swift */,
+				175D318B2C64ADF9009B58E0 /* DefaultFontSizeField.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				0AF5CB622C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift in Sources */,
 				0A6E85102C5E6C670030A4AA /* MessageViewModel.swift in Sources */,
 				0A6E85112C5E6C670030A4AA /* ChatViewModel.swift in Sources */,
+				175D318C2C64ADF9009B58E0 /* DefaultFontSizeField.swift in Sources */,
 				0A6E85342C5F9DA00030A4AA /* ChatFieldFooterView.swift in Sources */,
 				0ADB96162C5D5DE700EB0C60 /* Color+Hex.swift in Sources */,
 			);
