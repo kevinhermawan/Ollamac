@@ -18,17 +18,7 @@ struct ChatView: View {
     @State private var ollamaKit: OllamaKit
     @State private var prompt: String = ""
     @State private var scrollProxy: ScrollViewProxy? = nil
-    
-    @State private var isLoading: Bool = true
     @State private var isPreferencesPresented: Bool = false
-    
-    var isGenerating: Bool {
-        messageViewModel.loading == .generate
-    }
-    
-    var isNotGenerating: Bool {
-        !isGenerating
-    }
     
     init() {
         let baseURL = URL(string: Defaults[.defaultHost])!
@@ -51,7 +41,7 @@ struct ChatView: View {
                     
                     AssistantMessageView(
                         content: message.response,
-                        isGenerating: isGenerating,
+                        isGenerating: messageViewModel.loading == .generate,
                         isLastMessage: lastMessageId == message.id,
                         copyAction: self.copyAction,
                         regenerateAction: self.regenerateAction
@@ -67,11 +57,11 @@ struct ChatView: View {
                 
                 VStack {
                     ChatField("Write your message here", text: $prompt) {
-                        if isNotGenerating {
+                        if messageViewModel.loading != .generate {
                             generateAction()
                         }
                     } trailingAccessory: {
-                        CircleButton(systemImage: isGenerating ? "stop.fill" : "arrow.up", action: generateAction)
+                        CircleButton(systemImage: messageViewModel.loading == .generate ? "stop.fill" : "arrow.up", action: generateAction)
                     } footer: {
                         if chatViewModel.loading != nil {
                             ProgressView()
@@ -86,6 +76,9 @@ struct ChatView: View {
                                     .foregroundStyle(.blue)
                             }
                             .font(.callout)
+                        } else if messageViewModel.messages.isEmpty == false {
+                            ChatFieldFooterView("\u{2318}+R to regenerate the response")
+                                .foregroundColor(.secondary)
                         } else {
                             ChatFieldFooterView("AI can make mistakes. Please double-check responses.")
                                 .foregroundColor(.secondary)
@@ -147,7 +140,7 @@ struct ChatView: View {
     private func generateAction() {
         guard let activeChat = chatViewModel.activeChat, !activeChat.model.isEmpty, chatViewModel.isHostReachable else { return }
         
-        if isGenerating {
+        if messageViewModel.loading == .generate {
             messageViewModel.cancelGeneration()
         } else {
             guard let activeChat = chatViewModel.activeChat else { return }
@@ -161,7 +154,7 @@ struct ChatView: View {
     private func regenerateAction() {
         guard let activeChat = chatViewModel.activeChat, !activeChat.model.isEmpty, chatViewModel.isHostReachable else { return }
         
-        if isGenerating {
+        if messageViewModel.loading == .generate {
             messageViewModel.cancelGeneration()
         } else {
             guard let activeChat = chatViewModel.activeChat else { return }
@@ -177,7 +170,7 @@ struct ChatView: View {
         guard let lastMessage = messageViewModel.messages.last else { return }
         
         DispatchQueue.main.async {
-            proxy.scrollTo(lastMessage, anchor: .bottomTrailing)
+            proxy.scrollTo(lastMessage, anchor: .bottom)
         }
     }
 }
