@@ -16,20 +16,26 @@ struct SidebarView: View {
     private var todayChats: [Chat] {
         let calendar = Calendar.current
         
-        return chatViewModel.chats.filter { calendar.isDateInToday($0.modifiedAt) }
+        return chatViewModel.chats
+            .filter { calendar.isDateInToday($0.modifiedAt) }
+            .sorted { $0.modifiedAt > $1.modifiedAt }
     }
     
     private var yesterdayChats: [Chat] {
         let calendar = Calendar.current
         
-        return chatViewModel.chats.filter { calendar.isDateInYesterday($0.modifiedAt) }
+        return chatViewModel.chats
+            .filter { calendar.isDateInYesterday($0.modifiedAt) }
+            .sorted { $0.modifiedAt > $1.modifiedAt }
     }
     
     private var previousDaysChats: [Chat] {
         let calendar = Calendar.current
         let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date()) ?? Date()
         
-        return chatViewModel.chats.filter { $0.modifiedAt < calendar.startOfDay(for: twoDaysAgo) }
+        return chatViewModel.chats
+            .filter { $0.modifiedAt < calendar.startOfDay(for: twoDaysAgo) }
+            .sorted { $0.modifiedAt > $1.modifiedAt }
     }
     
     private var deleteConfirmationTitle: String {
@@ -54,7 +60,7 @@ struct SidebarView: View {
         List(selection: $chatViewModelBindable.selectedChats) {
             Section("Today") {
                 ForEach(todayChats) { chat in
-                    SidebarListItemView(chatViewModel: chatViewModel, name: chat.name, message: chat.messages.first?.response)
+                    SidebarListItemView(chatViewModel: chatViewModel, name: chat.name, message: chat.firstMessage?.response)
                         .tag(chat)
                 }
             }
@@ -62,7 +68,7 @@ struct SidebarView: View {
             
             Section("Yesterday") {
                 ForEach(yesterdayChats) { chat in
-                    SidebarListItemView(chatViewModel: chatViewModel, name: chat.name, message: chat.messages.first?.response)
+                    SidebarListItemView(chatViewModel: chatViewModel, name: chat.name, message: chat.firstMessage?.response)
                         .tag(chat)
                 }
             }
@@ -70,7 +76,7 @@ struct SidebarView: View {
             
             Section("Previous days") {
                 ForEach(previousDaysChats) { chat in
-                    SidebarListItemView(chatViewModel: chatViewModel, name: chat.name, message: chat.messages.first?.response)
+                    SidebarListItemView(chatViewModel: chatViewModel, name: chat.name, message: chat.firstMessage?.response)
                         .tag(chat)
                 }
             }

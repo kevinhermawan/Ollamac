@@ -36,4 +36,8 @@ final class Chat: Identifiable {
         self.topP = Defaults[.defaultTopP]
         self.topK = Defaults[.defaultTopK]
     }
+    
+    @Transient var firstMessage: Message? {
+        return messages.sorted { $0.createdAt < $1.createdAt }.first
+    }
 }

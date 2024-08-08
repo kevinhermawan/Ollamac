@@ -222,12 +222,12 @@
 		0A6E852C2C5EAA510030A4AA /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				0ADB95EC2C5D42E200EB0C60 /* UserMessageView.swift */,
 				0ADB95EE2C5D42FF00EB0C60 /* AssistantMessageView.swift */,
-				0A6E852D2C5EAA750030A4AA /* ChatPreferencesFooterView.swift */,
 				0A6E85332C5F9DA00030A4AA /* ChatFieldFooterView.swift */,
+				0A6E852D2C5EAA750030A4AA /* ChatPreferencesFooterView.swift */,
 				0AF5662D2C6431FB00D6E01A /* CircleButton.swift */,
 				0AF566312C65582300D6E01A /* MessageButton.swift */,
+				0ADB95EC2C5D42E200EB0C60 /* UserMessageView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";

@@ -13,8 +13,6 @@ struct UserMessageView: View {
     private let content: String
     private let copyAction: (_ content: String) -> Void
     
-    @State private var isCopied: Bool = false
-    
     init(content: String, copyAction: @escaping (_ content: String) -> Void) {
         self.content = content
         self.copyAction = copyAction
@@ -34,19 +32,10 @@ struct UserMessageView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                 
                 HStack(spacing: 16){
-                    MessageButton(isCopied ? "Copied" : "Copy", systemImage: isCopied ? "checkmark" : "doc.on.doc", action: handleCopy)
+                    MessageButton("Copy", systemImage: "doc.on.doc", action: { copyAction(content) })
                 }
             }
             .frame(maxWidth: windowWidth / 2, alignment: .trailing)
-        }
-    }
-    
-    private func handleCopy() {
-        self.copyAction(content)
-        self.isCopied = true
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.isCopied = false
         }
     }
 }
