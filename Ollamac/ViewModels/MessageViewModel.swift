@@ -16,6 +16,7 @@ final class MessageViewModel {
     private var generationTask: Task<Void, Never>?
     
     var messages: [Message] = []
+    var tempResponse: String = ""
     var loading: MessageViewModelLoading? = nil
     var error: MessageViewModelError? = nil
     
@@ -47,8 +48,6 @@ final class MessageViewModel {
         messages.append(message)
         modelContext.insert(message)
         
-        let data = message.toOKChatRequestData(messages: messages)
-        
         self.loading = .generate
         self.error = nil
         
@@ -56,13 +55,17 @@ final class MessageViewModel {
             defer { self.loading = nil }
             
             do {
+                let data = message.toOKChatRequestData(messages: self.messages)
+                
                 for try await chunk in ollamaKit.chat(data: data) {
                     if Task.isCancelled { break }
                     
-                    message.response = (message.response ?? "") + (chunk.message?.content ?? "")
+                    tempResponse = tempResponse + (chunk.message?.content ?? "")
                     
                     if chunk.done {
+                        message.response = tempResponse
                         activeChat.modifiedAt = .now
+                        tempResponse = ""
                         
                         if messages.count == 1 {
                             self.generateTitle(ollamaKit, activeChat: activeChat)
@@ -79,8 +82,6 @@ final class MessageViewModel {
         guard let lastMessage = messages.last else { return }
         lastMessage.response = nil
         
-        let data = lastMessage.toOKChatRequestData(messages: messages)
-        
         self.loading = .generate
         self.error = nil
         
@@ -88,13 +89,17 @@ final class MessageViewModel {
             defer { self.loading = nil }
             
             do {
+                let data = lastMessage.toOKChatRequestData(messages: self.messages)
+                
                 for try await chunk in ollamaKit.chat(data: data) {
                     if Task.isCancelled { break }
                     
-                    lastMessage.response = (lastMessage.response ?? "") + (chunk.message?.content ?? "")
+                    tempResponse = tempResponse + (chunk.message?.content ?? "")
                     
                     if chunk.done {
+                        lastMessage.response = tempResponse
                         activeChat.modifiedAt = .now
+                        tempResponse = ""
                     }
                 }
             } catch {

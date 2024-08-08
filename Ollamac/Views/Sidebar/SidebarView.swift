@@ -100,18 +100,10 @@ struct SidebarView: View {
             Text(deleteConfirmationMessage)
         }
         .onAppear(perform: chatViewModel.load)
-        .onChange(of: chatViewModel.chats) { _, chats in
-            if let chat = chats.first {
-                chatViewModel.selectedChats = [chat]
-            } else {
-                chatViewModel.selectedChats = []
-                messageViewModel.messages = []
-            }
-        }
         .onChange(of: chatViewModel.selectedChats) { _, selectedChats in
             if selectedChats.count > 1 {
                 chatViewModel.activeChat = nil
-                messageViewModel.load(of: nil)
+                messageViewModel.messages = []
             } else {
                 let selectedChatsArray = Array(selectedChats)
                 guard let activeChat = selectedChatsArray.first else { return }

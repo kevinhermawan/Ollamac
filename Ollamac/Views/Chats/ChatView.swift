@@ -40,7 +40,7 @@ struct ChatView: View {
                     .listRowSeparator(.hidden)
                     
                     AssistantMessageView(
-                        content: message.response,
+                        content: message.response ?? messageViewModel.tempResponse,
                         isGenerating: messageViewModel.loading == .generate,
                         isLastMessage: lastMessageId == message.id,
                         copyAction: self.copyAction,
