@@ -13,7 +13,6 @@ struct UserMessageView: View {
     private let content: String
     private let copyAction: (_ content: String) -> Void
     
-    @State private var isHovered: Bool = false
     @State private var isCopied: Bool = false
     
     init(content: String, copyAction: @escaping (_ content: String) -> Void) {
@@ -37,12 +36,8 @@ struct UserMessageView: View {
                 HStack(spacing: 16){
                     MessageButton(isCopied ? "Copied" : "Copy", systemImage: isCopied ? "checkmark" : "doc.on.doc", action: handleCopy)
                 }
-                .visible(if: isHovered)
             }
             .frame(maxWidth: windowWidth / 2, alignment: .trailing)
-        }
-        .onHover { hovered in
-            self.isHovered = hovered
         }
     }
     

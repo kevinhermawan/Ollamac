@@ -7,6 +7,7 @@
 
 import MarkdownUI
 import SwiftUI
+import ViewCondition
 
 struct AssistantMessageView: View {
     private let content: String?
@@ -15,7 +16,6 @@ struct AssistantMessageView: View {
     private let copyAction: (_ content: String) -> Void
     private let regenerateAction: () -> Void
     
-    @State private var isHovered: Bool = false
     @State private var isCopied: Bool = false
     
     init(content: String?, isGenerating: Bool, isLastMessage: Bool, copyAction: @escaping (_ content: String) -> Void, regenerateAction: @escaping () -> Void) {
@@ -40,18 +40,16 @@ struct AssistantMessageView: View {
                 
                 HStack(spacing: 16) {
                     MessageButton(isCopied ? "Copied" : "Copy", systemImage: isCopied ? "checkmark" : "doc.on.doc", action: handleCopy)
+                    
                     MessageButton("Regenerate", systemImage: "arrow.triangle.2.circlepath", action: regenerateAction)
+                        .visible(if: isLastMessage, removeCompletely: true)
                 }
-                .visible(if: isHovered)
             } else if isGenerating {
                 ProgressView()
                     .controlSize(.small)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .onHover { hovered in
-            self.isHovered = hovered
-        }
     }
     
     private func handleCopy() {
