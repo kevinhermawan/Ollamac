@@ -10,13 +10,13 @@ import SwiftUI
 import ViewCondition
 
 struct AssistantMessageView: View {
-    private let content: String?
+    private let content: String
     private let isGenerating: Bool
     private let isLastMessage: Bool
     private let copyAction: (_ content: String) -> Void
     private let regenerateAction: () -> Void
     
-    init(content: String?, isGenerating: Bool, isLastMessage: Bool, copyAction: @escaping (_ content: String) -> Void, regenerateAction: @escaping () -> Void) {
+    init(content: String, isGenerating: Bool, isLastMessage: Bool, copyAction: @escaping (_ content: String) -> Void, regenerateAction: @escaping () -> Void) {
         self.content = content
         self.isGenerating = isGenerating
         self.isLastMessage = isLastMessage
@@ -30,7 +30,10 @@ struct AssistantMessageView: View {
                 .font(Font.system(size: 16).weight(.semibold))
                 .foregroundStyle(.accent)
             
-            if let content {
+            if isGenerating && content.isEmpty {
+                ProgressView()
+                    .controlSize(.small)
+            } else {
                 Markdown(content)
                     .textSelection(.enabled)
                     .markdownTheme(.ollamac)
@@ -43,9 +46,7 @@ struct AssistantMessageView: View {
                         .keyboardShortcut("r", modifiers: [.command])
                         .visible(if: isLastMessage, removeCompletely: true)
                 }
-            } else if isGenerating {
-                ProgressView()
-                    .controlSize(.small)
+                .hide(if: isLastMessage && isGenerating)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
