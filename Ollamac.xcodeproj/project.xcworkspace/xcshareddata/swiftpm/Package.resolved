@@ -1,12 +1,22 @@
 {
+  "originHash" : "ef305d4a18935c329efd5ade26b15b124a5a02ddb4cdf7097ef07fe59ad91937",
   "pins" : [
+    {
+      "identity" : "appinfo",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kevinhermawan/AppInfo.git",
+      "state" : {
+        "revision" : "4b60b10c94c327083cb5fe5e73cdff21d1082b4c",
+        "version" : "1.0.2"
+      }
+    },
     {
       "identity" : "chatfield",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/ChatField.git",
       "state" : {
-        "revision" : "36833e4ddc23308c3754083d4bdcfa837fa17799",
-        "version" : "1.0.1"
+        "branch" : "main",
+        "revision" : "ee20264ddc43aefb04544cb25f862f77c3c9b855"
       }
     },
     {
@@ -23,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/raspu/Highlightr.git",
       "state" : {
-        "revision" : "fa483d37c692961ecc2391eac568ba3d3935e663",
-        "version" : "2.2.0"
+        "revision" : "bcf2d0590f32ac2528feb72d7e34f5b463801a47",
+        "version" : "2.2.1"
       }
     },
     {
@@ -41,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/OllamaKit",
       "state" : {
-        "revision" : "8264a8766c391427944cd4d55304bdfdcb8fdfee",
-        "version" : "5.0.0"
+        "revision" : "f947524e08fa8b0ddb875834a81ed7b4cf9ea23a",
+        "version" : "5.0.5"
       }
     },
     {
@@ -50,14 +60,14 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sparkle-project/Sparkle",
       "state" : {
-        "revision" : "b456fd404954a9e13f55aa0c88cd5a40b8399638",
-        "version" : "2.6.3"
+        "revision" : "0ef1ee0220239b3776f433314515fd849025673f",
+        "version" : "2.6.4"
       }
     },
     {
       "identity" : "swift-markdown-ui",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
+      "location" : "https://github.com/gonzalezreal/swift-markdown-ui.git",
       "state" : {
         "revision" : "9a8119b37e09a770367eeb26e05267c75d854053",
         "version" : "2.3.1"
@@ -68,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/siteline/swiftui-introspect",
       "state" : {
-        "revision" : "7dc5b287f8040e4ad5038739850b758e78f77808",
-        "version" : "1.1.4"
+        "revision" : "807f73ce09a9b9723f12385e592b4e0aaebd3336",
+        "version" : "1.3.0"
       }
     },
     {
@@ -77,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/ViewCondition",
       "state" : {
-        "revision" : "3d6ff8a51f31890e091eac6872d966859d11ed76",
-        "version" : "1.0.1"
+        "revision" : "a3d0aaf943271247dfd4870a2a0696693165c884",
+        "version" : "1.0.5"
       }
     },
     {
@@ -91,5 +101,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

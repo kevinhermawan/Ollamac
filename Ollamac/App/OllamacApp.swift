@@ -5,11 +5,9 @@
 //  Created by Kevin Hermawan on 03/11/23.
 //
 
-import CoreModels
-import CoreViewModels
+import AppInfo
 import Defaults
 import OllamaKit
-import SettingsModule
 import Sparkle
 import SwiftUI
 import SwiftData
@@ -19,8 +17,6 @@ struct OllamacApp: App {
     @State private var appUpdater: AppUpdater
     private var updater: SPUUpdater
     
-    @State private var commandViewModel: CommandViewModel
-    @State private var ollamaViewModel: OllamaViewModel
     @State private var chatViewModel: ChatViewModel
     @State private var messageViewModel: MessageViewModel
     
@@ -38,38 +34,33 @@ struct OllamacApp: App {
     init() {
         let modelContext = sharedModelContainer.mainContext
         
-        let commandViewModel = CommandViewModel()
-        _commandViewModel = State(initialValue: commandViewModel)
-        
-        let ollamaURL = URL(string: Defaults[.defaultHost])!
-        let ollamaKit = OllamaKit(baseURL: ollamaURL)
-        
-        let ollamaViewModel = OllamaViewModel(ollamaKit: ollamaKit)
-        _ollamaViewModel = State(initialValue: ollamaViewModel)
-        
-        let messageViewModel = MessageViewModel(modelContext: modelContext, ollamaKit: ollamaKit)
-        _messageViewModel = State(initialValue: messageViewModel)
-        
-        let chatViewModel = ChatViewModel(modelContext: modelContext)
-        _chatViewModel = State(initialValue: chatViewModel)
-        
         let updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
-        updater = updaterController.updater
+        self.updater = updaterController.updater
         
         let appUpdater = AppUpdater(updater)
-        _appUpdater = State(initialValue: appUpdater)
+        self._appUpdater = State(initialValue: appUpdater)
+        
+        let chatViewModel = ChatViewModel(modelContext: modelContext)
+        self._chatViewModel = State(initialValue: chatViewModel)
+        
+        let messageViewModel = MessageViewModel(modelContext: modelContext)
+        self._messageViewModel = State(initialValue: messageViewModel)
     }
     
     var body: some Scene {
         WindowGroup {
             AppView()
-                .environment(commandViewModel)
                 .environment(chatViewModel)
                 .environment(messageViewModel)
-                .environment(ollamaViewModel)
         }
         .modelContainer(sharedModelContainer)
         .commands {
+            CommandGroup(replacing: .textEditing) {
+                if chatViewModel.selectedChats.count > 0 {
+                    SidebarContextMenu(chatViewModel: chatViewModel)
+                }
+            }
+            
             CommandGroup(after: .appInfo) {
                 Button("Check for Updates...") {
                     updater.checkForUpdates()
@@ -77,25 +68,18 @@ struct OllamacApp: App {
                 .disabled(appUpdater.canCheckForUpdates == false)
             }
             
-            CommandGroup(replacing: .newItem) {
-                Button("New Chat") {
-                    commandViewModel.isAddChatViewPresented = true
-                }
-                .keyboardShortcut("n", modifiers: .command)
-            }
-            
-            CommandGroup(replacing: .textEditing) {
-                if let selectedChat = commandViewModel.selectedChat {
-                    ChatContextMenu(commandViewModel, for: selectedChat)
+            CommandGroup(replacing: .help) {
+                if let helpURL = AppInfo.value(for: "HELP_URL"), let url = URL(string: helpURL) {
+                    Link("Ollamac Help", destination: url)
                 }
             }
 
             CommandGroup(after: .textEditing) {
                 Divider()
-                Button("Increase font size", action: commandViewModel.increaseFontSize)
+                Button("Increase font size", action: increaseFontSize)
                     .keyboardShortcut("+", modifiers: [.command], localization: .custom)
 
-                Button("Decrease font size", action: commandViewModel.decreaseFontSize)
+                Button("Decrease font size", action: decreaseFontSize)
                     .keyboardShortcut("-", modifiers: [.command], localization: .custom)
             }
         }
@@ -103,5 +87,13 @@ struct OllamacApp: App {
         Settings {
             SettingsView()
         }
+    }
+
+    func increaseFontSize() {
+        Defaults[.fontSize] += 1
+    }
+
+    func decreaseFontSize() {
+        Defaults[.fontSize] = max(Defaults[.fontSize] - 1, 8)
     }
 }
