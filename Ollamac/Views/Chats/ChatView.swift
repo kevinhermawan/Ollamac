@@ -18,6 +18,8 @@ struct ChatView: View {
     @State private var ollamaKit: OllamaKit
     @State private var prompt: String = ""
     @State private var scrollProxy: ScrollViewProxy? = nil
+    
+    @State private var isLoading: Bool = true
     @State private var isPreferencesPresented: Bool = false
     
     var isGenerating: Bool {
@@ -42,9 +44,9 @@ struct ChatView: View {
                         .padding(.horizontal)
                         .listRowSeparator(.hidden)
                     
-                    AssistantMessageView(content: message.response)
+                    AssistantMessageView(content: message.response, isGenerating: isGenerating)
                         .id(message)
-                        .padding(.top)
+                        .padding(.top) 
                         .padding(.horizontal)
                         .listRowSeparator(.hidden)
                         .if(messageViewModel.messages.last?.id == message.id) { view in
@@ -58,23 +60,21 @@ struct ChatView: View {
                             generateAction()
                         }
                     } trailingAccessory: {
-                        Button(action: generateAction) {
-                            Image(systemName: isGenerating ? "stop.fill" : "arrow.up")
-                                .imageScale(.medium)
-                                .padding(6)
-                                .fontWeight(.bold)
-                                .background(Color(nsColor: .labelColor))
-                                .foregroundColor(Color(nsColor: .textBackgroundColor))
-                                .clipShape(Circle())
-                        }
-                        .buttonStyle(.plain)
+                        CircleButton(systemImage: isGenerating ? "stop.fill" : "arrow.up", action: generateAction)
                     } footer: {
-                        if chatViewModel.models.isEmpty {
-                            ChatFieldFooterView("You don't have any Ollama model. Please pull at least one Ollama model first.")
-                                .foregroundColor(.red)
-                        } else if let activeChat = chatViewModel.activeChat, !chatViewModel.models.contains(where: { $0 == activeChat.model }) {
-                            ChatFieldFooterView("Please select a model from the list on the right side of the chat.")
-                                .foregroundColor(.red)
+                        if chatViewModel.loading != nil {
+                            ProgressView()
+                                .controlSize(.small)
+                        } else if case .fetchModels(let message) = chatViewModel.error {
+                            HStack {
+                                Text(message)
+                                    .foregroundStyle(.red)
+                                
+                                Button("Try Again", action: onActiveChatChanged)
+                                    .buttonStyle(.plain)
+                                    .foregroundStyle(.blue)
+                            }
+                            .font(.callout)
                         } else {
                             ChatFieldFooterView("AI can make mistakes. Please double-check responses.")
                                 .foregroundColor(.secondary)
@@ -92,16 +92,7 @@ struct ChatView: View {
                 self.scrollProxy = proxy
             }
             .onChange(of: chatViewModel.activeChat?.id) {
-                self.prompt = ""
-                
-                if let scrollProxy {
-                    self.scrollToBottom(proxy: scrollProxy)
-                }
-                
-                if let activeChat = chatViewModel.activeChat, let host = activeChat.host, let baseURL = URL(string: host) {
-                    self.ollamaKit = OllamaKit(baseURL: baseURL)
-                    self.chatViewModel.fetchModels(self.ollamaKit)
-                }
+                self.onActiveChatChanged()
             }
             .onChange(of: messageViewModel.messages.last?.response) {
                 if let proxy = scrollProxy {
@@ -124,8 +115,21 @@ struct ChatView: View {
         }
     }
     
+    private func onActiveChatChanged() {
+        self.prompt = ""
+        
+        if let scrollProxy {
+            self.scrollToBottom(proxy: scrollProxy)
+        }
+        
+        if let activeChat = chatViewModel.activeChat, let host = activeChat.host, let baseURL = URL(string: host) {
+            self.ollamaKit = OllamaKit(baseURL: baseURL)
+            self.chatViewModel.fetchModels(self.ollamaKit)
+        }
+    }
+    
     private func generateAction() {
-        guard let activeChat = chatViewModel.activeChat, !activeChat.model.isEmpty else { return }
+        guard let activeChat = chatViewModel.activeChat, !activeChat.model.isEmpty, chatViewModel.isHostReachable else { return }
         
         if isGenerating {
             messageViewModel.cancelGeneration()

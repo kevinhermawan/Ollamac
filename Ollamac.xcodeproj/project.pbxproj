@@ -45,6 +45,7 @@
 		0ADB96162C5D5DE700EB0C60 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADB96152C5D5DE700EB0C60 /* Color+Hex.swift */; };
 		0AE024832AFB898300347C18 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 0AE024822AFB898300347C18 /* Sparkle */; };
 		0AE0248B2AFEA24600347C18 /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0AE0248A2AFEA24600347C18 /* OllamaKit */; };
+		0AF5662E2C6431FB00D6E01A /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF5662D2C6431FB00D6E01A /* CircleButton.swift */; };
 		0AF5CB622C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF5CB612C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift */; };
 		0AF5CB642C62B7E100DF8DA8 /* GeneralBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF5CB632C62B7E100DF8DA8 /* GeneralBox.swift */; };
 		0AF5CB682C62BCA100DF8DA8 /* AppInfo in Frameworks */ = {isa = PBXBuildFile; productRef = 0AF5CB672C62BCA100DF8DA8 /* AppInfo */; };
@@ -83,6 +84,7 @@
 		0ADB96122C5D5CC400EB0C60 /* CodeHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeHighlighter.swift; sourceTree = "<group>"; };
 		0ADB96152C5D5DE700EB0C60 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		0AE024842AFB8D0E00347C18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0AF5662D2C6431FB00D6E01A /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		0AF5CB612C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateOllamaHostSheet.swift; sourceTree = "<group>"; };
 		0AF5CB632C62B7E100DF8DA8 /* GeneralBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -218,8 +220,11 @@
 		0A6E852C2C5EAA510030A4AA /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				0ADB95EC2C5D42E200EB0C60 /* UserMessageView.swift */,
+				0ADB95EE2C5D42FF00EB0C60 /* AssistantMessageView.swift */,
 				0A6E852D2C5EAA750030A4AA /* ChatPreferencesFooterView.swift */,
 				0A6E85332C5F9DA00030A4AA /* ChatFieldFooterView.swift */,
+				0AF5662D2C6431FB00D6E01A /* CircleButton.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -255,8 +260,6 @@
 			children = (
 				0A6E852C2C5EAA510030A4AA /* Subviews */,
 				0ADB95EA2C5D41DF00EB0C60 /* ChatView.swift */,
-				0ADB95EC2C5D42E200EB0C60 /* UserMessageView.swift */,
-				0ADB95EE2C5D42FF00EB0C60 /* AssistantMessageView.swift */,
 				0A6E852A2C5E9A250030A4AA /* ChatPreferencesView.swift */,
 			);
 			path = Chats;
@@ -393,6 +396,7 @@
 				0A6E851F2C5E98770030A4AA /* Defaults+Keys.swift in Sources */,
 				0AF5CB642C62B7E100DF8DA8 /* GeneralBox.swift in Sources */,
 				0A6E85202C5E98770030A4AA /* Optional+Utils.swift in Sources */,
+				0AF5662E2C6431FB00D6E01A /* CircleButton.swift in Sources */,
 				0ADB96132C5D5CC400EB0C60 /* CodeHighlighter.swift in Sources */,
 				0ADB96112C5D585500EB0C60 /* Theme+Ollamac.swift in Sources */,
 				0ADB95EB2C5D41DF00EB0C60 /* ChatView.swift in Sources */,
@@ -643,8 +647,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kevinhermawan/ChatField.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.3;
+				branch = main;
+				kind = branch;
 			};
 		};
 		0AB362A02C398ED700DE3F31 /* XCRemoteSwiftPackageReference "Highlightr" */ = {
