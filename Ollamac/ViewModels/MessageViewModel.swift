@@ -79,13 +79,16 @@ final class MessageViewModel {
         guard let lastMessage = messages.last else { return }
         lastMessage.response = nil
         
+        let data = lastMessage.toOKChatRequestData(messages: messages)
+        
         self.loading = .generate
+        self.error = nil
         
         generationTask = Task {
             defer { self.loading = nil }
             
             do {
-                for try await chunk in ollamaKit.chat(data: lastMessage.toOKChatRequestData(messages: messages)) {
+                for try await chunk in ollamaKit.chat(data: data) {
                     if Task.isCancelled { break }
                     
                     lastMessage.response = (lastMessage.response ?? "") + (chunk.message?.content ?? "")

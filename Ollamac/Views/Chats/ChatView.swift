@@ -39,19 +39,30 @@ struct ChatView: View {
         ScrollViewReader { proxy in
             VStack {
                 List(messageViewModel.messages) { message in
-                    UserMessageView(content: message.prompt)
-                        .padding(.top)
-                        .padding(.horizontal)
-                        .listRowSeparator(.hidden)
+                    let lastMessageId = messageViewModel.messages.last?.id
                     
-                    AssistantMessageView(content: message.response, isGenerating: isGenerating)
-                        .id(message)
-                        .padding(.top) 
-                        .padding(.horizontal)
-                        .listRowSeparator(.hidden)
-                        .if(messageViewModel.messages.last?.id == message.id) { view in
-                            view.padding(.bottom)
-                        }
+                    UserMessageView(
+                        content: message.prompt,
+                        copyAction: self.copyAction
+                    )
+                    .padding(.top)
+                    .padding(.horizontal)
+                    .listRowSeparator(.hidden)
+                    
+                    AssistantMessageView(
+                        content: message.response,
+                        isGenerating: isGenerating,
+                        isLastMessage: lastMessageId == message.id,
+                        copyAction: self.copyAction,
+                        regenerateAction: self.regenerateAction
+                    )
+                    .id(message)
+                    .padding(.top)
+                    .padding(.horizontal)
+                    .listRowSeparator(.hidden)
+                    .if(lastMessageId == message.id) { view in
+                        view.padding(.bottom)
+                    }
                 }
                 
                 VStack {
@@ -128,6 +139,11 @@ struct ChatView: View {
         }
     }
     
+    private func copyAction(_ content: String) {
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(content, forType: .string)
+    }
+    
     private func generateAction() {
         guard let activeChat = chatViewModel.activeChat, !activeChat.model.isEmpty, chatViewModel.isHostReachable else { return }
         
@@ -137,6 +153,20 @@ struct ChatView: View {
             guard let activeChat = chatViewModel.activeChat else { return }
             
             messageViewModel.generate(ollamaKit, activeChat: activeChat, prompt: prompt)
+        }
+        
+        prompt = ""
+    }
+    
+    private func regenerateAction() {
+        guard let activeChat = chatViewModel.activeChat, !activeChat.model.isEmpty, chatViewModel.isHostReachable else { return }
+        
+        if isGenerating {
+            messageViewModel.cancelGeneration()
+        } else {
+            guard let activeChat = chatViewModel.activeChat else { return }
+            
+            messageViewModel.regenerate(ollamaKit, activeChat: activeChat)
         }
         
         prompt = ""
