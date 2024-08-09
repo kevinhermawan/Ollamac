@@ -39,8 +39,26 @@ struct CodeHighlighter: CodeSyntaxHighlighter {
     }
 }
 
+class CodeHighlighterCache {
+    static let shared = CodeHighlighterCache()
+    private var highlighter: CodeHighlighter?
+    
+    private init() {}
+    
+    func getHighlighter() -> CodeHighlighter {
+        if let existingHighlighter = highlighter {
+            return existingHighlighter
+        } else {
+            let newHighlighter = CodeHighlighter()
+            highlighter = newHighlighter
+            
+            return newHighlighter
+        }
+    }
+}
+
 extension CodeSyntaxHighlighter where Self == CodeHighlighter {
     static var ollamac: Self {
-        CodeHighlighter()
+        CodeHighlighterCache.shared.getHighlighter()
     }
 }

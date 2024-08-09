@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/ChatField.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "ee20264ddc43aefb04544cb25f862f77c3c9b855"
+        "revision" : "d4eb2c9070a74b9c115d88499c0374258d6b8285",
+        "version" : "3.0.4"
       }
     },
     {

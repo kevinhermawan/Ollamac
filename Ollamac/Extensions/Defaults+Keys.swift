@@ -15,4 +15,6 @@ extension Defaults.Keys {
     static let defaultTemperature = Key<Double>("defaultTemperature", default: 0.7)
     static let defaultTopP = Key<Double>("defaultTopP", default: 0.9)
     static let defaultTopK = Key<Int>("defaultTopK", default: 40)
+    
+    static let experimentalCodeHighlighting = Key<Bool>("experimentalCodeHighlighting", default: false)
 }

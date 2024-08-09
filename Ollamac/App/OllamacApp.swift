@@ -6,8 +6,6 @@
 //
 
 import AppInfo
-import Defaults
-import OllamaKit
 import Sparkle
 import SwiftUI
 import SwiftData

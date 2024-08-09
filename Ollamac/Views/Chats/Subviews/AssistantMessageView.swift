@@ -5,6 +5,7 @@
 //  Created by Kevin Hermawan on 8/2/24.
 //
 
+import Defaults
 import MarkdownUI
 import SwiftUI
 import ViewCondition
@@ -37,7 +38,9 @@ struct AssistantMessageView: View {
                 Markdown(content)
                     .textSelection(.enabled)
                     .markdownTheme(.ollamac)
-                    .markdownCodeSyntaxHighlighter(.ollamac)
+                    .if(Defaults[.experimentalCodeHighlighting]) { view in
+                        view.markdownCodeSyntaxHighlighter(.ollamac)
+                    }
                 
                 HStack(spacing: 16) {
                     MessageButton("Copy", systemImage: "doc.on.doc", action: { copyAction(content) })
