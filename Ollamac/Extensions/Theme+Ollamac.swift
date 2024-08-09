@@ -65,6 +65,7 @@ fileprivate struct CodeBlockView: View {
                 .padding(.top, 8)
                 .padding(.bottom)
                 .padding(.horizontal)
+                .monospaced()
         }
         .background(Color(hex: "#20242b"))
         .cornerRadius(8)

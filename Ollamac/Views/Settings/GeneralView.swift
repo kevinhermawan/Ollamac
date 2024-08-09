@@ -16,13 +16,23 @@ struct GeneralView: View {
     @State private var isUpdateSystemPromptPresented = false
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            GeneralBox(label: "Default Ollama Host", value: defaultHost) {
-                isUpdateOllamaHostPresented = true
+        Form {
+            Section {
+                GeneralBox(label: "Default Ollama Host", value: defaultHost) {
+                    isUpdateOllamaHostPresented = true
+                }
+            } footer: {
+                SectionFooter("This host will be used for new chats.")
+                    .padding(.bottom)
             }
             
-            GeneralBox(label: "Default System Prompt", value: defaultSystemPrompt) {
-                isUpdateSystemPromptPresented = true
+            Section {
+                GeneralBox(label: "Default System Prompt", value: defaultSystemPrompt) {
+                    isUpdateSystemPromptPresented = true
+                }
+            } footer: {
+                SectionFooter("This prompt will be used for new chats.")
+                    .padding(.bottom)
             }
         }
         .sheet(isPresented: $isUpdateOllamaHostPresented) {
