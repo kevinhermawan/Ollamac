@@ -44,8 +44,8 @@ struct GeneralView: View {
                         .font(.headline.weight(.semibold))
                     
                     HStack {
-                        Text(defaultHost)
-                            .help(defaultHost)
+                        Text(defaultSystemPrompt)
+                            .help(defaultSystemPrompt)
                             .lineLimit(1)
                             .foregroundColor(.secondary)
                         

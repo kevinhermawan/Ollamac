@@ -3,22 +3,28 @@
     <channel>
         <title>Ollamac</title>
         <item>
-            <title>2.1.2</title>
-            <pubDate>Tue, 30 Jul 2024 23:30:44 +0700</pubDate>
-            <sparkle:version>11</sparkle:version>
-            <sparkle:shortVersionString>2.1.2</sparkle:shortVersionString>
+            <title>3.0.0</title>
+            <pubDate>Sat, 10 Aug 2024 03:37:27 +0700</pubDate>
+            <sparkle:version>12</sparkle:version>
+            <sparkle:shortVersionString>3.0.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <description>
             <![CDATA[
-                <h1>Ollamac v2.1.2</h1>
-                <h3>Bug Fixes</h3>
+                <h1>Ollamac 3 is here!</h1>
                 <ul>
-                    <li>Fixed: code blocks showing "undefined" (Thanks to <a href="https://github.com/pd95">@pd95</a>)</li>
+                    <li>Revamped chat UI</li>
+                    <li>Fresh sidebar UI</li>
+                    <li>Custom system prompts</li>
+                    <li>Change host for each chat</li>
+                    <li>Switch models on the fly</li>
+                    <li>Quick and easy chat creation</li>
+                    <li>Tweak model settings in chat</li>
+                    <li>Too much to tell, let's give it a try...</li>
                 </ul>
-                <p>For a complete list of changes, visit our <a href="https://github.com/kevinhermawan/Ollamac/releases/tag/v2.1.2">Full Changelog</a>.</p>
+                <p>For a complete list of changes, visit our <a href="https://github.com/kevinhermawan/Ollamac/releases/tag/v3.0.0">Full Changelog</a>.</p>
             ]]>
             </description>
-            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v2.1.2/Ollamac-2.1.2.dmg" length="4961644" type="application/octet-stream" sparkle:edSignature="1WNndntUQ2hOuKz1xhWs88sbGpD4WMKYAQtPt1d8GeRzPuX6h6QsXpfDv6CzglQaVLDq00XmjEpvwzR0Vy+hBQ=="/>
+            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v3.0.0/Ollamac-3.0.0.dmg" length="5118551" type="application/octet-stream" sparkle:edSignature="s8LF3grL37rrUG4mXN21DlutBXGoQBwEiewuTSuMlTspB3jTLPpxj4IaNUYkaFKQx/CQ+EBuEvq1Wa5yK6CoBg=="/>
         </item>
     </channel>
 </rss>
