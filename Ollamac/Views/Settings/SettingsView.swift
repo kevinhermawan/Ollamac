@@ -15,6 +15,11 @@ struct SettingsView: View {
                     .tabItem {
                         Label("General", systemImage: "gearshape")
                     }
+                
+                ExperimentalView()
+                    .tabItem {
+                        Label("Experimental", systemImage: "testtube.2")
+                    }
             }
         }
         .padding()

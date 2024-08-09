@@ -18,8 +18,20 @@ struct GeneralView: View {
     var body: some View {
         Form {
             Section {
-                GeneralBox(label: "Default Ollama Host", value: defaultHost) {
-                    isUpdateOllamaHostPresented = true
+                Box {
+                    Text("Default Ollama Host")
+                        .font(.headline.weight(.semibold))
+                    
+                    HStack {
+                        Text(defaultHost)
+                            .help(defaultHost)
+                            .lineLimit(1)
+                            .foregroundColor(.secondary)
+                        
+                        Spacer()
+                        
+                        Button("Change", action: { isUpdateOllamaHostPresented = true })
+                    }
                 }
             } footer: {
                 SectionFooter("This host will be used for new chats.")
@@ -27,12 +39,23 @@ struct GeneralView: View {
             }
             
             Section {
-                GeneralBox(label: "Default System Prompt", value: defaultSystemPrompt) {
-                    isUpdateSystemPromptPresented = true
+                Box {
+                    Text("Default System Prompt")
+                        .font(.headline.weight(.semibold))
+                    
+                    HStack {
+                        Text(defaultHost)
+                            .help(defaultHost)
+                            .lineLimit(1)
+                            .foregroundColor(.secondary)
+                        
+                        Spacer()
+                        
+                        Button("Change", action: { isUpdateSystemPromptPresented = true })
+                    }
                 }
             } footer: {
                 SectionFooter("This prompt will be used for new chats.")
-                    .padding(.bottom)
             }
         }
         .sheet(isPresented: $isUpdateOllamaHostPresented) {

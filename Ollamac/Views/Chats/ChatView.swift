@@ -98,7 +98,7 @@ struct ChatView: View {
             .onChange(of: chatViewModel.activeChat?.id) {
                 self.onActiveChatChanged()
             }
-            .onChange(of: messageViewModel.messages.last?.response) {
+            .onChange(of: messageViewModel.tempResponse) {
                 if let proxy = scrollProxy {
                     scrollToBottom(proxy: proxy)
                 }
@@ -121,10 +121,6 @@ struct ChatView: View {
     
     private func onActiveChatChanged() {
         self.prompt = ""
-        
-        if let scrollProxy {
-            self.scrollToBottom(proxy: scrollProxy)
-        }
         
         if let activeChat = chatViewModel.activeChat, let host = activeChat.host, let baseURL = URL(string: host) {
             self.ollamaKit = OllamaKit(baseURL: baseURL)
