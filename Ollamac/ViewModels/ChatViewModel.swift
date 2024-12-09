@@ -5,6 +5,7 @@
 //  Created by Kevin Hermawan on 13/07/24.
 //
 
+import Defaults
 import OllamaKit
 import SwiftData
 import SwiftUI
@@ -110,6 +111,13 @@ final class ChatViewModel {
         for chat in selectedChats {
             self.modelContext.delete(chat)
             self.chats.removeAll(where: { $0.id == chat.id })
+        }
+    }
+    
+    func removeTemporaryChat(chatToRemove: Chat) {
+        if (chatToRemove.name == Defaults[.defaultChatName] && chatToRemove.messages.isEmpty) {
+            self.modelContext.delete(chatToRemove)
+            self.chats.removeAll(where: { $0.id == chatToRemove.id })
         }
     }
 }

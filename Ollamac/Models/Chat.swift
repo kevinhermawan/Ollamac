@@ -28,7 +28,7 @@ final class Chat: Identifiable {
     var messages: [Message] = []
     
     init(model: String) {
-        self.name = "New Chat"
+        self.name = Defaults[.defaultChatName]
         self.model = model
         self.host = Defaults[.defaultHost]
         self.systemPrompt = Defaults[.defaultSystemPrompt]
