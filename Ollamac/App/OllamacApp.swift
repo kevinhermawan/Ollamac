@@ -5,6 +5,7 @@
 //  Created by Kevin Hermawan on 03/11/23.
 //
 
+import Defaults
 import AppInfo
 import Sparkle
 import SwiftUI
@@ -43,6 +44,13 @@ struct OllamacApp: App {
         
         let messageViewModel = MessageViewModel(modelContext: modelContext)
         self._messageViewModel = State(initialValue: messageViewModel)
+        
+        chatViewModel.create(model: Defaults[.defaultModel])
+        guard let activeChat = chatViewModel.selectedChats
+            .first else { return }
+        
+        chatViewModel.activeChat = activeChat
+        messageViewModel.load(of: activeChat)
     }
     
     var body: some Scene {

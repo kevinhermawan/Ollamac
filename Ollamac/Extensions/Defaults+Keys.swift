@@ -9,6 +9,7 @@ import Defaults
 import Foundation
 
 extension Defaults.Keys {
+    static let defaultChatName = Key<String>("defaultChatName", default: "New Chat")
     static let defaultModel = Key<String>("defaultModel", default: "")
     static let defaultHost = Key<String>("defaultHost", default: "http://localhost:11434")
     static let defaultSystemPrompt = Key<String>("defaultSystemPrompt", default: "You're Ollamac, a helpful assistant.")
