@@ -33,6 +33,11 @@ class ThemeCache {
                 .codeBlock { [weak self] configuration in
                     self?.getCodeBlockView(for: configuration) ?? CodeBlockView(configuration: configuration)
                 }
+                .listItem { configuration in
+                    configuration.label
+                        .markdownMargin(top: .em(0.5))
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             
             cachedTheme = newTheme
             
