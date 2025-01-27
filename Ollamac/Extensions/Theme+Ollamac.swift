@@ -30,8 +30,8 @@ class ThemeCache {
                     FontSize(15.0)
                     FontFamilyVariant(.monospaced)
                 }
-                .codeBlock { [weak self] configuration in
-                    self?.getCodeBlockView(for: configuration) ?? CodeBlockView(configuration: configuration)
+                .codeBlock { configuration in
+                    CodeBlockView(configuration: configuration)
                 }
             
             cachedTheme = newTheme
@@ -40,16 +40,16 @@ class ThemeCache {
         }
     }
     
-    private func getCodeBlockView(for configuration: CodeBlockConfiguration) -> CodeBlockView {
-        if let cachedView = cachedCodeBlocks[configuration] {
-            return cachedView
-        } else {
-            let newView = CodeBlockView(configuration: configuration)
-            cachedCodeBlocks[configuration] = newView
-            
-            return newView
-        }
-    }
+//    private func getCodeBlockView(for configuration: CodeBlockConfiguration) -> CodeBlockView {
+//        if let cachedView = cachedCodeBlocks[configuration] {
+//            return cachedView
+//        } else {
+//            let newView = CodeBlockView(configuration: configuration)
+//            cachedCodeBlocks[configuration] = newView
+//            
+//            return newView
+//        }
+//    }
 }
 
 extension Theme {

@@ -9,7 +9,7 @@ import MarkdownUI
 import SwiftUI
 
 struct CodeBlockView: View {
-    @Environment(\.colorScheme) private var colorScheme
+    @Environment(CodeHighlighter.self) private var codeHighlighter
 
     let configuration: CodeBlockConfiguration
     @State private var isCopied = false
@@ -32,7 +32,7 @@ struct CodeBlockView: View {
                 .cornerRadius(4)
                 .overlay(
                     RoundedRectangle(cornerRadius: 4)
-                        .stroke(Color(hex: "#a5a5a9"), lineWidth: 1)
+                        .stroke(borderColor, lineWidth: 1)
                 )
             }
             .padding(.horizontal)
@@ -54,11 +54,15 @@ struct CodeBlockView: View {
     }
 
     var headerBackground: some View {
-        Color.primary.brightness(colorScheme == .dark ? -0.8 : 0.2)
+        Color.primary.brightness(codeHighlighter.scheme == .dark ? -0.8 : 0.2)
+    }
+
+    var borderColor: Color {
+        codeHighlighter.scheme == .dark ? Color(hex: "#a5a5a9") : Color.gray
     }
 
     var codeBackground: some View {
-        Color.primary.brightness(colorScheme == .dark ? -0.85 : 0.95)
+        Color.primary.brightness(codeHighlighter.scheme == .dark ? -0.85 : 0.95)
     }
     
     private func copyCodeAction() {

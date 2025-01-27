@@ -18,7 +18,8 @@ struct OllamacApp: App {
     
     @State private var chatViewModel: ChatViewModel
     @State private var messageViewModel: MessageViewModel
-    
+    @State private var codeHighlighter: CodeHighlighter
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([Chat.self, Message.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
@@ -44,7 +45,10 @@ struct OllamacApp: App {
         
         let messageViewModel = MessageViewModel(modelContext: modelContext)
         self._messageViewModel = State(initialValue: messageViewModel)
-        
+
+        let codeHighlighter =  CodeHighlighter()
+        _codeHighlighter = State(initialValue: codeHighlighter)
+
         chatViewModel.create(model: Defaults[.defaultModel])
         guard let activeChat = chatViewModel.selectedChats
             .first else { return }
@@ -58,6 +62,7 @@ struct OllamacApp: App {
             AppView()
                 .environment(chatViewModel)
                 .environment(messageViewModel)
+                .environment(codeHighlighter)
         }
         .modelContainer(sharedModelContainer)
         .commands {
