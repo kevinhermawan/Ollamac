@@ -15,7 +15,6 @@ class CodeHighlighter: CodeSyntaxHighlighter {
     private(set) var scheme: ColorScheme = .dark
 
     init() {
-        print(Self.self, #function)
         guard let highlightrInstance = Highlightr() else {
             fatalError("Failed to initialize Highlightr")
         }
