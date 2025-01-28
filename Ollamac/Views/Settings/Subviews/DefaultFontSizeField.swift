@@ -17,36 +17,31 @@ struct DefaultFontSizeField: View {
     @ScaledMetric(relativeTo: .headline) private var width: CGFloat = 48
 
     var body: some View {
-        GroupBox {
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Font size")
-                    .font(.headline.weight(.semibold))
+        Text("Font size")
+            .font(.headline.weight(.semibold))
 
-                HStack {
-                    HStack {
-                        TextField(String(Default(.fontSize).defaultValue), value: $fontSize, format: .number.precision(.fractionLength(0)))
-                            .textFieldStyle(.roundedBorder)
-                            .frame(width: width)
+        HStack {
+            HStack {
+                TextField(String(Default(.fontSize).defaultValue), value: $fontSize, format: .number.precision(.fractionLength(0)))
+                    .textFieldStyle(.roundedBorder)
+                    .frame(maxWidth: width)
 
-                        Stepper("Font size", value: $fontSize, in: range, step: 1)
-                            .labelsHidden()
-                    }
-                    .onChange(of: fontSize, { oldValue, newValue in
-                        if newValue < range.lowerBound {
-                            fontSize = range.lowerBound
-                        } else if newValue > range.upperBound {
-                            fontSize = range.upperBound
-                        }
-                    })
-
-                    Spacer()
-
-                    Button("Reset") {
-                        Default(.fontSize).reset()
-                    }
-                }
+                Stepper("Font size", value: $fontSize, in: range, step: 1)
             }
-            .padding(4)
+            .labelsHidden()
+            .onChange(of: fontSize, { oldValue, newValue in
+                if newValue < range.lowerBound {
+                    fontSize = range.lowerBound
+                } else if newValue > range.upperBound {
+                    fontSize = range.upperBound
+                }
+            })
+
+            Spacer()
+
+            Button("Reset") {
+                Default(.fontSize).reset()
+            }
         }
     }
 }
@@ -56,6 +51,12 @@ struct DefaultFontSizeField: View {
     VStack {
         GroupBox {
             DefaultFontSizeField()
+        }
+
+        Section {
+            Box {
+                DefaultFontSizeField()
+            }
         }
     }
     .padding(16)
