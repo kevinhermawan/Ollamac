@@ -5,11 +5,14 @@
 //  Created by Kevin Hermawan on 8/4/24.
 //
 
+import Defaults
 import SwiftUI
 
 struct UpdateSystemPromptSheet: View {
     @Environment(\.dismiss) private var dismiss
     
+    @Default(.fontSize) private var fontSize
+
     @State private var prompt: String
     
     private let action: (_ prompt: String) -> Void
@@ -25,7 +28,7 @@ struct UpdateSystemPromptSheet: View {
                 TextEditor(text: $prompt)
                     .textEditorStyle(.plain)
                     .scrollIndicators(.never)
-                    .font(Font.system(size: 16))
+                    .font(Font.system(size: fontSize))
             }
             .padding(.vertical, 16)
             .padding(.horizontal, 10)

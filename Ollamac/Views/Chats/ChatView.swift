@@ -17,6 +17,8 @@ struct ChatView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(CodeHighlighter.self) private var codeHighlighter
 
+    @Default(.fontSize) private var fontSize
+
     @State private var ollamaKit: OllamaKit
     @State private var prompt: String = ""
     @State private var scrollProxy: ScrollViewProxy? = nil
@@ -87,7 +89,7 @@ struct ChatView: View {
                         }
                     }
                     .chatFieldStyle(.capsule)
-                    .font(Font.system(size: 16))
+                    .font(Font.system(size: fontSize))
                 }
                 .padding(.top, 8)
                 .padding(.bottom, 12)

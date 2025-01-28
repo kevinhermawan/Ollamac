@@ -33,7 +33,7 @@ struct AssistantMessageView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Assistant")
-                .font(Font.system(size: 16).weight(.semibold))
+                .font(Font.system(size: fontSize).weight(.semibold))
                 .foregroundStyle(.accent)
             
             if isGenerating && content.isEmpty {
