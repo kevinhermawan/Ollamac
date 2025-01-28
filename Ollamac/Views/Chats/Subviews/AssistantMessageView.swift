@@ -16,7 +16,10 @@ struct AssistantMessageView: View {
     private let isLastMessage: Bool
     private let copyAction: (_ content: String) -> Void
     private let regenerateAction: () -> Void
-    
+
+    @Environment(CodeHighlighter.self) private var codeHighlighter
+    @AppStorage("experimentalCodeHighlighting") private var experimentalCodeHighlighting = false
+
     init(content: String, isGenerating: Bool, isLastMessage: Bool, copyAction: @escaping (_ content: String) -> Void, regenerateAction: @escaping () -> Void) {
         self.content = content
         self.isGenerating = isGenerating
@@ -38,10 +41,9 @@ struct AssistantMessageView: View {
                 Markdown(content)
                     .textSelection(.enabled)
                     .markdownTheme(.ollamac)
-                    .if(Defaults[.experimentalCodeHighlighting]) { view in
-                        view.markdownCodeSyntaxHighlighter(.ollamac)
-                    }
-                
+                    .markdownCodeSyntaxHighlighter(experimentalCodeHighlighting ? codeHighlighter : .plainText)
+                    .id(experimentalCodeHighlighting.hashValue &+ codeHighlighter.scheme.hashValue)
+
                 HStack(spacing: 16) {
                     MessageButton("Copy", systemImage: "doc.on.doc", action: { copyAction(content) })
                     

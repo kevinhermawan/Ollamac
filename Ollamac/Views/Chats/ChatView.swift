@@ -14,7 +14,9 @@ import ViewCondition
 struct ChatView: View {
     @Environment(ChatViewModel.self) private var chatViewModel
     @Environment(MessageViewModel.self) private var messageViewModel
-    
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(CodeHighlighter.self) private var codeHighlighter
+
     @State private var ollamaKit: OllamaKit
     @State private var prompt: String = ""
     @State private var scrollProxy: ScrollViewProxy? = nil
@@ -102,6 +104,9 @@ struct ChatView: View {
                 if let proxy = scrollProxy {
                     scrollToBottom(proxy: proxy)
                 }
+            }
+            .onChange(of: colorScheme, initial: true) {
+                codeHighlighter.setColorScheme(to: colorScheme)
             }
         }
         .navigationTitle(chatViewModel.activeChat?.name ?? "Ollamac")
