@@ -46,7 +46,7 @@ struct OllamacApp: App {
         let messageViewModel = MessageViewModel(modelContext: modelContext)
         self._messageViewModel = State(initialValue: messageViewModel)
 
-        let codeHighlighter =  CodeHighlighter()
+        let codeHighlighter =  CodeHighlighter(colorScheme: .light, fontSize: Defaults[.fontSize], enabled: Defaults[.experimentalCodeHighlighting])
         _codeHighlighter = State(initialValue: codeHighlighter)
 
         chatViewModel.create(model: Defaults[.defaultModel])

@@ -51,7 +51,7 @@ struct AssistantMessageView: View {
                     }
                     .markdownTheme(.ollamac)
                     .markdownCodeSyntaxHighlighter(experimentalCodeHighlighting ? codeHighlighter : .plainText)
-                    .id(experimentalCodeHighlighting.hashValue &+ codeHighlighter.scheme.hashValue)
+                    .id(codeHighlighter.stateHashValue)
 
                 HStack(spacing: 16) {
                     MessageButton("Copy", systemImage: "doc.on.doc", action: { copyAction(content) })

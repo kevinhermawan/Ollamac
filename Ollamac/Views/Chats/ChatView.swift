@@ -17,6 +17,7 @@ struct ChatView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(CodeHighlighter.self) private var codeHighlighter
 
+    @AppStorage("experimentalCodeHighlighting") private var experimentalCodeHighlighting = false
     @Default(.fontSize) private var fontSize
 
     @State private var ollamaKit: OllamaKit
@@ -108,7 +109,13 @@ struct ChatView: View {
                 }
             }
             .onChange(of: colorScheme, initial: true) {
-                codeHighlighter.setColorScheme(to: colorScheme)
+                codeHighlighter.colorScheme = colorScheme
+            }
+            .onChange(of: fontSize, initial: true) {
+                codeHighlighter.fontSize = fontSize
+            }
+            .onChange(of: experimentalCodeHighlighting) {
+                codeHighlighter.enabled = experimentalCodeHighlighting
             }
         }
         .navigationTitle(chatViewModel.activeChat?.name ?? "Ollamac")
