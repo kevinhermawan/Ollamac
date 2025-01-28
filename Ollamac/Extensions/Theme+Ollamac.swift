@@ -19,15 +19,11 @@ class ThemeCache {
             return existingTheme
         } else {
             let newTheme = Theme()
-                .text {
-                    FontSize(16.0)
-                }
                 .paragraph { configuration in
                     configuration.label
                         .relativeLineSpacing(.em(0.25))
                 }
                 .code {
-                    FontSize(15.0)
                     FontFamilyVariant(.monospaced)
                 }
                 .codeBlock { configuration in

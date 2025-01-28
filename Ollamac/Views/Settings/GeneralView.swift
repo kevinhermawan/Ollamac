@@ -57,6 +57,8 @@ struct GeneralView: View {
             } footer: {
                 SectionFooter("This prompt will be used for new chats.")
             }
+
+            DefaultFontSizeField()
         }
         .sheet(isPresented: $isUpdateOllamaHostPresented) {
             UpdateOllamaHostSheet(host: defaultHost) { host in

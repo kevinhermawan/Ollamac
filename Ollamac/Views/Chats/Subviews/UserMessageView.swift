@@ -5,10 +5,13 @@
 //  Created by Kevin Hermawan on 8/2/24.
 //
 
+import Defaults
 import SwiftUI
 import ViewCondition
 
 struct UserMessageView: View {
+    @Default(.fontSize) private var fontSize
+
     private let windowWidth = NSApplication.shared.windows.first?.frame.width ?? 0
     private let content: String
     private let copyAction: (_ content: String) -> Void
@@ -28,7 +31,7 @@ struct UserMessageView: View {
                     .background(.accent)
                     .foregroundColor(.white)
                     .textSelection(.enabled)
-                    .font(Font.system(size: 16))
+                    .font(Font.system(size: fontSize))
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                 
                 HStack(spacing: 16){

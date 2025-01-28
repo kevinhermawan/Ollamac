@@ -11,6 +11,8 @@ import SwiftUI
 import ViewCondition
 
 struct AssistantMessageView: View {
+    @Default(.fontSize) private var fontSize
+
     private let content: String
     private let isGenerating: Bool
     private let isLastMessage: Bool
@@ -40,6 +42,13 @@ struct AssistantMessageView: View {
             } else {
                 Markdown(content)
                     .textSelection(.enabled)
+                    .markdownTextStyle(\.text) {
+                        FontSize(CGFloat(fontSize))
+                    }
+                    .markdownTextStyle(\.code) {
+                        FontSize(CGFloat(fontSize))
+                        FontFamily(.system(.monospaced))
+                    }
                     .markdownTheme(.ollamac)
                     .markdownCodeSyntaxHighlighter(experimentalCodeHighlighting ? codeHighlighter : .plainText)
                     .id(experimentalCodeHighlighting.hashValue &+ codeHighlighter.scheme.hashValue)
