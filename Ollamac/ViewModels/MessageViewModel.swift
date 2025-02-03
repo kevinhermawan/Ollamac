@@ -126,14 +126,29 @@ final class MessageViewModel {
             defer { self.loading = nil }
             
             do {
+                var isReasoningContent = false
+                
                 for try await chunk in ollamaKit.chat(data: OKChatRequestData(model: activeChat.model, messages: requestMessages)) {
                     if Task.isCancelled { break }
                     
-                    if activeChat.name == "New Chat" {
-                        activeChat.name = ""
-                        activeChat.name += chunk.message?.content ?? ""
-                    } else {
-                        activeChat.name += chunk.message?.content ?? ""
+                    guard let content = chunk.message?.content else { continue }
+                    
+                    if content.contains("<think>") {
+                        isReasoningContent = true
+                        continue
+                    }
+                    
+                    if content.contains("</think>") {
+                        isReasoningContent = false
+                        continue
+                    }
+                    
+                    if !isReasoningContent {
+                        if activeChat.name == "New Chat" {
+                            activeChat.name = content.trimmingCharacters(in: .whitespacesAndNewlines)
+                        } else {
+                            activeChat.name += content
+                        }
                     }
                     
                     if chunk.done {
