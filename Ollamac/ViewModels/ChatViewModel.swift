@@ -21,7 +21,9 @@ final class ChatViewModel {
     var chats: [Chat] = []
     var activeChat: Chat? = nil
     var selectedChats = Set<Chat>()
-    
+
+    var shouldFocusPrompt = false
+
     var isHostReachable: Bool = true
     var loading: ChatViewModelLoading? = nil
     var error: ChatViewModelError? = nil
@@ -96,6 +98,7 @@ final class ChatViewModel {
         
         self.chats.insert(chat, at: 0)
         self.selectedChats = [chat]
+        self.shouldFocusPrompt = true
     }
     
     func rename() {

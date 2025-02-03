@@ -21,7 +21,8 @@ struct ChatView: View {
     @State private var prompt: String = ""
     @State private var scrollProxy: ScrollViewProxy? = nil
     @State private var isPreferencesPresented: Bool = false
-    
+    @FocusState private var isFocused: Bool
+
     init() {
         let baseURL = URL(string: Defaults[.defaultHost])!
         self._ollamaKit = State(initialValue: OllamaKit(baseURL: baseURL))
@@ -87,6 +88,7 @@ struct ChatView: View {
                         }
                     }
                     .chatFieldStyle(.capsule)
+                    .focused($isFocused)
                     .font(Font.system(size: 16))
                 }
                 .padding(.top, 8)
@@ -97,7 +99,7 @@ struct ChatView: View {
             .onAppear {
                 self.scrollProxy = proxy
             }
-            .onChange(of: chatViewModel.activeChat?.id) {
+            .onChange(of: chatViewModel.activeChat?.id, initial: true) {
                 self.onActiveChatChanged()
             }
             .onChange(of: messageViewModel.tempResponse) {
@@ -126,7 +128,11 @@ struct ChatView: View {
     
     private func onActiveChatChanged() {
         self.prompt = ""
-        
+        if chatViewModel.shouldFocusPrompt {
+            chatViewModel.shouldFocusPrompt = false
+            self.isFocused = true
+        }
+
         if let activeChat = chatViewModel.activeChat, let host = activeChat.host, let baseURL = URL(string: host) {
             self.ollamaKit = OllamaKit(baseURL: baseURL)
             self.chatViewModel.fetchModels(self.ollamaKit)
