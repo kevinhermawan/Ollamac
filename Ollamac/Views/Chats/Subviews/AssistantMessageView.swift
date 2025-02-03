@@ -38,7 +38,7 @@ struct AssistantMessageView: View {
                 ProgressView()
                     .controlSize(.small)
             } else {
-                Markdown(content)
+				Markdown(convertThinkTagsToMarkdownQuote(in: content))
                     .textSelection(.enabled)
                     .markdownTheme(.ollamac)
                     .markdownCodeSyntaxHighlighter(experimentalCodeHighlighting ? codeHighlighter : .plainText)
@@ -56,4 +56,35 @@ struct AssistantMessageView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
+	
+	func convertThinkTagsToMarkdownQuote(in text: String) -> String  {
+		// Only process responses that need markdown updated
+		guard text.starts(with: "<think>") else {
+			return text
+		}
+		let openingTag = "<think>"
+		let closingTag = "</think>"
+		
+		var result = ""
+		var insideThinkBlock = false
+
+		text.enumerateLines { line, stop in
+			switch true {
+			case line.contains(openingTag):
+				insideThinkBlock = true
+				result.append("> \(line.replaceAndTrim(string: openingTag))\n")
+			case line.contains(closingTag):
+				insideThinkBlock = false
+				result.append("> \(line.replaceAndTrim(string: closingTag))\n")
+			case insideThinkBlock:
+				result.append("> \(line)\n")
+			default:
+				result.append("\(line)\n")
+			}
+		}
+		
+		return result
+	}
 }
+
+

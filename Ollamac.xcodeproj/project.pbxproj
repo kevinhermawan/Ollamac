@@ -53,6 +53,7 @@
 		0AFC5AA52C6694F400A148A2 /* ExperimentalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFC5AA42C6694F400A148A2 /* ExperimentalView.swift */; };
 		0AFC5AA72C6695CF00A148A2 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFC5AA62C6695CF00A148A2 /* Box.swift */; };
 		0AFC5AA92C66A20C00A148A2 /* CodeBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFC5AA82C66A20C00A148A2 /* CodeBlockView.swift */; };
+		4A4A8EBE2D5047590065A5EC /* String+ReplaceAndTrim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A8EBD2D5047590065A5EC /* String+ReplaceAndTrim.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +96,7 @@
 		0AFC5AA42C6694F400A148A2 /* ExperimentalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentalView.swift; sourceTree = "<group>"; };
 		0AFC5AA62C6695CF00A148A2 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		0AFC5AA82C66A20C00A148A2 /* CodeBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeBlockView.swift; sourceTree = "<group>"; };
+		4A4A8EBD2D5047590065A5EC /* String+ReplaceAndTrim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ReplaceAndTrim.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,6 +282,7 @@
 		0ADB96142C5D5DD900EB0C60 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4A4A8EBD2D5047590065A5EC /* String+ReplaceAndTrim.swift */,
 				0ADB96152C5D5DE700EB0C60 /* Color+Hex.swift */,
 				0ADB96102C5D585500EB0C60 /* Theme+Ollamac.swift */,
 				0A6E85172C5E98770030A4AA /* Defaults+Keys.swift */,
@@ -423,6 +426,7 @@
 				0AB3629F2C398C3300DE3F31 /* AppUpdater.swift in Sources */,
 				0A4D35852AF541D900846890 /* OllamacApp.swift in Sources */,
 				0AF5CB622C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift in Sources */,
+				4A4A8EBE2D5047590065A5EC /* String+ReplaceAndTrim.swift in Sources */,
 				0A6E85102C5E6C670030A4AA /* MessageViewModel.swift in Sources */,
 				0A6E85112C5E6C670030A4AA /* ChatViewModel.swift in Sources */,
 				0A6E85342C5F9DA00030A4AA /* ChatFieldFooterView.swift in Sources */,
