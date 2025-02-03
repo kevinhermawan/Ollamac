@@ -141,7 +141,12 @@ struct ChatView: View {
     
     private func generateAction() {
         guard let activeChat = chatViewModel.activeChat, !activeChat.model.isEmpty, chatViewModel.isHostReachable else { return }
-        guard !prompt.isEmpty else { return }
+
+        let prompt = prompt.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !prompt.isEmpty else {
+            self.prompt = ""
+            return
+        }
 
         if messageViewModel.loading == .generate {
             messageViewModel.cancelGeneration()
@@ -151,7 +156,7 @@ struct ChatView: View {
             messageViewModel.generate(ollamaKit, activeChat: activeChat, prompt: prompt)
         }
         
-        prompt = ""
+        self.prompt = ""
     }
     
     private func regenerateAction() {
