@@ -130,7 +130,12 @@ struct ChatView: View {
         self.prompt = ""
         if chatViewModel.shouldFocusPrompt {
             chatViewModel.shouldFocusPrompt = false
-            self.isFocused = true
+            Task {
+                try await Task.sleep(for: .seconds(0.8))
+                withAnimation {
+                    self.isFocused = true
+                }
+            }
         }
 
         if let activeChat = chatViewModel.activeChat, let host = activeChat.host, let baseURL = URL(string: host) {
