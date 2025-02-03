@@ -9,6 +9,7 @@ import Defaults
 import MarkdownUI
 import SwiftUI
 import ViewCondition
+import RegexBuilder
 
 struct AssistantMessageView: View {
     private let content: String
@@ -58,12 +59,26 @@ struct AssistantMessageView: View {
     }
 	
 	func convertThinkTagsToMarkdownQuote(in text: String) -> String  {
-		// Only process responses that need markdown updated
-		guard text.starts(with: "<think>") else {
-			return text
-		}
 		let openingTag = "<think>"
 		let closingTag = "</think>"
+		
+		// Disregard any markup if this does not start with with the appropriate tag
+		guard text.starts(with: openingTag) else { return text }
+		
+		// Check if a think tag is present, but empty and remove it from the contents if appropriate
+		let emptyThinkBlockRegex = Regex {
+			openingTag
+			Capture {
+				OneOrMore(.anyNonNewline.inverted)
+			}
+			closingTag
+		}
+		
+		if let tagRange = text.firstRange(of: emptyThinkBlockRegex) {
+			var newText = text
+			newText.removeSubrange(tagRange)
+			return newText
+		}
 		
 		var result = ""
 		var insideThinkBlock = false
