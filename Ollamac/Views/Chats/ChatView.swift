@@ -24,7 +24,8 @@ struct ChatView: View {
     @State private var prompt: String = ""
     @State private var scrollProxy: ScrollViewProxy? = nil
     @State private var isPreferencesPresented: Bool = false
-    
+    @FocusState private var isFocused: Bool
+
     init() {
         let baseURL = URL(string: Defaults[.defaultHost])!
         self._ollamaKit = State(initialValue: OllamaKit(baseURL: baseURL))
@@ -67,6 +68,7 @@ struct ChatView: View {
                         }
                     } trailingAccessory: {
                         CircleButton(systemImage: messageViewModel.loading == .generate ? "stop.fill" : "arrow.up", action: generateAction)
+                            .disabled(prompt.isEmpty && messageViewModel.loading != .generate)
                     } footer: {
                         if chatViewModel.loading != nil {
                             ProgressView()
@@ -90,6 +92,7 @@ struct ChatView: View {
                         }
                     }
                     .chatFieldStyle(.capsule)
+                    .focused($isFocused)
                     .font(Font.system(size: fontSize))
                 }
                 .padding(.top, 8)
@@ -100,7 +103,7 @@ struct ChatView: View {
             .onAppear {
                 self.scrollProxy = proxy
             }
-            .onChange(of: chatViewModel.activeChat?.id) {
+            .onChange(of: chatViewModel.activeChat?.id, initial: true) {
                 self.onActiveChatChanged()
             }
             .onChange(of: messageViewModel.tempResponse) {
@@ -135,7 +138,16 @@ struct ChatView: View {
     
     private func onActiveChatChanged() {
         self.prompt = ""
-        
+        if chatViewModel.shouldFocusPrompt {
+            chatViewModel.shouldFocusPrompt = false
+            Task {
+                try await Task.sleep(for: .seconds(0.8))
+                withAnimation {
+                    self.isFocused = true
+                }
+            }
+        }
+
         if let activeChat = chatViewModel.activeChat, let host = activeChat.host, let baseURL = URL(string: host) {
             self.ollamaKit = OllamaKit(baseURL: baseURL)
             self.chatViewModel.fetchModels(self.ollamaKit)
@@ -149,16 +161,22 @@ struct ChatView: View {
     
     private func generateAction() {
         guard let activeChat = chatViewModel.activeChat, !activeChat.model.isEmpty, chatViewModel.isHostReachable else { return }
-        
+
         if messageViewModel.loading == .generate {
             messageViewModel.cancelGeneration()
         } else {
+            let prompt = prompt.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !prompt.isEmpty else {
+                self.prompt = ""
+                return
+            }
+
             guard let activeChat = chatViewModel.activeChat else { return }
             
             messageViewModel.generate(ollamaKit, activeChat: activeChat, prompt: prompt)
         }
         
-        prompt = ""
+        self.prompt = ""
     }
     
     private func regenerateAction() {
