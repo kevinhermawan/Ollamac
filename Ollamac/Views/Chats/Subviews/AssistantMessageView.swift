@@ -9,6 +9,7 @@ import Defaults
 import MarkdownUI
 import SwiftUI
 import ViewCondition
+import RegexBuilder
 
 struct AssistantMessageView: View {
     private let content: String
@@ -38,7 +39,7 @@ struct AssistantMessageView: View {
                 ProgressView()
                     .controlSize(.small)
             } else {
-                Markdown(content)
+				Markdown(convertThinkTagsToMarkdownQuote(in: content))
                     .textSelection(.enabled)
                     .markdownTheme(.ollamac)
                     .markdownCodeSyntaxHighlighter(experimentalCodeHighlighting ? codeHighlighter : .plainText)
@@ -56,4 +57,49 @@ struct AssistantMessageView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
+	
+	func convertThinkTagsToMarkdownQuote(in text: String) -> String  {
+		let openingTag = "<think>"
+		let closingTag = "</think>"
+		
+		// Disregard any markup if this does not start with with the appropriate tag
+		guard text.starts(with: openingTag) else { return text }
+		
+		// Check if a think tag is present, but empty and remove it from the contents if appropriate
+		let emptyThinkBlockRegex = Regex {
+			openingTag
+			Capture {
+				OneOrMore(.anyNonNewline.inverted)
+			}
+			closingTag
+		}
+		
+		if let tagRange = text.firstRange(of: emptyThinkBlockRegex) {
+			var newText = text
+			newText.removeSubrange(tagRange)
+			return newText
+		}
+		
+		var result = ""
+		var insideThinkBlock = false
+
+		text.enumerateLines { line, stop in
+			switch true {
+			case line.contains(openingTag):
+				insideThinkBlock = true
+				result.append("> \(line.replaceAndTrim(string: openingTag))\n")
+			case line.contains(closingTag):
+				insideThinkBlock = false
+				result.append("> \(line.replaceAndTrim(string: closingTag))\n")
+			case insideThinkBlock:
+				result.append("> \(line)\n")
+			default:
+				result.append("\(line)\n")
+			}
+		}
+		
+		return result
+	}
 }
+
+

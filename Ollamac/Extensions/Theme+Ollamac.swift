@@ -38,6 +38,16 @@ class ThemeCache {
                         .markdownMargin(top: .em(0.5))
                         .fixedSize(horizontal: false, vertical: true)
                 }
+				.blockquote { configuration in
+					configuration.label
+						.padding()
+						.overlay(alignment: .leading) {
+							Rectangle()
+								.fill(.gray)
+								.frame(width: 4)
+						}
+						.background(Color.gray.opacity(0.3))
+				}
             
             cachedTheme = newTheme
             
