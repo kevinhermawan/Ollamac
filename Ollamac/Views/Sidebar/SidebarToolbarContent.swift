@@ -21,6 +21,7 @@ struct SidebarToolbarContent: ToolbarContent {
             Button(action: addAction) {
                 Label("New Chat", systemImage: "square.and.pencil")
             }
+            .keyboardShortcut("n")
             .help("New Chat")
         }
     }

@@ -65,6 +65,7 @@ struct OllamacApp: App {
                 .environment(codeHighlighter)
         }
         .modelContainer(sharedModelContainer)
+        .keyboardShortcut(KeyboardShortcut("n", modifiers: [.command, .shift]))
         .commands {
             CommandGroup(replacing: .textEditing) {
                 if chatViewModel.selectedChats.count > 0 {
