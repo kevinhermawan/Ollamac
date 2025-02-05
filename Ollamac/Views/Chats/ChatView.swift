@@ -65,7 +65,7 @@ struct ChatView: View {
                         }
                     } trailingAccessory: {
                         CircleButton(systemImage: messageViewModel.loading == .generate ? "stop.fill" : "arrow.up", action: generateAction)
-                            .disabled(prompt.isEmpty)
+                            .disabled(prompt.isEmpty && messageViewModel.loading != .generate)
                     } footer: {
                         if chatViewModel.loading != nil {
                             ProgressView()
@@ -153,15 +153,15 @@ struct ChatView: View {
     private func generateAction() {
         guard let activeChat = chatViewModel.activeChat, !activeChat.model.isEmpty, chatViewModel.isHostReachable else { return }
 
-        let prompt = prompt.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !prompt.isEmpty else {
-            self.prompt = ""
-            return
-        }
-
         if messageViewModel.loading == .generate {
             messageViewModel.cancelGeneration()
         } else {
+            let prompt = prompt.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !prompt.isEmpty else {
+                self.prompt = ""
+                return
+            }
+
             guard let activeChat = chatViewModel.activeChat else { return }
             
             messageViewModel.generate(ollamaKit, activeChat: activeChat, prompt: prompt)
