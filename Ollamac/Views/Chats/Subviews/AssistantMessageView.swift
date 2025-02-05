@@ -12,6 +12,8 @@ import ViewCondition
 import RegexBuilder
 
 struct AssistantMessageView: View {
+    @Default(.fontSize) private var fontSize
+
     private let content: String
     private let isGenerating: Bool
     private let isLastMessage: Bool
@@ -32,7 +34,7 @@ struct AssistantMessageView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Assistant")
-                .font(Font.system(size: 16).weight(.semibold))
+                .font(Font.system(size: fontSize).weight(.semibold))
                 .foregroundStyle(.accent)
             
             if isGenerating && content.isEmpty {
@@ -41,9 +43,16 @@ struct AssistantMessageView: View {
             } else {
 				Markdown(convertThinkTagsToMarkdownQuote(in: content))
                     .textSelection(.enabled)
+                    .markdownTextStyle(\.text) {
+                        FontSize(CGFloat(fontSize))
+                    }
+                    .markdownTextStyle(\.code) {
+                        FontSize(CGFloat(fontSize))
+                        FontFamily(.system(.monospaced))
+                    }
                     .markdownTheme(.ollamac)
                     .markdownCodeSyntaxHighlighter(experimentalCodeHighlighting ? codeHighlighter : .plainText)
-                    .id(experimentalCodeHighlighting.hashValue &+ codeHighlighter.scheme.hashValue)
+                    .id(codeHighlighter.stateHashValue)
 
                 HStack(spacing: 16) {
                     MessageButton("Copy", systemImage: "doc.on.doc", action: { copyAction(content) })

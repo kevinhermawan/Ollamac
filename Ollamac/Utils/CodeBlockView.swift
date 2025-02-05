@@ -54,15 +54,15 @@ struct CodeBlockView: View {
     }
 
     var headerBackground: some View {
-        Color.primary.brightness(codeHighlighter.scheme == .dark ? -0.8 : 0.2)
+        Color.primary.brightness(codeHighlighter.colorScheme == .dark ? -0.8 : 0.2)
     }
 
     var borderColor: Color {
-        codeHighlighter.scheme == .dark ? Color(hex: "#a5a5a9") : Color.gray
+        codeHighlighter.colorScheme == .dark ? Color(hex: "#a5a5a9") : Color.gray
     }
 
     var codeBackground: some View {
-        Color.primary.brightness(codeHighlighter.scheme == .dark ? -0.85 : 0.95)
+        Color.primary.brightness(codeHighlighter.colorScheme == .dark ? -0.85 : 0.95)
     }
     
     private func copyCodeAction() {
