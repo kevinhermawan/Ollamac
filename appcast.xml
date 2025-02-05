@@ -3,21 +3,23 @@
     <channel>
         <title>Ollamac</title>
         <item>
-            <title>3.0.1</title>
-            <pubDate>Tue, 28 Jan 2025 17:17:43 +0700</pubDate>
-            <sparkle:version>13</sparkle:version>
-            <sparkle:shortVersionString>3.0.1</sparkle:shortVersionString>
+            <title>3.0.2</title>
+            <pubDate>Wed, 05 Feb 2025 14:24:44 +0700</pubDate>
+            <sparkle:version>14</sparkle:version>
+            <sparkle:shortVersionString>3.0.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v3.0.1/Ollamac-3.0.1.dmg" length="5133912" type="application/octet-stream" sparkle:edSignature="qVxjxTsBSC/R8/5f0CLJGE5Av7vnBNT6bfkr5UUktGrc+ciQyCf6wfOCc/x99sPCyhp8adUb9jFt7jxKlfSLDA=="/>
-            <description>
-            <![CDATA[
-                <h1>What's New in Ollamac 3.0.1</h1>
+            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v3.0.2/Ollamac-3.0.2.dmg" length="5166103" type="application/octet-stream" sparkle:edSignature="ZqDoEtuCaw+llvhKx4aHBYYZYbMNHJ55JfGbArVrrh/6r78dSQCjWxXoVDXAoSXGNSD3egPUIcYIQUrHpVMUBQ=="/>
+            <description><![CDATA[
+                <h1>What's New in Ollamac 3.0.2</h1>
                 <ul>
-                    <li>New chats now open automatically when launching the app. Thanks to @newjonny!</li>
-                    <li>Improved bullet point formatting with better margins and text wrapping. Thanks to @szymonlopaciuk!</li>
-                    <li>Fixed syntax highlighting issues in code blocks. Thanks to @pd95!</li>
+                    <li>Added font size configuration for markdown rendering. Thanks to @pd95!</li>
+                    <li>Fixed the "stop" button functionality during text generation. Thanks to @pd95!</li>
+                    <li>Added blockquote markdown support for r1 model thinking. Thanks to @Harryjeffs!</li>
+                    <li>Fixed chat window shortcuts. Thanks to @pd95!</li>
+                    <li>Fixed title generation for deepseek-r1 model. Thanks to @kevinhermawan!</li>
+                    <li>Prevented empty prompts from being sent. Thanks to @pd95!</li>
                 </ul>
-                <p>For a complete list of changes, visit our <a href="https://github.com/kevinhermawan/Ollamac/releases/tag/v3.0.1">Full Changelog</a>.</p>
+                <p>For a complete list of changes, visit our <a href="https://github.com/kevinhermawan/Ollamac/releases/tag/v3.0.2">Full Changelog</a>.</p>
             ]]>
             </description>
         </item>
