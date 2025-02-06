@@ -119,12 +119,14 @@ final class MessageViewModel {
             requestMessages.append(assistantMessage)
         }
         
-        let userMessage = OKChatRequestData.Message(role: .user, content: "Just reply with a short title about this conversation.")
+        let userMessage = OKChatRequestData.Message(role: .user, content: "Just reply with a short title about this conversation. One line maximum. No markdown.")
         requestMessages.append(userMessage)
         
         generationTask = Task {
             defer { self.loading = nil }
             
+            activeChat.name = "New Chat"
+            var title: String = ""
             do {
                 var isReasoningContent = false
                 
@@ -144,10 +146,9 @@ final class MessageViewModel {
                     }
                     
                     if !isReasoningContent {
-                        if activeChat.name == "New Chat" {
-                            activeChat.name = content.trimmingCharacters(in: .whitespacesAndNewlines)
-                        } else {
-                            activeChat.name += content
+                        title += content
+                        if title.isEmpty == false {
+                            activeChat.name = title.trimmingCharacters(in: .whitespacesAndNewlines.union(.punctuationCharacters))
                         }
                     }
                     
