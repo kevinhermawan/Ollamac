@@ -53,6 +53,7 @@
 		0AFC5AA52C6694F400A148A2 /* ExperimentalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFC5AA42C6694F400A148A2 /* ExperimentalView.swift */; };
 		0AFC5AA72C6695CF00A148A2 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFC5AA62C6695CF00A148A2 /* Box.swift */; };
 		0AFC5AA92C66A20C00A148A2 /* CodeBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFC5AA82C66A20C00A148A2 /* CodeBlockView.swift */; };
+		173D20662D556F350069CD5A /* Chat-Export.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173D20652D556F2B0069CD5A /* Chat-Export.swift */; };
 		175D318C2C64ADF9009B58E0 /* DefaultFontSizeField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175D318B2C64ADF9009B58E0 /* DefaultFontSizeField.swift */; };
 		4A4A8EBE2D5047590065A5EC /* String+ReplaceAndTrim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A8EBD2D5047590065A5EC /* String+ReplaceAndTrim.swift */; };
 /* End PBXBuildFile section */
@@ -98,6 +99,7 @@
 		0AFC5AA42C6694F400A148A2 /* ExperimentalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentalView.swift; sourceTree = "<group>"; };
 		0AFC5AA62C6695CF00A148A2 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		0AFC5AA82C66A20C00A148A2 /* CodeBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeBlockView.swift; sourceTree = "<group>"; };
+		173D20652D556F2B0069CD5A /* Chat-Export.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chat-Export.swift"; sourceTree = "<group>"; };
 		175D318B2C64ADF9009B58E0 /* DefaultFontSizeField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFontSizeField.swift; sourceTree = "<group>"; };
 		4A4A8EBD2D5047590065A5EC /* String+ReplaceAndTrim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ReplaceAndTrim.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -259,6 +261,7 @@
 				0AF5664B2C65A2B400D6E01A /* SectionFooter.swift */,
 				0ADB96122C5D5CC400EB0C60 /* CodeHighlighter.swift */,
 				0AFC5AA82C66A20C00A148A2 /* CodeBlockView.swift */,
+				173D20652D556F2B0069CD5A /* Chat-Export.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				0AF5CB622C62B0B600DF8DA8 /* UpdateOllamaHostSheet.swift in Sources */,
 				4A4A8EBE2D5047590065A5EC /* String+ReplaceAndTrim.swift in Sources */,
 				0A6E85102C5E6C670030A4AA /* MessageViewModel.swift in Sources */,
+				173D20662D556F350069CD5A /* Chat-Export.swift in Sources */,
 				0A6E85112C5E6C670030A4AA /* ChatViewModel.swift in Sources */,
 				175D318C2C64ADF9009B58E0 /* DefaultFontSizeField.swift in Sources */,
 				0A6E85342C5F9DA00030A4AA /* ChatFieldFooterView.swift in Sources */,
