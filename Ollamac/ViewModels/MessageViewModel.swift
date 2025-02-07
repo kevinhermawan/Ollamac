@@ -72,6 +72,29 @@ final class MessageViewModel {
                         }
                     }
                 }
+
+                // If chunk was not done: handle temporary response
+                if !tempResponse.isEmpty {
+                    // properly close <think> block
+                    if tempResponse.matches(of: /<\/?think>/).count == 1 {
+                        tempResponse += "\n</think>\n"
+                    }
+
+                    // properly close any code blocks
+                    if tempResponse.matches(of: /```/).count % 2 == 1 {
+                        tempResponse += "\n```\n"
+                    } else {
+                        // ... or add a visual separator
+                        tempResponse += "\n\n---\n"
+                    }
+
+                    // mark response as cancelled
+                    tempResponse += "\n_CANCELLED_"
+
+                    message.response = tempResponse
+                    activeChat.modifiedAt = .now
+                    tempResponse = ""
+                }
             } catch {
                 self.error = .generate(error.localizedDescription)
             }
@@ -101,6 +124,29 @@ final class MessageViewModel {
                         activeChat.modifiedAt = .now
                         tempResponse = ""
                     }
+                }
+
+                // If chunk was not done: handle temporary response
+                if !tempResponse.isEmpty {
+                    // properly close <think> block
+                    if tempResponse.matches(of: /<\/?think>/).count == 1 {
+                        tempResponse += "\n</think>\n"
+                    }
+
+                    // properly close any code blocks
+                    if tempResponse.matches(of: /```/).count % 2 == 1 {
+                        tempResponse += "\n```\n"
+                    } else {
+                        // ... or add a visual separator
+                        tempResponse += "\n\n---\n"
+                    }
+
+                    // mark response as cancelled
+                    tempResponse += "\n_CANCELLED_"
+
+                    lastMessage.response = tempResponse
+                    activeChat.modifiedAt = .now
+                    tempResponse = ""
                 }
             } catch {
                 self.error = .generate(error.localizedDescription)
