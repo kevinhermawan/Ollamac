@@ -27,6 +27,20 @@ final class Message: Identifiable {
     @Transient var model: String {
         self.chat?.model ?? ""
     }
+
+    var responseText: String {
+        var response = self.response ?? ""
+
+        // identify <think> phase of model and remove it
+        if let start = response.ranges(of: "<think>").first?.lowerBound {
+            if let end = response.ranges(of: "</think>").first?.upperBound {
+                response.removeSubrange(start...end)
+            }
+        }
+
+        // return trimmed text
+        return response.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 }
 
 extension Message {

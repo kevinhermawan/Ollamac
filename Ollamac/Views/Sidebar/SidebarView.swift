@@ -60,7 +60,7 @@ struct SidebarView: View {
         List(selection: $chatViewModelBindable.selectedChats) {
             Section("Today") {
                 ForEach(todayChats) { chat in
-                    SidebarListItemView(chatViewModel: chatViewModel, name: chat.name, message: chat.firstMessage?.response)
+                    SidebarListItemView(chatViewModel: chatViewModel, name: chat.name, message: chat.firstMessage?.responseText)
                         .tag(chat)
                 }
             }
@@ -68,7 +68,7 @@ struct SidebarView: View {
             
             Section("Yesterday") {
                 ForEach(yesterdayChats) { chat in
-                    SidebarListItemView(chatViewModel: chatViewModel, name: chat.name, message: chat.firstMessage?.response)
+                    SidebarListItemView(chatViewModel: chatViewModel, name: chat.name, message: chat.firstMessage?.responseText)
                         .tag(chat)
                 }
             }
@@ -76,7 +76,7 @@ struct SidebarView: View {
             
             Section("Previous days") {
                 ForEach(previousDaysChats) { chat in
-                    SidebarListItemView(chatViewModel: chatViewModel, name: chat.name, message: chat.firstMessage?.response)
+                    SidebarListItemView(chatViewModel: chatViewModel, name: chat.name, message: chat.firstMessage?.responseText)
                         .tag(chat)
                 }
             }
