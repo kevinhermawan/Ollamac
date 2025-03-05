@@ -3,6 +3,23 @@
     <channel>
         <title>Ollamac</title>
         <item>
+            <title>3.0.3</title>
+            <pubDate>Thu, 06 Mar 2025 05:15:42 +0700</pubDate>
+            <sparkle:version>15</sparkle:version>
+            <sparkle:shortVersionString>3.0.3</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/kevinhermawan/Ollamac/releases/download/v3.0.3/Ollamac-3.0.3.dmg" length="5227198" type="application/octet-stream" sparkle:edSignature="mqlsWkPpm3pUo32GZDbn8UyBliTYr7LeA9u9EuBQ+Z2yE/6XdvxviZqo8vMRj958dtM7OnS/YOYobIhpAmUXBg=="/>
+            <description><![CDATA[
+                <h1>What's New in Ollamac 3.0.3</h1>
+                <ul>
+                    <li>Fixed sidebar content. Thanks to @pd95!</li>
+                    <li>Improved handling of incomplete responses. Thanks to @pd95!</li>
+                    <li>Updated dependencies. Thanks to @kevinhermawan!</li>
+                </ul>
+                <p>For a complete list of changes, visit our <a href="https://github.com/kevinhermawan/Ollamac/releases/tag/v3.0.3">Full Changelog</a>.</p>
+            ]]></description>
+        </item>
+        <item>
             <title>3.0.2</title>
             <pubDate>Wed, 05 Feb 2025 14:24:44 +0700</pubDate>
             <sparkle:version>14</sparkle:version>
@@ -20,8 +37,7 @@
                     <li>Prevented empty prompts from being sent. Thanks to @pd95!</li>
                 </ul>
                 <p>For a complete list of changes, visit our <a href="https://github.com/kevinhermawan/Ollamac/releases/tag/v3.0.2">Full Changelog</a>.</p>
-            ]]>
-            </description>
+            ]]></description>
         </item>
     </channel>
 </rss>
