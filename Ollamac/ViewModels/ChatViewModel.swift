@@ -93,7 +93,7 @@ final class ChatViewModel {
     }
     
     func create(model: String) {
-        let chat = Chat(model: model)
+        let chat = Chat(name: "New Chat")
         self.modelContext.insert(chat)
         
         self.chats.insert(chat, at: 0)

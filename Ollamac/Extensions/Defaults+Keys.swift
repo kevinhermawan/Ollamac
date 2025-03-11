@@ -10,6 +10,7 @@ import Foundation
 import AppKit.NSFont
 
 extension Defaults.Keys {
+    static let selectedChatId = Key<Chat.ID?>("selectedChatId", default: nil)
     static let defaultChatName = Key<String>("defaultChatName", default: "New Chat")
     static let defaultModel = Key<String>("defaultModel", default: "")
     static let defaultHost = Key<String>("defaultHost", default: "http://localhost:11434")

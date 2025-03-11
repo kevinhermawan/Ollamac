@@ -10,7 +10,7 @@ import SwiftUI
 struct AppView: View {
     var body: some View {
         NavigationSplitView {
-            SidebarView()
+            ChatListView()
                 .navigationSplitViewColumnWidth(min: 256, ideal: 256)
         } detail: {
             ChatView()
