@@ -52,13 +52,6 @@ struct OllamacApp: App {
         
         let codeHighlighter =  CodeHighlighter(colorScheme: .light, fontSize: Defaults[.fontSize], enabled: Defaults[.experimentalCodeHighlighting])
         _codeHighlighter = State(initialValue: codeHighlighter)
-        
-        chatViewModel.create(model: Defaults[.defaultModel])
-        guard let activeChat = chatViewModel.selectedChats
-            .first else { return }
-        
-        chatViewModel.activeChat = activeChat
-        messageViewModel.load(of: activeChat)
     }
     
     var body: some Scene {
@@ -72,12 +65,6 @@ struct OllamacApp: App {
         .modelContainer(sharedModelContainer)
         .keyboardShortcut(KeyboardShortcut("n", modifiers: [.command, .shift]))
         .commands {
-            CommandGroup(replacing: .textEditing) {
-                if chatViewModel.selectedChats.count > 0 {
-                    SidebarContextMenu(chatViewModel: chatViewModel)
-                }
-            }
-            
             CommandGroup(after: .appInfo) {
                 Button("Check for Updates...") {
                     updater.checkForUpdates()

@@ -48,6 +48,17 @@ struct ChatListView: View {
             
             chatManager.setSelectedChat()
         }
+        .toolbar {
+            ToolbarItemGroup(placement: .primaryAction) {
+                Spacer()
+                
+                Button(action: chatManager.createNewChat) {
+                    Label("New Chat", systemImage: "square.and.pencil")
+                }
+                .keyboardShortcut("n", modifiers: .command)
+                .help("New Chat")
+            }
+        }
         .confirmationDialog("Are you sure want to delete this chat?", isPresented: $isDeleteConfirmationPresented) {
             Button("Delete", role: .destructive, action: chatManager.deleteChat)
             Button("Cancel", role: .cancel, action: {})

@@ -13,7 +13,6 @@ import SwiftUI
 @Observable
 final class ChatManager {
     private let modelContext: ModelContext
-    private var localEventMonitor: Any?
     
     var chats: [Chat] = []
     
@@ -32,13 +31,7 @@ final class ChatManager {
         self.modelContext = modelContext
         
         fetchChats()
-        setSelectedChat()
-    }
-    
-    deinit {
-        if let localEventMonitor {
-            NSEvent.removeMonitor(localEventMonitor)
-        }
+//        setSelectedChat()
     }
     
     func fetchChats() {
