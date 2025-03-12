@@ -27,9 +27,9 @@ final class Chat: Identifiable {
     @Relationship(deleteRule: .cascade)
     var messages: [Message] = []
     
-    init(model: String) {
-        self.name = Defaults[.defaultChatName]
-        self.model = model
+    init(name: String) {
+        self.name = name
+        self.model = Defaults[.defaultModel]
         self.host = Defaults[.defaultHost]
         self.systemPrompt = Defaults[.defaultSystemPrompt]
         self.temperature = Defaults[.defaultTemperature]

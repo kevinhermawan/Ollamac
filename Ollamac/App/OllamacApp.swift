@@ -16,10 +16,11 @@ struct OllamacApp: App {
     @State private var appUpdater: AppUpdater
     private var updater: SPUUpdater
     
+    @State private var chatManager: ChatManager
     @State private var chatViewModel: ChatViewModel
     @State private var messageViewModel: MessageViewModel
     @State private var codeHighlighter: CodeHighlighter
-
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([Chat.self, Message.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
@@ -40,26 +41,23 @@ struct OllamacApp: App {
         let appUpdater = AppUpdater(updater)
         self._appUpdater = State(initialValue: appUpdater)
         
+        let chatManager = ChatManager(modelContext: modelContext)
+        self._chatManager = State(initialValue: chatManager)
+        
         let chatViewModel = ChatViewModel(modelContext: modelContext)
         self._chatViewModel = State(initialValue: chatViewModel)
         
         let messageViewModel = MessageViewModel(modelContext: modelContext)
         self._messageViewModel = State(initialValue: messageViewModel)
-
+        
         let codeHighlighter =  CodeHighlighter(colorScheme: .light, fontSize: Defaults[.fontSize], enabled: Defaults[.experimentalCodeHighlighting])
         _codeHighlighter = State(initialValue: codeHighlighter)
-
-        chatViewModel.create(model: Defaults[.defaultModel])
-        guard let activeChat = chatViewModel.selectedChats
-            .first else { return }
-        
-        chatViewModel.activeChat = activeChat
-        messageViewModel.load(of: activeChat)
     }
     
     var body: some Scene {
         WindowGroup {
             AppView()
+                .environment(chatManager)
                 .environment(chatViewModel)
                 .environment(messageViewModel)
                 .environment(codeHighlighter)
@@ -67,12 +65,6 @@ struct OllamacApp: App {
         .modelContainer(sharedModelContainer)
         .keyboardShortcut(KeyboardShortcut("n", modifiers: [.command, .shift]))
         .commands {
-            CommandGroup(replacing: .textEditing) {
-                if chatViewModel.selectedChats.count > 0 {
-                    SidebarContextMenu(chatViewModel: chatViewModel)
-                }
-            }
-            
             CommandGroup(after: .appInfo) {
                 Button("Check for Updates...") {
                     updater.checkForUpdates()
@@ -85,12 +77,12 @@ struct OllamacApp: App {
                     Link("Ollamac Help", destination: url)
                 }
             }
-
+            
             CommandGroup(after: .textEditing) {
                 Divider()
                 Button("Increase font size", action: increaseFontSize)
                     .keyboardShortcut("+", modifiers: [.command], localization: .custom)
-
+                
                 Button("Decrease font size", action: decreaseFontSize)
                     .keyboardShortcut("-", modifiers: [.command], localization: .custom)
             }
@@ -100,11 +92,11 @@ struct OllamacApp: App {
             SettingsView()
         }
     }
-
+    
     func increaseFontSize() {
         Defaults[.fontSize] += 1
     }
-
+    
     func decreaseFontSize() {
         Defaults[.fontSize] = max(Defaults[.fontSize] - 1, 8)
     }
