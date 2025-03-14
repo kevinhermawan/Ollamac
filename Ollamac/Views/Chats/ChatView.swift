@@ -24,6 +24,7 @@ struct ChatView: View {
     @State private var prompt: String = ""
     @State private var scrollProxy: ScrollViewProxy? = nil
     @State private var isPreferencesPresented: Bool = false
+    @State private var isExporting: Bool = false
     @FocusState private var isFocused: Bool
 
     init() {
@@ -124,6 +125,20 @@ struct ChatView: View {
         .navigationTitle(chatViewModel.activeChat?.name ?? "Ollamac")
         .navigationSubtitle(chatViewModel.activeChat?.model ?? "")
         .toolbar {
+            ToolbarItem {
+                Button("Share", systemImage: "square.and.arrow.up") {
+                    isExporting = true
+                }
+                .disabled(chatViewModel.activeChat?.messages.count ?? 0 == 0)
+                .fileExporter(isPresented: $isExporting,
+                              item: chatViewModel.activeChat,
+                              contentTypes: [.plainText],
+                              defaultFilename: chatViewModel.activeChat?.chatFilename ?? "Ollamac_Chat.txt"
+                ) { result in
+                    // handle error?
+                    print(result)
+                }
+            }
             ToolbarItem(placement: .primaryAction) {
                 Button("Show Preferences", systemImage: "sidebar.trailing") {
                     isPreferencesPresented.toggle()
