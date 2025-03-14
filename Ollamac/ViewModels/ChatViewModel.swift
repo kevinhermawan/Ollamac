@@ -87,17 +87,25 @@ final class ChatViewModel {
             let fetchDescriptor = FetchDescriptor<Chat>(sortBy: [sortDescriptor])
             
             self.chats = try self.modelContext.fetch(fetchDescriptor)
+            self.create(model: Defaults[.defaultModel])
         } catch {
             self.error = .load(error.localizedDescription)
         }
     }
     
     func create(model: String) {
-        let chat = Chat(model: model)
-        self.modelContext.insert(chat)
-        
-        self.chats.insert(chat, at: 0)
-        self.selectedChats = [chat]
+        // There is already a "New Chat" unused chat
+        if let existingChat = chats.first(where: { $0.isNew }) {
+            existingChat.createdAt = .now
+            existingChat.model = model
+            self.selectedChats = [existingChat]
+        } else {
+            let chat = Chat(model: model)
+            self.modelContext.insert(chat)
+
+            self.chats.insert(chat, at: 0)
+            self.selectedChats = [chat]
+        }
         self.shouldFocusPrompt = true
     }
     
@@ -118,10 +126,9 @@ final class ChatViewModel {
     }
     
     func removeTemporaryChat(chatToRemove: Chat) {
-        if (chatToRemove.name == Defaults[.defaultChatName] && chatToRemove.messages.isEmpty) {
-            self.modelContext.delete(chatToRemove)
-            self.chats.removeAll(where: { $0.id == chatToRemove.id })
-        }
+        guard chatToRemove.isNew else { return }
+        self.modelContext.delete(chatToRemove)
+        self.chats.removeAll(where: { $0.id == chatToRemove.id })
     }
 }
 

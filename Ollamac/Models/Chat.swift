@@ -40,4 +40,8 @@ final class Chat: Identifiable {
     @Transient var firstMessage: Message? {
         return messages.sorted { $0.createdAt < $1.createdAt }.first
     }
+
+    var isNew: Bool {
+        name == Defaults[.defaultChatName] && messages.isEmpty
+    }
 }
