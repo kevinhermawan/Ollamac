@@ -48,13 +48,6 @@ struct OllamacApp: App {
 
         let codeHighlighter =  CodeHighlighter(colorScheme: .light, fontSize: Defaults[.fontSize], enabled: Defaults[.experimentalCodeHighlighting])
         _codeHighlighter = State(initialValue: codeHighlighter)
-
-        chatViewModel.create(model: Defaults[.defaultModel])
-        guard let activeChat = chatViewModel.selectedChats
-            .first else { return }
-        
-        chatViewModel.activeChat = activeChat
-        messageViewModel.load(of: activeChat)
     }
     
     var body: some Scene {
