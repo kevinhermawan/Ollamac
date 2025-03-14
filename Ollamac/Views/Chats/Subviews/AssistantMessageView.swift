@@ -7,9 +7,9 @@
 
 import Defaults
 import MarkdownUI
+import RegexBuilder
 import SwiftUI
 import ViewCondition
-import RegexBuilder
 
 struct AssistantMessageView: View {
     @Default(.fontSize) private var fontSize
@@ -43,15 +43,6 @@ struct AssistantMessageView: View {
             } else {
 				Markdown(convertThinkTagsToMarkdownQuote(in: content))
                     .textSelection(.enabled)
-                    .markdownTextStyle(\.text) {
-                        FontSize(CGFloat(fontSize))
-                    }
-                    .markdownTextStyle(\.code) {
-                        FontSize(CGFloat(fontSize))
-                        FontFamily(.system(.monospaced))
-                    }
-                    .markdownTheme(.ollamac)
-                    .markdownCodeSyntaxHighlighter(experimentalCodeHighlighting ? codeHighlighter : .plainText)
                     .id(codeHighlighter.stateHashValue)
 
                 HStack(spacing: 16) {

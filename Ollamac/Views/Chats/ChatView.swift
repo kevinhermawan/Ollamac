@@ -5,8 +5,8 @@
 //  Created by Kevin Hermawan on 8/2/24.
 //
 
-import Defaults
 import ChatField
+import Defaults
 import OllamaKit
 import SwiftUI
 import ViewCondition
@@ -14,10 +14,7 @@ import ViewCondition
 struct ChatView: View {
     @Environment(ChatViewModel.self) private var chatViewModel
     @Environment(MessageViewModel.self) private var messageViewModel
-    @Environment(\.colorScheme) private var colorScheme
-    @Environment(CodeHighlighter.self) private var codeHighlighter
 
-    @AppStorage("experimentalCodeHighlighting") private var experimentalCodeHighlighting = false
     @Default(.fontSize) private var fontSize
 
     @State private var ollamaKit: OllamaKit
@@ -110,15 +107,6 @@ struct ChatView: View {
                 if let proxy = scrollProxy {
                     scrollToBottom(proxy: proxy)
                 }
-            }
-            .onChange(of: colorScheme, initial: true) {
-                codeHighlighter.colorScheme = colorScheme
-            }
-            .onChange(of: fontSize, initial: true) {
-                codeHighlighter.fontSize = fontSize
-            }
-            .onChange(of: experimentalCodeHighlighting) {
-                codeHighlighter.enabled = experimentalCodeHighlighting
             }
         }
         .navigationTitle(chatViewModel.activeChat?.name ?? "Ollamac")
