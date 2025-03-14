@@ -94,11 +94,11 @@ final class ChatViewModel {
     }
     
     func create(model: String) {
-        // There is already a "new" unused chat
-        if let newChat = chats.first(where: { $0.isNew }) {
-            newChat.createdAt = .now
-            newChat.model = model
-            self.selectedChats = [newChat]
+        // There is already a "New Chat" unused chat
+        if let existingChat = chats.first(where: { $0.isNew }) {
+            existingChat.createdAt = .now
+            existingChat.model = model
+            self.selectedChats = [existingChat]
         } else {
             let chat = Chat(model: model)
             self.modelContext.insert(chat)
