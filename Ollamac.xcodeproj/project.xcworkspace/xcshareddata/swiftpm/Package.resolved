@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kevinhermawan/OllamaKit",
       "state" : {
-        "revision" : "f947524e08fa8b0ddb875834a81ed7b4cf9ea23a",
-        "version" : "5.0.5"
+        "revision" : "b6ff6a0c75a3756450cfb38074f6264be1314abc",
+        "version" : "5.0.8"
       }
     },
     {
@@ -60,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sparkle-project/Sparkle",
       "state" : {
-        "revision" : "0ef1ee0220239b3776f433314515fd849025673f",
-        "version" : "2.6.4"
+        "revision" : "0ca3004e98712ea2b39dd881d28448630cce1c99",
+        "version" : "2.7.0"
       }
     },
     {
