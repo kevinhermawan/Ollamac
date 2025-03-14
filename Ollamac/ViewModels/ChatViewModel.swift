@@ -118,10 +118,9 @@ final class ChatViewModel {
     }
     
     func removeTemporaryChat(chatToRemove: Chat) {
-        if (chatToRemove.name == Defaults[.defaultChatName] && chatToRemove.messages.isEmpty) {
-            self.modelContext.delete(chatToRemove)
-            self.chats.removeAll(where: { $0.id == chatToRemove.id })
-        }
+        guard chatToRemove.isNew else { return }
+        self.modelContext.delete(chatToRemove)
+        self.chats.removeAll(where: { $0.id == chatToRemove.id })
     }
 }
 

@@ -104,15 +104,12 @@ struct SidebarView: View {
             if selectedChats.count > 1 {
                 chatViewModel.activeChat = nil
                 messageViewModel.messages = []
-            } else {
-                guard let oldActiveChat = oldSelectedChats.first else { return }
-                chatViewModel.removeTemporaryChat(chatToRemove: oldActiveChat)
-                
-                let selectedChatsArray = Array(selectedChats)
-                guard let activeChat = selectedChatsArray.first else { return }
-                
+            } else if let activeChat = selectedChats.first {
                 chatViewModel.activeChat = activeChat
                 messageViewModel.load(of: activeChat)
+                if let oldActiveChat = oldSelectedChats.first {
+                    chatViewModel.removeTemporaryChat(chatToRemove: oldActiveChat)
+                }
             }
         }
     }
