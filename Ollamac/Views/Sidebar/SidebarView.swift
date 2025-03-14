@@ -104,7 +104,7 @@ struct SidebarView: View {
             if selectedChats.count > 1 {
                 chatViewModel.activeChat = nil
                 messageViewModel.messages = []
-            } else if let activeChat = selectedChats.first {
+            } else if let activeChat = selectedChats.first, chatViewModel.activeChat != activeChat {
                 chatViewModel.activeChat = activeChat
                 messageViewModel.load(of: activeChat)
                 if let oldActiveChat = oldSelectedChats.first {
