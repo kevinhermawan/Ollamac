@@ -87,17 +87,25 @@ final class ChatViewModel {
             let fetchDescriptor = FetchDescriptor<Chat>(sortBy: [sortDescriptor])
             
             self.chats = try self.modelContext.fetch(fetchDescriptor)
+            self.create(model: Defaults[.defaultModel])
         } catch {
             self.error = .load(error.localizedDescription)
         }
     }
     
     func create(model: String) {
-        let chat = Chat(model: model)
-        self.modelContext.insert(chat)
-        
-        self.chats.insert(chat, at: 0)
-        self.selectedChats = [chat]
+        // There is already a "new" unused chat
+        if let newChat = chats.first(where: { $0.isNew }) {
+            newChat.createdAt = .now
+            newChat.model = model
+            self.selectedChats = [newChat]
+        } else {
+            let chat = Chat(model: model)
+            self.modelContext.insert(chat)
+
+            self.chats.insert(chat, at: 0)
+            self.selectedChats = [chat]
+        }
         self.shouldFocusPrompt = true
     }
     
