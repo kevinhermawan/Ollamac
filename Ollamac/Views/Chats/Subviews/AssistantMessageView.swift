@@ -43,6 +43,9 @@ struct AssistantMessageView: View {
             } else {
 				Markdown(convertThinkTagsToMarkdownQuote(in: content))
                     .textSelection(.enabled)
+                    .if(isGenerating) {
+                        $0.markdownCodeSyntaxHighlighter(.plainText)
+                    }
                     .id(codeHighlighter.stateHashValue)
 
                 HStack(spacing: 16) {
