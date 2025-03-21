@@ -43,7 +43,7 @@ struct AssistantMessageView: View {
             } else {
 				Markdown(convertThinkTagsToMarkdownQuote(in: content))
                     .textSelection(.enabled)
-                    .if(isGenerating) {
+                    .if(isGenerating && isLastMessage) {
                         $0.markdownCodeSyntaxHighlighter(.plainText)
                     }
                     .id(codeHighlighter.stateHashValue)
