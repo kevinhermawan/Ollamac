@@ -1,0 +1,59 @@
+
+[
+  {
+    "modelName": "deepseek-r1:1.5b",
+    "modelSize": "1.1 GB"
+  },
+  {
+      "modelName": "deepseek-r1:7b",
+      "modelSize": "4.7 GB"
+  },
+  {
+      "modelName": "deepseek-r1:8b",
+      "modelSize": "4.9 GB"
+  },
+  {
+      "modelName": "deepseek-r1:14b",
+      "modelSize": "9.0 GB"
+  },
+  {
+      "modelName": "llama3.2:1b",
+      "modelSize": "1.3 GB"
+  },
+  {
+      "modelName": "llama3.2:3b",
+      "modelSize": "2.0 GB"
+  },
+  {
+    "modelName": "gemma3:1b",
+    "modelSize": "815 MB"
+  },
+  {
+    "modelName": "gemma3:4b",
+    "modelSize": "3.3 GB"
+  },
+  {
+    "modelName": "gemma3:12b",
+    "modelSize": "8.1 GB"
+  },
+  {
+    "modelName": "gemma3:27b",
+    "modelSize": "17 GB"
+  },
+  {
+    "modelName": "gemma3:12b-it-fp16",
+    "modelSize": "24 GB"
+  },
+  {
+    "modelName": "gemma3:12b-it-q4_K_M",
+    "modelSize": "8.1 GB"
+  },
+  {
+    "modelName": "gemma3:12b-it-q8_0",
+    "modelSize": "13 GB"
+  },
+  {
+    "modelName": "gemma3:1b-it-fp16",
+    "modelSize": "2.0 GB"
+  }
+]
