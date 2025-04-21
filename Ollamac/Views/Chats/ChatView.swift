@@ -9,6 +9,7 @@ import Defaults
 import ChatField
 import OllamaKit
 import SwiftUI
+import AppKit
 import ViewCondition
 
 struct ChatView: View {
@@ -24,6 +25,7 @@ struct ChatView: View {
     @State private var prompt: String = ""
     @State private var scrollProxy: ScrollViewProxy? = nil
     @State private var isPreferencesPresented: Bool = false
+    @State private var images: [String] = []
     @FocusState private var isFocused: Bool
 
     init() {
@@ -39,6 +41,7 @@ struct ChatView: View {
                     
                     UserMessageView(
                         content: message.prompt,
+                        images: message.images,
                         copyAction: self.copyAction
                     )
                     .padding(.top)
@@ -62,11 +65,29 @@ struct ChatView: View {
                 }
                 
                 VStack {
+                    
+                    HStack(spacing: 8) {
+                        ForEach(images, id: \.self) { image in
+                            if let data = Data(base64Encoded: image), let nsImage = NSImage(data: data) {
+                                Image(nsImage: nsImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100, height: 100)
+                            }
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                    
                     ChatField("Write your message here", text: $prompt) {
                         if messageViewModel.loading != .generate {
                             generateAction()
                         }
-                    } trailingAccessory: {
+                    } leadingAccessory: {
+                        CircleButton(systemImage: "paperclip", action: attachmentAction)
+                            .disabled(messageViewModel.loading == .generate)
+                    }
+                    trailingAccessory: {
                         CircleButton(systemImage: messageViewModel.loading == .generate ? "stop.fill" : "arrow.up", action: generateAction)
                             .disabled(prompt.isEmpty && messageViewModel.loading != .generate)
                     } footer: {
@@ -172,11 +193,65 @@ struct ChatView: View {
             }
 
             guard let activeChat = chatViewModel.activeChat else { return }
-            
-            messageViewModel.generate(ollamaKit, activeChat: activeChat, prompt: prompt)
+            messageViewModel.generate(ollamaKit, activeChat: activeChat, prompt: prompt, images: images)
         }
         
+        self.images = []
         self.prompt = ""
+    }
+    
+    private func attachmentAction() {
+        let panel = NSOpenPanel()
+        panel.allowedContentTypes = [.image, .png, .jpeg, .gif]
+        panel.allowsMultipleSelection = true
+        panel.canChooseDirectories = false
+        
+        if panel.runModal() == .OK {
+            for url in panel.urls {
+                if let imageData = try? Data(contentsOf: url) {
+                    let processedImage = processImage(imageData: imageData)
+                    guard let base64 = processedImage else {
+                        return
+                    }
+                    images.append(base64)
+                }
+            }
+        }
+    }
+    
+    private func processImage(imageData: Data, maxSize: CGFloat = 512) -> String? {
+        guard let originalImage = NSImage(data: imageData) else {return nil}
+        
+        let resizedImage = resizeImage(originalImage, maxSize: maxSize)
+        
+        // Convert to JPEG data
+        guard let tiffData = resizedImage?.tiffRepresentation,
+              let bitmap = NSBitmapImageRep(data: tiffData) else {
+            return nil
+        }
+        guard let jpegData = bitmap.representation(using: .jpeg, properties: [.compressionFactor: 0.8]) else {
+            print("Failed to convert to JPEG")
+            return nil
+        }
+                        
+        return jpegData.base64EncodedString()
+    }
+    
+    func resizeImage(_ image: NSImage, maxSize: CGFloat) -> NSImage? {
+        let originalSize = image.size
+        let ratio = min(maxSize / originalSize.width, maxSize / originalSize.height)
+
+        let newSize = NSSize(width: originalSize.width * ratio, height: originalSize.height * ratio)
+        let newImage = NSImage(size: newSize)
+
+        newImage.lockFocus()
+        image.draw(in: NSRect(origin: .zero, size: newSize),
+                   from: NSRect(origin: .zero, size: originalSize),
+                   operation: .copy,
+                   fraction: 1.0)
+        newImage.unlockFocus()
+
+        return newImage
     }
     
     private func regenerateAction() {
@@ -187,7 +262,7 @@ struct ChatView: View {
         } else {
             guard let activeChat = chatViewModel.activeChat else { return }
             
-            messageViewModel.regenerate(ollamaKit, activeChat: activeChat)
+            messageViewModel.regenerate(ollamaKit, activeChat: activeChat, images: images)
         }
         
         prompt = ""

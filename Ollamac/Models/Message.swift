@@ -17,6 +17,8 @@ final class Message: Identifiable {
     var response: String?
     var createdAt: Date = Date.now
     
+    @Attribute var imagesData: Data? // Store encoded images array
+    
     @Relationship
     var chat: Chat?
     
@@ -41,14 +43,25 @@ final class Message: Identifiable {
         // return trimmed text
         return response.trimmingCharacters(in: .whitespacesAndNewlines)
     }
+    
+    // Computed property to get/set images as an array
+        var images: [String]? {
+            get {
+                guard let data = imagesData else { return nil }
+                return try? JSONDecoder().decode([String].self, from: data)
+            }
+            set {
+                imagesData = try? JSONEncoder().encode(newValue)
+            }
+        }
 }
 
 extension Message {
-    func toOKChatRequestData(messages: [Message]) -> OKChatRequestData {
+    func toOKChatRequestData(messages: [Message], images: [String]?) -> OKChatRequestData {
         var requestMessages = [OKChatRequestData.Message]()
         
         for message in messages {
-            let userMessage = OKChatRequestData.Message(role: .user, content: message.prompt)
+            let userMessage = OKChatRequestData.Message(role: .user, content: message.prompt, images: images)
             let assistantMessage = OKChatRequestData.Message(role: .assistant, content: message.response ?? "")
             
             requestMessages.append(userMessage)
