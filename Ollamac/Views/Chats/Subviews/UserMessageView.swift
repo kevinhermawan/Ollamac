@@ -38,14 +38,16 @@ struct UserMessageView: View {
                                     Image(nsImage: convertedImage)
                                         .resizable()
                                         .scaledToFit()
+                                        .cornerRadius(4)
+                                        .padding()
                                         .frame(width: 100, height: 100)
-                                        .cornerRadius(12)
                                 }
                             }
                         }
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(12)
                     }
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(12)
+                    .frame(maxWidth: .infinity)
                 }
                 
                 Text(content)

@@ -11,23 +11,24 @@ import OllamaKit
 import SwiftUI
 import AppKit
 import ViewCondition
+import SwiftData
 
 struct ChatView: View {
     @Environment(ChatViewModel.self) private var chatViewModel
     @Environment(MessageViewModel.self) private var messageViewModel
     @Environment(\.colorScheme) private var colorScheme
     @Environment(CodeHighlighter.self) private var codeHighlighter
-
+    
     @AppStorage("experimentalCodeHighlighting") private var experimentalCodeHighlighting = false
     @Default(.fontSize) private var fontSize
-
+    
     @State private var ollamaKit: OllamaKit
     @State private var prompt: String = ""
     @State private var scrollProxy: ScrollViewProxy? = nil
     @State private var isPreferencesPresented: Bool = false
     @State private var images: [String] = []
     @FocusState private var isFocused: Bool
-
+    
     init() {
         let baseURL = URL(string: Defaults[.defaultHost])!
         self._ollamaKit = State(initialValue: OllamaKit(baseURL: baseURL))
@@ -64,63 +65,9 @@ struct ChatView: View {
                     }
                 }
                 
-                VStack {
-                    
-                    HStack(spacing: 8) {
-                        ForEach(images, id: \.self) { image in
-                            if let data = Data(base64Encoded: image), let nsImage = NSImage(data: data) {
-                                Image(nsImage: nsImage)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 100)
-                            }
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 
-                    
-                    ChatField("Write your message here", text: $prompt) {
-                        if messageViewModel.loading != .generate {
-                            generateAction()
-                        }
-                    } leadingAccessory: {
-                        CircleButton(systemImage: "paperclip", action: attachmentAction)
-                            .disabled(messageViewModel.loading == .generate)
-                    }
-                    trailingAccessory: {
-                        CircleButton(systemImage: messageViewModel.loading == .generate ? "stop.fill" : "arrow.up", action: generateAction)
-                            .disabled(prompt.isEmpty && messageViewModel.loading != .generate)
-                    } footer: {
-                        if chatViewModel.loading != nil {
-                            ProgressView()
-                                .controlSize(.small)
-                        } else if case .fetchModels(let message) = chatViewModel.error {
-                            HStack {
-                                Text(message)
-                                    .foregroundStyle(.red)
-                                
-                                Button("Try Again", action: onActiveChatChanged)
-                                    .buttonStyle(.plain)
-                                    .foregroundStyle(.blue)
-                            }
-                            .font(.callout)
-                        } else if messageViewModel.messages.isEmpty == false {
-                            ChatFieldFooterView("\u{2318}+R to regenerate the response")
-                                .foregroundColor(.secondary)
-                        } else {
-                            ChatFieldFooterView("AI can make mistakes. Please double-check responses.")
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                    .chatFieldStyle(.capsule)
-                    .focused($isFocused)
-                    .font(Font.system(size: fontSize))
-                }
-                .padding(.top, 8)
-                .padding(.bottom, 12)
-                .padding(.horizontal)
-                .visible(if: chatViewModel.activeChat.isNotNil, removeCompletely: true)
             }
+            .safeAreaInset(edge: .bottom, content: ChatFieldView)
             .onAppear {
                 self.scrollProxy = proxy
             }
@@ -157,6 +104,99 @@ struct ChatView: View {
         }
     }
     
+    // MARK: Views
+    
+    @ViewBuilder
+    private func ChatFieldView() -> some View {
+        VStack {
+            HStack(spacing: 8) {
+                ForEach(images, id: \.self) { image in
+                    if let data = Data(base64Encoded: image), let nsImage = NSImage(data: data) {
+                        ZStack(alignment: .topLeading){
+                            Image(nsImage: nsImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 100)
+                            
+                            Button(action: {
+                                deleteImage(at: images.firstIndex(of: image) ?? 0)
+                            }, label: {
+                                Label("Remove", systemImage: "xmark.circle.fill")
+                                    .labelStyle(.iconOnly)
+                                    .font(.body)
+                            })
+                            .buttonStyle(.borderless)
+                        }
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            
+            ChatField("Write your message here", text: $prompt) {
+                if messageViewModel.loading != .generate {
+                    generateAction()
+                }
+            } leadingAccessory: {
+                attachmentMenu
+            }
+            trailingAccessory: {
+                CircleButton(systemImage: messageViewModel.loading == .generate ? "stop.fill" : "arrow.up", action: generateAction)
+                    .disabled(prompt.isEmpty && messageViewModel.loading != .generate)
+            } footer: {
+                if chatViewModel.loading != nil {
+                    ProgressView()
+                        .controlSize(.small)
+                } else if case .fetchModels(let message) = chatViewModel.error {
+                    HStack {
+                        Text(message)
+                            .foregroundStyle(.red)
+                        
+                        Button("Try Again", action: onActiveChatChanged)
+                            .buttonStyle(.plain)
+                            .foregroundStyle(.blue)
+                    }
+                    .font(.callout)
+                } else if messageViewModel.messages.isEmpty == false {
+                    ChatFieldFooterView("\u{2318}+R to regenerate the response")
+                        .foregroundColor(.secondary)
+                }
+//                else {
+//                    ChatFieldFooterView("AI can make mistakes. Please double-check responses.")
+//                        .foregroundColor(.secondary)
+//                }
+            }
+            .chatFieldStyle(.capsule)
+            .focused($isFocused)
+            .font(Font.system(size: fontSize))
+        }
+        .padding()
+        .background(.ultraThinMaterial)
+        .cornerRadius(12)
+        .padding(.top, 8)
+        .padding(.bottom, 12)
+        .padding([.leading, .trailing], 8)
+        .visible(if: chatViewModel.activeChat.isNotNil, removeCompletely: true)
+    }
+    
+    private var attachmentMenu: some View {
+        Menu {
+            Button(action: attachmentAction, label: {
+                Label("Upload Photo", systemImage: "photo.artframe")
+            })
+            
+            Button(action: {}, label: {
+                Label("Upload Files", systemImage: "document.fill")
+            })
+        } label: {
+            Label("Attachment", systemImage: "plus")
+                .labelStyle(.iconOnly)
+        }
+        .menuStyle(.borderlessButton)
+        .frame(width: 32)
+    }
+    
+    // MARK: Functions
     private func onActiveChatChanged() {
         self.prompt = ""
         if chatViewModel.shouldFocusPrompt {
@@ -168,7 +208,7 @@ struct ChatView: View {
                 }
             }
         }
-
+        
         if let activeChat = chatViewModel.activeChat, let host = activeChat.host, let baseURL = URL(string: host) {
             self.ollamaKit = OllamaKit(baseURL: baseURL)
             self.chatViewModel.fetchModels(self.ollamaKit)
@@ -182,7 +222,7 @@ struct ChatView: View {
     
     private func generateAction() {
         guard let activeChat = chatViewModel.activeChat, !activeChat.model.isEmpty, chatViewModel.isHostReachable else { return }
-
+        
         if messageViewModel.loading == .generate {
             messageViewModel.cancelGeneration()
         } else {
@@ -191,7 +231,7 @@ struct ChatView: View {
                 self.prompt = ""
                 return
             }
-
+            
             guard let activeChat = chatViewModel.activeChat else { return }
             messageViewModel.generate(ollamaKit, activeChat: activeChat, prompt: prompt, images: images)
         }
@@ -219,6 +259,11 @@ struct ChatView: View {
         }
     }
     
+    private func deleteImage(at index: Int) {
+        guard index >= 0 && index < images.count else { return }
+        images.remove(at: index)
+    }
+    
     private func processImage(imageData: Data, maxSize: CGFloat = 512) -> String? {
         guard let originalImage = NSImage(data: imageData) else {return nil}
         
@@ -233,24 +278,25 @@ struct ChatView: View {
             print("Failed to convert to JPEG")
             return nil
         }
-                        
+        
         return jpegData.base64EncodedString()
     }
     
     func resizeImage(_ image: NSImage, maxSize: CGFloat) -> NSImage? {
+        
         let originalSize = image.size
         let ratio = min(maxSize / originalSize.width, maxSize / originalSize.height)
-
+        
         let newSize = NSSize(width: originalSize.width * ratio, height: originalSize.height * ratio)
         let newImage = NSImage(size: newSize)
-
+        
         newImage.lockFocus()
         image.draw(in: NSRect(origin: .zero, size: newSize),
                    from: NSRect(origin: .zero, size: originalSize),
                    operation: .copy,
                    fraction: 1.0)
         newImage.unlockFocus()
-
+        
         return newImage
     }
     
