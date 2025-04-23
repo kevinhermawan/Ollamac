@@ -11,6 +11,12 @@ struct SettingsView: View {
     var body: some View {
         VStack {
             TabView {
+                
+                ModelsView()
+                    .tabItem{
+                        Label("Models", systemImage: "apple.intelligence")
+                    }
+                
                 GeneralView()
                     .tabItem {
                         Label("General", systemImage: "gearshape")
@@ -25,4 +31,7 @@ struct SettingsView: View {
         .padding()
         .frame(width: 512)
     }
+    
+    
+    
 }

@@ -42,9 +42,10 @@ final class MessageViewModel {
         }
     }
     
-    func generate(_ ollamaKit: OllamaKit, activeChat: Chat, prompt: String) {
+    func generate(_ ollamaKit: OllamaKit, activeChat: Chat, prompt: String, images: [String]?) {
         let message = Message(prompt: prompt)
         message.chat = activeChat
+        message.images = images
         messages.append(message)
         modelContext.insert(message)
         
@@ -55,7 +56,7 @@ final class MessageViewModel {
             defer { self.loading = nil }
             
             do {
-                let data = message.toOKChatRequestData(messages: self.messages)
+                let data = message.toOKChatRequestData(messages: self.messages, images: images)
                 
                 for try await chunk in ollamaKit.chat(data: data) {
                     if Task.isCancelled { break }
@@ -101,7 +102,7 @@ final class MessageViewModel {
         }
     }
     
-    func regenerate(_ ollamaKit: OllamaKit, activeChat: Chat) {
+    func regenerate(_ ollamaKit: OllamaKit, activeChat: Chat, images: [String]?) {
         guard let lastMessage = messages.last else { return }
         lastMessage.response = nil
         
@@ -112,7 +113,7 @@ final class MessageViewModel {
             defer { self.loading = nil }
             
             do {
-                let data = lastMessage.toOKChatRequestData(messages: self.messages)
+                let data = lastMessage.toOKChatRequestData(messages: self.messages, images: images)
                 
                 for try await chunk in ollamaKit.chat(data: data) {
                     if Task.isCancelled { break }
